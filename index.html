@@ -1,0 +1,73 @@
+<html>
+<head>
+    <title>Leaflet Draw</title>
+
+    <link rel="stylesheet" href="js/Leaflet.draw-0.2.3/leaflet.draw.css">
+    <link rel="stylesheet" href="js/leaflet-0.7.3/leaflet.css">
+    <script src="js/leaflet-0.7.3/leaflet.js"></script>
+    <style type="text/css"></style>
+    <script src="js/Leaflet.draw-0.2.3/leaflet.draw.js"></script>
+</head>
+<body>
+<div id="map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+
+<script>
+
+
+    var centralLocation = [40.573436, -105.086547];
+    var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}),
+            map = new L.Map('map', {
+                layers: [osm],
+                center: new L.LatLng(centralLocation[0], centralLocation[1]),
+                zoom: 10
+            });
+
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+
+    var drawControl = new L.Control.Draw({
+        draw: {
+            position: 'topleft',
+            polygon: {
+                title: 'Draw a sexy polygon!',
+                allowIntersection: false,
+                drawError: {
+                    color: '#b00b00',
+                    timeout: 1000
+                },
+                shapeOptions: {
+                    color: '#bada55'
+                },
+                showArea: true
+            },
+            polyline: {
+                metric: false
+            },
+            circle: {
+                shapeOptions: {
+                    color: '#662d91'
+                }
+            }
+        },
+        edit: {
+            featureGroup: drawnItems
+        }
+    });
+    map.addControl(drawControl);
+
+    map.on('draw:created', function (e) {
+        var type = e.layerType,
+                layer = e.layer;
+        alert(e.shapeOptions.size);
+        if (type === 'marker') {
+            layer.bindPopup('A popup!');
+        }
+
+        drawnItems.addLayer(layer);
+    });
+
+</script>
+</body>
+</html>

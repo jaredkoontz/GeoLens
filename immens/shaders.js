@@ -1,14 +1,14 @@
 var Shaders = Backbone.Model.extend({
-	/**
-	 * @memberOf Shaders
-	 */
-	
-},{
-	/**
-	 * @memberOf Shaders
-	 */
-	getRenderShader_4Byte : function(gl) {							
-		var str =  "precision highp float;							\
+    /**
+     * @memberOf Shaders
+     */
+
+}, {
+    /**
+     * @memberOf Shaders
+     */
+    getRenderShader_4Byte: function (gl) {
+        var str = "precision highp float;							\
 			uniform highp sampler2D u_data;					\
 			uniform highp float u_texw, u_texh;						\
             uniform highp float u_localMax, u_globalMax, u_bufferMax, u_avgPix, u_bufferMin;            \
@@ -130,22 +130,22 @@ var Shaders = Backbone.Model.extend({
 					gl_FragColor =  getColorYellowRed((xBin + u_xLoc)/u_texw , (yBin + u_yLoc)/u_texh);	\
 				}											\
 			}																	\
-			";	
+			";
 //		if ( x == u_containerPos[0] + u_visTileWd - 1.0 || y == u_containerPos[1] + u_visTileHt - 1.0 ) {\
 //			gl_FragColor = vec4( 0.0, 1.0, 1.0, 1.0);				\
 //			return;			\
 //		}					\
-		
-		var shader = gl.createShader(gl.FRAGMENT_SHADER);
-		gl.shaderSource(shader, str);
-		gl.compileShader(shader);
-		if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == 0)
-		  alert(gl.getShaderInfoLog(shader));
-		return shader;
-	},
 
-	getQueryShader3D_4Bytes : function(gl){
-		var str =  "precision highp float;							\
+        var shader = gl.createShader(gl.FRAGMENT_SHADER);
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+        if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == 0)
+            alert(gl.getShaderInfoLog(shader));
+        return shader;
+    },
+
+    getQueryShader3D_4Bytes: function (gl) {
+        var str = "precision highp float;							\
 					uniform highp float u_numTiles;							\
 					uniform highp sampler2D u_data0, u_data1, u_data2, u_data3;					\
 					uniform highp vec2 u_cols;						\
@@ -281,17 +281,17 @@ var Shaders = Backbone.Model.extend({
 						gl_FragColor = vec4(r/255.0,g/255.0,b/255.0,a/255.0);		\
 					}													\
 					";
-		var shader = gl.createShader(gl.FRAGMENT_SHADER);
-		gl.shaderSource(shader, str);
-		gl.compileShader(shader);
-		if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == 0)
-		  alert(gl.getShaderInfoLog(shader));
-		return shader;
-	},
-	
-	
-	getQueryShader3D_2Bytes : function(gl) {
-		var str =  "precision highp float;							\
+        var shader = gl.createShader(gl.FRAGMENT_SHADER);
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+        if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == 0)
+            alert(gl.getShaderInfoLog(shader));
+        return shader;
+    },
+
+
+    getQueryShader3D_2Bytes: function (gl) {
+        var str = "precision highp float;							\
 			uniform highp float u_numTiles;							\
 			uniform highp sampler2D u_data0, u_data1, u_data2, u_data3, u_data4, u_data5;					\
 			uniform highp vec2 u_cols;						\
@@ -426,20 +426,20 @@ var Shaders = Backbone.Model.extend({
 				gl_FragColor = vec4(p1/255.0, p2/255.0, p3/255.0, p4/255.0);		\
 			}													\
 			";
-			var shader = gl.createShader(gl.FRAGMENT_SHADER);
-			gl.shaderSource(shader, str);
-			gl.compileShader(shader);
-			if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == 0)
-			  alert(gl.getShaderInfoLog(shader));
-			return shader;
-	},
-	//(v.g - 128.0/255.0) * 256.0 +  v.r : (v.a - 128.0/255.0) * 256.0 + v.b 
-	//v.g * 256.0 +  v.r : v.a * 256.0 + v.b
-	
-	//when write results to FBO, use all 4 channels in the order of a b g r
-	//u_maxCnt is useless for now
-	getQueryShader3D_1Byte : function(gl) {
-		var str =  "precision highp float;							\
+        var shader = gl.createShader(gl.FRAGMENT_SHADER);
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+        if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == 0)
+            alert(gl.getShaderInfoLog(shader));
+        return shader;
+    },
+    //(v.g - 128.0/255.0) * 256.0 +  v.r : (v.a - 128.0/255.0) * 256.0 + v.b
+    //v.g * 256.0 +  v.r : v.a * 256.0 + v.b
+
+    //when write results to FBO, use all 4 channels in the order of a b g r
+    //u_maxCnt is useless for now
+    getQueryShader3D_1Byte: function (gl) {
+        var str = "precision highp float;							\
 					uniform highp float u_numTiles;							\
 					uniform highp sampler2D u_data0, u_data1, u_data2, u_data3;					\
 					uniform highp vec2 u_cols;						\
@@ -574,26 +574,26 @@ var Shaders = Backbone.Model.extend({
 						gl_FragColor = vec4(p1/255.0, p2/255.0, p3/255.0, p4/255.0);		\
 					}													\
 					";
-		var shader = gl.createShader(gl.FRAGMENT_SHADER);
-		gl.shaderSource(shader, str);
-		gl.compileShader(shader);
-		if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == 0)
-		  alert(gl.getShaderInfoLog(shader));
-		return shader;
-	},
-	
-	getVertexShader : function(gl) {
-		var str =  "attribute vec2 a_position; 				\
+        var shader = gl.createShader(gl.FRAGMENT_SHADER);
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+        if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == 0)
+            alert(gl.getShaderInfoLog(shader));
+        return shader;
+    },
+
+    getVertexShader: function (gl) {
+        var str = "attribute vec2 a_position; 				\
 			void main() {									\
 			  gl_Position = vec4(a_position, 0, 1);			\
 			}";
 
-		var shader = gl.createShader(gl.VERTEX_SHADER);
-		gl.shaderSource(shader, str);
-		gl.compileShader(shader);
-		if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == 0)
-		  alert(gl.getShaderInfoLog(shader));
-		return shader;
-	}
-	
+        var shader = gl.createShader(gl.VERTEX_SHADER);
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+        if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) == 0)
+            alert(gl.getShaderInfoLog(shader));
+        return shader;
+    }
+
 });
