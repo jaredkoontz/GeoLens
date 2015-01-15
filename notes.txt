@@ -9,6 +9,8 @@ http://www.d3noob.org/2014/01/using-leafletdraw-plugin-for-leafletjs.html
 https://leanpub.com/leaflet-tips-and-tricks/read
 http://stackoverflow.com/questions/15775103/leaflet-draw-mapping-how-to-initiate-the-draw-function-without-toolbar
 
+https://leanpub.com/leaflet-tips-and-tricks/read
+
 
 todo make column to left of page
 todo icon/logo
