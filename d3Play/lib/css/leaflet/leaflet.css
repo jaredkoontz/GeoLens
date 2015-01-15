@@ -288,6 +288,7 @@
     cursor: default;
     background-color: #f4f4f4;
     color: #bbb;
+    /*todo here for color change*/
 }
 
 .leaflet-touch .leaflet-bar a {

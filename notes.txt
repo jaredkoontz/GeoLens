@@ -15,3 +15,7 @@ todo icon/logo
 
 todo make sprite sheet smaller
 todo find a new map from leaflet
+
+todo find out what square or polygon lat lon points are
+
+todo create json for geolens structure.
