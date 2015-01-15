@@ -313,13 +313,13 @@ var BinnedPlots = Backbone.Model.extend({
         var bgProc = new WebGLProcessor({
             gl: this.get("bgCtxt"),
             binnedPlots: this,
-            isBg: true,
+            isBg: true
         });
 
         var fgProc = new WebGLProcessor({
             gl: this.get("fgCtxt"),
             binnedPlots: this,
-            isBg: false,
+            isBg: false
         });
 
         this.set({
@@ -356,5 +356,5 @@ var BinnedPlots = Backbone.Model.extend({
     //R_MINOR: 6356752.3142,
     //R_MAJOR: 6378137,
     CloudmadeUrl: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/72337/256/{z}/{x}/{y}.png',
-    CloudmadeAttribution: 'Map data &copy; OpenStreetMap contributors, Imagery &copy; CloudMade',
+    CloudmadeAttribution: 'Map data &copy; OpenStreetMap contributors, Imagery &copy; CloudMade'
 });

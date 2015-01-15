@@ -1,0 +1,45 @@
+body {
+/*need to check*/
+    min-width: 800px;
+    height: 100%;
+}
+html {
+    height: 100%;
+}
+
+
+#map {
+    display: inline-block;
+    width: 50%;
+    min-width:300px;
+    height: 50%;
+    background: #fff;
+}
+
+#hist{
+    display: inline-block;
+    width:20%;
+    height: 50%;
+    background: #000aaa;
+}
+
+.bar rect {
+    fill: steelblue;
+    shape-rendering: crispEdges;
+}
+
+.bar text {
+    fill: #fff;
+}
+
+.axis {
+    font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
