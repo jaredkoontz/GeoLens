@@ -1,66 +1,145 @@
-// Generate a Bates distribution of 10 random variables.
-var values = d3.range(1000).map(d3.random.bates(10));
+var barData = [
+    {'x': 1, 'y': 5},
+    {'x': 20, 'y': 20},
+    {'x': 40, 'y': 10},
+    {'x': 60, 'y': 40},
+    {'x': 80, 'y': 5},
+    {'x': 100, 'y': 60}
+];
 
-// A formatter for counts.
-var formatCount = d3.format(",.0f");
+var vis = d3.select('#visualisation'),
+    WIDTH = 1000,
+    HEIGHT = 500,
+    MARGINS = {
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 50
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+        return d.x;
+    })),
 
-var margin = {top: 10, right: 30, bottom: 30, left: 30},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
 
-var x = d3.scale.linear()
-    .domain([0, 1])
-    .range([0, width]);
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+        d3.max(barData, function (d) {
+            return d.y;
+        })
+    ]),
 
-// Generate a histogram using twenty uniformly-spaced bins.
-var data = d3.layout.histogram()
-    .bins(x.ticks(20))
-(values);
+    xAxis = d3.svg.axis()
+        .scale(xRange)
+        .tickSize(5)
+        .tickSubdivide(true),
 
-var y = d3.scale.linear()
-    .domain([0, d3.max(data, function (d) {
-        return d.y;
-    })])
-    .range([height, 0]);
+    yAxis = d3.svg.axis()
+        .scale(yRange)
+        .tickSize(5)
+        .orient("left")
+        .tickSubdivide(true);
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
 
-var svg = d3.select("hist").append("svg")
-    .attr("width")
-    .attr("height")
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-var bar = svg.selectAll(".bar")
-    .data(data)
-    .enter().append("g")
-    .attr("class", "bar")
-    .attr("transform", function (d) {
-        return "translate(" + x(d.x) + "," + y(d.y) + ")";
-    });
-
-bar.append("rect")
-    .attr("x", 1)
-    .attr("width", x(data[0].dx) - 1)
-    .attr("height", function (d) {
-        return height - y(d.y);
-    });
-
-bar.append("text")
-    .attr("dy", ".75em")
-    .attr("y", 6)
-    .attr("x", x(data[0].dx) / 2)
-    .attr("text-anchor", "middle")
-    .text(function (d) {
-        return formatCount(d.y);
-    });
-
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
     .call(xAxis);
+
+vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function (d) {
+        return xRange(d.x);
+    })
+    .attr('y', function (d) {
+        return yRange(d.y);
+    })
+    .attr('width', xRange.rangeBand())
+    .attr('height', function (d) {
+        return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+    })
+    .attr('fill', 'grey')
+    .on('mouseover', function (d) {
+        d3.select(this)
+            .attr('fill', 'blue');
+    })
+    .on('mouseout', function (d) {
+        d3.select(this)
+            .attr('fill', 'grey');
+    });
+
+
+
+
+//
+//// Generate a Bates distribution of 10 random variables.
+//var values = d3.range(1000).map(d3.random.bates(10));
+//
+//// A formatter for counts.
+//var formatCount = d3.format(",.0f");
+//
+//var margin = {top: 10, right: 30, bottom: 30, left: 30},
+//    width = 960 - margin.left - margin.right,
+//    height = 500 - margin.top - margin.bottom;
+//
+//var x = d3.scale.linear()
+//    .domain([0, 1])
+//    .range([0, width]);
+//
+//// Generate a histogram using twenty uniformly-spaced bins.
+//var data = d3.layout.histogram()
+//    .bins(x.ticks(20))
+//(values);
+//
+//var y = d3.scale.linear()
+//    .domain([0, d3.max(data, function (d) {
+//        return d.y;
+//    })])
+//    .range([height, 0]);
+//
+//var xAxis = d3.svg.axis()
+//    .scale(x)
+//    .orient("bottom");
+//
+//var svg = d3.select("body").append("svg")
+//    .attr("width")
+//    .attr("height")
+//    .append("g")
+//    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+//
+//var bar = svg.selectAll(".bar")
+//    .data(data)
+//    .enter().append("g")
+//    .attr("class", "bar")
+//    .attr("transform", function (d) {
+//        return "translate(" + x(d.x) + "," + y(d.y) + ")";
+//    });
+//
+//bar.append("rect")
+//    .attr("x", 1)
+//    .attr("width", x(data[0].dx) - 1)
+//    .attr("height", function (d) {
+//        return height - y(d.y);
+//    });
+//
+//bar.append("text")
+//    .attr("dy", ".75em")
+//    .attr("y", 6)
+//    .attr("x", x(data[0].dx) / 2)
+//    .attr("text-anchor", "middle")
+//    .text(function (d) {
+//        return formatCount(d.y);
+//    });
+//
+//svg.append("g")
+//    .attr("class", "x axis")
+//    .attr("transform", "translate(0," + height + ")")
+//    .call(xAxis);
 
 //begin immens
 

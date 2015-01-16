@@ -24,7 +24,13 @@ var drawControl = new L.Control.Draw({
             shapeOptions: {
                 color: '#8A2BE2'
             },
-            showArea: true
+            showArea: false
+        },
+        rectangle: {
+            title: 'Draw a rectangle',
+            shapeOptions: {
+                color: '#8A2BE2'
+            }
         },
         //remove unsed icons
         polyline: false,
@@ -48,4 +54,9 @@ map.on('draw:created', function (e) {
     }
 
     drawnItems.addLayer(layer);
+
+    var type = e.layerType,
+        layer = e.layer;
+    console.log(layer.getLatLngs());
 });
+

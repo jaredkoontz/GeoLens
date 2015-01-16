@@ -21,3 +21,11 @@ todo find a new map from leaflet
 todo find out what square or polygon lat lon points are
 
 todo create json for geolens structure.
+
+todo make poly buttons grey after drawing query
+
+todo put hist on map because it is easier on mobile?
+
+todo change to black map
+
+--hard to do
