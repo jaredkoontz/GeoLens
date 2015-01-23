@@ -1,0 +1,43 @@
+body {
+    min-width: 800px;
+    height: 100%;
+    overflow: hidden;
+    margin: 1em;
+    /* overflow-y: scroll; */
+    color: #f0f0f0;
+    background-color: #282828;
+}
+
+html {
+    height: 100%;
+}
+
+#map {
+    display: block;
+    position: inherit !important;
+    margin: auto;
+    width: 100%;
+    min-width: 300px;
+    height: 100%;
+}
+
+#histPanel {
+    float: right;
+    position: relative;
+    height: 95%;
+    width: 10%;
+    z-index:1000; /*on top of everything*/
+    background-color: #000;
+    margin-bottom: 10px;
+}
+
+#histogramVis {
+
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #fff; /*line color*/
+    shape-rendering: crispEdges;
+}
+

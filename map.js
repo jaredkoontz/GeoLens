@@ -1,11 +1,18 @@
 var centralLocation = [40.573436, -105.086547];
-var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}),
+var maxZoom = 18;
+var currentZoom = 5;
+
+
+//var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+//osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+//osm = L.tileLayer(osmUrl, {maxZoom: maxZoom, attribution: osmAttrib}),
+var tileUrl = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+    attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+    tileLayer = L.tileLayer(tileUrl, {maxZoom: maxZoom, attribution: attribution}),
     map = new L.Map('map', {
-        layers: [osm],
+        layers: [tileLayer],
         center: new L.LatLng(centralLocation[0], centralLocation[1]),
-        zoom: 10
+        zoom: currentZoom
     });
 
 var drawnItems = new L.FeatureGroup();
@@ -34,7 +41,7 @@ var drawControl = new L.Control.Draw({
         },
         //remove unsed icons
         polyline: false,
-        circle: false,
+        circle: false, //todo add circle back
         marker: false
     },
     edit: {

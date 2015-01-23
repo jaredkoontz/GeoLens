@@ -5,40 +5,24 @@
     <!-- leaflet -->
     <link rel="stylesheet" href="lib/js/leaflet.draw.css">
     <link rel="stylesheet" href="lib/js/leaflet.css">
-    <link rel="stylesheet" href="css/geolens.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <style type="text/css"></style>
     <script src="lib/js/d3.min.js"></script>
 
     <script src="lib/js/leaflet.js"></script>
     <script src="lib/js/leaflet.draw-src.js"></script>
-
-    <!-- immens binned plots -->
-    <script src="immens/underscore-min.js"></script>
-    <script src="immens/backbone-min.js"></script>
-    <script src="immens/dataManager.js"></script>
-    <script src="immens/binnedPlots.js"></script>
-    <script src="immens/spec/visSpec.js"></script>
-    <script src="immens/dataUtil.js"></script>
-    <script src="immens/spec/dimInfo.js"></script>
-    <script src="immens/spec/visualTile.js"></script>
-    <script src="immens/spec/visSpec.js"></script>
-    <script src="immens/spec/imMensEvent.js"></script>
-    <script src="immens/networker.js"></script>
-    <script src="immens/tileLoader.js"></script>
-    <script src="immens/actionManager.js"></script>
-    <script src="immens/shaders.js"></script>
-    <script src="immens/WebGLProcessor.js"></script>
-    <script src="immens/WebGLRenderer.js"></script>
-    <script src="immens/binnedPlots.js"></script>
-    <script src="immens/visManager.js"></script>
-
 </head>
 <body>
+<div id="histPanel">
+    Histograms
+    <div id ="hists">
+        <svg id="histogramVis"></svg>
+        <script src="hist.js"></script>
+    </div>
+</div>
 <div id="map">
     <script src="map.js"></script>
-</div>
-<div id="hist"><svg id="visualisation"></svg><script src="hist.js"></script>
 </div>
 </body>
 </html>
