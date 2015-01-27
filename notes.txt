@@ -2,8 +2,6 @@ javascript minify command line
 
 
 http://leafletjs.com/examples/choropleth.html
-
-
 http://stackoverflow.com/questions/15775103/leaflet-draw-mapping-how-to-initiate-the-draw-function-without-toolbar
 http://www.d3noob.org/2014/01/using-leafletdraw-plugin-for-leafletjs.html
 https://leanpub.com/leaflet-tips-and-tricks/read
@@ -13,13 +11,7 @@ https://leanpub.com/leaflet-tips-and-tricks/read
 
 
 todo icon/logo
-todo make sprite sheet smaller
 todo make poly buttons grey after drawing query
-todo put hist on map because it is easier on mobile?
-
---hard to do
-
-
 
 ---------------
 
