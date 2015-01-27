@@ -12,20 +12,22 @@ http://stackoverflow.com/questions/15775103/leaflet-draw-mapping-how-to-initiate
 https://leanpub.com/leaflet-tips-and-tricks/read
 
 
-todo make column to left of page
 todo icon/logo
-
 todo make sprite sheet smaller
-todo find a new map from leaflet
-
-todo find out what square or polygon lat lon points are
-
-todo create json for geolens structure.
-
 todo make poly buttons grey after drawing query
-
 todo put hist on map because it is easier on mobile?
 
-todo change to black map
-
 --hard to do
+
+
+
+---------------
+
+
+RoadMap of To do:
+
+-Change functionality of pushing send query to actually send query
+-Make map still work when histograms are still on them? Could do state machine.
+-Make server code use json
+-Make server repository on github (this involves combinging code into my own galileo dir)
+-check browser types
