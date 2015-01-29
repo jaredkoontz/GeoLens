@@ -1,0 +1,106 @@
+<html>
+<head><title></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" href="assets/css/bootstrap.css"/>
+  <link rel="stylesheet" href="assets/css/bootstrap-tour.css"/>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <link rel="stylesheet" href="d3.parsets.css"/>
+  <link type="text/css" href="lib/ui-lightness/jquery-ui-1.8.21.custom.css" rel="stylesheet" />
+  <script src="lib/jquery-1.7.2.min.js"></script>
+  <script src="lib/jquery.mousewheel.js"></script>
+  <script src="lib/jquery-ui-1.8.21.custom.js"></script>
+  <script src="lib/d3.js"></script>
+  <script src="lux.js"></script>
+  <script src="assets/js/bootstrap.js"></script>
+  <script src="assets/js/bootstrap-tour.js"></script>
+  <script src="assets/js/jquery.cookie.js"></script>
+  <script src="histogram.js"></script>
+  <script src="tile_cache.js"></script>
+  <script src="tiled_pointset.js"></script>
+  <script src="nanocube.js"></script>
+  <script src="nanocube_heatmap.js"></script>
+  <script src="d3.parsets.js"></script>
+  <script src="view.js"></script>
+  <script src="help.js"></script>
+  <script src="view_schemata.js"></script>
+  <script>
+    if (location.hash === '')
+        location.hash = 'twitter';
+    var view_schema = view_schemata[location.hash.substr(1)];
+  </script>
+  <script src="nanocube_view.js"></script>
+  <script src="binned_scatterplot.js"></script>
+  <script src="time_series.js"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41718814-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<style>
+.ui-slider .ui-slider-handle { 
+    width: 18px; 
+    height: 18px;
+}
+
+.slider-div {
+   top: 7px;
+   width: 300px;
+   height: 10px;
+   float: left;
+   clear: left;
+   margin-right: 18px;
+}
+
+.selected-mode {
+   font-weight: 500;
+   color: white;
+}
+
+html {
+   overflow: hidden;
+}
+
+body {
+   color: white;
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+</style>
+</head>
+<body>
+<canvas style="position: absolute; top: 0px; left: 0px" id="webgl" width="640" height="480"></canvas>
+<div style="position: absolute; top: 1em; left: 1em;
+	    background-color: rgba(0,0,0,0.8);
+	    padding:0.5em"><h4 style="text-shadow: 2px 2px 2px #000;"
+	    id="header">Title goes here</h3> <span style="font-size:0.5em">From
+	    the <a href="http://www.research.att.com/infovis">infovis
+    folks at at&amp;t labs research</a></span> <br><span id="more">[<a href="http://www.nanocubes.net/">About
+	    this demo</a>] [<a href="view.html#" id="help">Help</a>]</span></div>
+<div style="position: absolute; bottom:0em; right: 0em" id="vis-panes"></div>
+<div style="position: absolute; top: 0em; right: 0em" id="pan-select">
+  <div class="vis-pane-bg" style="width: 17em">
+    <div id="dragging-mode">Dragging mode: <span style="float: right"> [<a href="view.html#" id="option-pan">Pan</a>] [<a href="view.html#" id="option-select">Select</a>]</span>
+    </div>
+    <div id="heatmap-resolution" style="margin-top:.8em">
+      Heatmap resolution: <span style="float: right">[<a href="view.html#" id="coarser">Coarser</a>] [<a href="view.html#" id="finer">Finer</a>]</span>
+    </div>
+    <div id="colormap" style="margin-top:.5em">
+      Colormap: <span style="float: right">[<a href="view.html#" id="brighter">Brighter</a>] [<a href="view.html#" id="fainter">Fainter</a>]</span>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
+

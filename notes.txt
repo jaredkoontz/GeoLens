@@ -12,6 +12,7 @@ https://leanpub.com/leaflet-tips-and-tricks/read
 
 todo icon/logo
 todo make poly buttons grey after drawing query
+todo image tile cache
 
 ---------------
 

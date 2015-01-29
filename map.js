@@ -7,8 +7,17 @@ var currentZoom = 5;
 //osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 //osm = L.tileLayer(osmUrl, {maxZoom: maxZoom, attribution: osmAttrib}),
 var tileUrl = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-    attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-    tileLayer = L.tileLayer(tileUrl, {maxZoom: maxZoom, attribution: attribution}),
+    tileLayer = L.tileLayer(
+        tileUrl,
+        {
+            //max zoom. How far in we can go.
+            maxZoom: maxZoom,
+            // This map option disables world wrapping. by default, it is false.
+            continuousWorld: false,
+            // This option disables loading tiles outside of the world bounds.
+            noWrap: true
+        }
+    ),
     map = new L.Map('map', {
         layers: [tileLayer],
         center: new L.LatLng(centralLocation[0], centralLocation[1]),
