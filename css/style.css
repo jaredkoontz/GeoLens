@@ -27,12 +27,12 @@ html {
     width: 15%;
     background-color: #000;
     position: absolute;
-    bottom:0;
+    bottom: 0;
     right: 0;
 }
 
-#histogramVis {
-
+#hists {
+    margin: 1em;
 }
 
 .axis path, .axis line {

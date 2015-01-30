@@ -14,38 +14,40 @@ function nanocube_heatmap(opts) {
         point_weight: point_weight,
         point_color: opts.point_color,
         tile_pattern: opts.tile_pattern,
-        construct_node: function(data, zoom, x, y) {
+        construct_node: function (data, zoom, x, y) {
             var node = {
                 id: global_id++,
-                element_count: function() { return this.n_points; },
-                clear_data: function() {
+                element_count: function () {
+                    return this.n_points;
+                },
+                clear_data: function () {
                     delete this.x_buffer;
                     delete this.y_buffer;
                     delete this.count_buffer;
                     delete this.n_points;
                 },
                 // set_attributes should be called pre_draw_visit() or something like that
-                set_attributes: function(is_leaf) {
+                set_attributes: function (is_leaf) {
                     point_offset.set(this.offset);
                     point_x.set(this.x_buffer);
                     point_y.set(this.y_buffer);
                     point_weight.set(this.count_buffer);
                 },
-                update: function(data) {
+                update: function (data) {
                     var x_list = [], y_list = [], count = [],
-                    offset = [];
-                    _.each(data.x, function(x, i) {
-                        x_list.push(x/256, x/256, x/256, x/256, x/256, x/256);
-                        offset.push(0/256, 0/256,
-                                    1/256, 0/256,
-                                    1/256, 1/256,
-                                    0/256, 0/256,
-                                    1/256, 1/256,
-                                    0/256, 1/256);
+                        offset = [];
+                    _.each(data.x, function (x, i) {
+                        x_list.push(x / 256, x / 256, x / 256, x / 256, x / 256, x / 256);
+                        offset.push(0 / 256, 0 / 256,
+                            1 / 256, 0 / 256,
+                            1 / 256, 1 / 256,
+                            0 / 256, 0 / 256,
+                            1 / 256, 1 / 256,
+                            0 / 256, 1 / 256);
                         // offset.push(0,0,0,0,0,0,0,0,0,0,0,0);
                         count.push(data.count[i], data.count[i], data.count[i],
-                                   data.count[i], data.count[i], data.count[i]);
-                        
+                            data.count[i], data.count[i], data.count[i]);
+
                         var y = data.y[i];
 
                         y = y / 256;

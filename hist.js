@@ -7,8 +7,13 @@ var fakeBarData = [
     {'x': "100", 'y': 60}
 ];
 
+var windowHeight = $(document).height(); // returns height of HTML document
+var windowWidth = $(document).width(); // returns width of HTML document
+
+var histPanelWidth = .13 * windowWidth;
+
 var vis = d3.select('#histogramVis'), //could be "next available slot"?
-    width = 150,
+    width = histPanelWidth,
     height = 75,
     margins = {
         top: 5,

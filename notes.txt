@@ -13,14 +13,18 @@ https://leanpub.com/leaflet-tips-and-tricks/read
 todo icon/logo
 todo make poly buttons grey after drawing query
 todo image tile cache
+todo multiple histograms on panel.
 
+
+
+
+todo edit control is actually quite useful
 ---------------
 
 
 RoadMap of To do:
 
 -Change functionality of pushing send query to actually send query
--Make map still work when histograms are still on them? Could do state machine.
 -Make server code use json
 -Make server repository on github (this involves combinging code into my own galileo dir)
 -check browser types

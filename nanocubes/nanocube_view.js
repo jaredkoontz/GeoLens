@@ -15,10 +15,11 @@ function create_nanocube_view(view_schema, nanocube_selection) {
             var to = nanocube.to_tbin(ts.range[1]);
             var step = Math.max(1, ~~((to - from) / ts.resolution));
             if (d.length) {
-                ts.new_data(_.map(d[0].values, function(count, i) {
-                    return { time: nanocube.from_tbin(i * step + from),
-                             count: count
-                           };
+                ts.new_data(_.map(d[0].values, function (count, i) {
+                    return {
+                        time: nanocube.from_tbin(i * step + from),
+                        count: count
+                    };
                 }));
             } else {
                 ts.new_data([]);
@@ -49,14 +50,15 @@ function create_nanocube_view(view_schema, nanocube_selection) {
 
         function update_selection(selection) {
             if (_.isUndefined(selection)) {
-                nanocube_selection 
+                nanocube_selection
                     .update_when(undefined)
                     .refresh();
             } else {
-                nanocube_selection 
-                    .update_when({ from: nanocube.to_tbin(selection[0]),
-                                   to: nanocube.to_tbin(selection[1])
-                                 })
+                nanocube_selection
+                    .update_when({
+                        from: nanocube.to_tbin(selection[0]),
+                        to: nanocube.to_tbin(selection[1])
+                    })
                     .refresh();
             }
         }
@@ -69,7 +71,7 @@ function create_nanocube_view(view_schema, nanocube_selection) {
     function create_binned_scatterplot_view(parent, spec) {
         var bs = binned_scatterplot(parent, spec);
         nanocube_selection.category(
-            [spec.field_x.name, spec.field_y.name], function(d) {
+            [spec.field_x.name, spec.field_y.name], function (d) {
                 bs.new_data(d);
             });
     }
@@ -82,10 +84,10 @@ function create_nanocube_view(view_schema, nanocube_selection) {
         var selected_count = div.append("span");
         div.append("span").text(" of ");
         var total_count = div.append("span");
-        nanocube.all({}, function(data) {
+        nanocube.all({}, function (data) {
             total_count.text(fmt(data[0].values[0]));
         });
-        nanocube_selection.all(function(data) {
+        nanocube_selection.all(function (data) {
             if (data.length === 0)
                 selected_count.text("0");
             else
@@ -97,7 +99,9 @@ function create_nanocube_view(view_schema, nanocube_selection) {
         var schema_fields = spec.fields;
         var parsets = d3.parsets()
             .dimensions(schema_fields)
-            .value(function(d) { return d.values[0]; })
+            .value(function (d) {
+                return d.values[0];
+            })
             .width(300)
             .height(spec.height);
         var parsets_div = parent
@@ -106,8 +110,8 @@ function create_nanocube_view(view_schema, nanocube_selection) {
             .attr("style", "background-color: white")
             .append("svg")
             .attr("width", parsets.width())
-            .attr("height",parsets.height());
-        nanocube_selection.category(schema_fields, function(data) {
+            .attr("height", parsets.height());
+        nanocube_selection.category(schema_fields, function (data) {
             parsets_div.datum(data).call(parsets);
         });
     }
@@ -123,14 +127,16 @@ function create_nanocube_view(view_schema, nanocube_selection) {
             height: spec.height,
             border: spec.border
         });
-        histogram.on("select", function(selected_fields) {
+        histogram.on("select", function (selected_fields) {
             nanocube_selection
                 .update_where(field.name, selected_fields)
                 .refresh();
         });
         nanocube_selection.category(
             [field.name],
-            function(data) { histogram.new_data(data); }
+            function (data) {
+                histogram.new_data(data);
+            }
         );
     }
 
@@ -142,7 +148,7 @@ function create_nanocube_view(view_schema, nanocube_selection) {
         "time-series": create_timeseries_view
     };
 
-    _.each(view_schema.views, function(view) {
+    _.each(view_schema.views, function (view) {
         dispatch[view.type](d3.select(view_schema.parent_div), view);
     });
 };

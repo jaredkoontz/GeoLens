@@ -2,10 +2,6 @@ var centralLocation = [40.573436, -105.086547];
 var maxZoom = 18;
 var currentZoom = 5;
 
-
-//var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-//osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-//osm = L.tileLayer(osmUrl, {maxZoom: maxZoom, attribution: osmAttrib}),
 var tileUrl = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
     tileLayer = L.tileLayer(
         tileUrl,
@@ -21,6 +17,7 @@ var tileUrl = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
     map = new L.Map('map', {
         layers: [tileLayer],
         center: new L.LatLng(centralLocation[0], centralLocation[1]),
+        attributionControl: false,
         zoom: currentZoom
     });
 
@@ -31,7 +28,7 @@ var drawControl = new L.Control.Draw({
     draw: {
         position: 'topleft',
         polygon: {
-            title: 'Draw a polygon!',
+            title: 'Draw a polygon',
             allowIntersection: false,
             drawError: {
                 color: '#FF0000',
@@ -63,16 +60,9 @@ map.addControl(drawControl);
 map.on('draw:created', function (e) {
     var type = e.layerType,
         layer = e.layer;
-    //alert(e.shapeOptions.size);
-
-    if (type === 'marker') {
-        layer.bindPopup('A popup!');
-    }
-
+    setLatLonValuesAndType(layer.getLatLngs(),type);
     drawnItems.addLayer(layer);
 
-    var type = e.layerType,
-        layer = e.layer;
-    console.log(layer.getLatLngs());
+    //todo fire runners to dim poly buttons
 });
 
