@@ -57,9 +57,9 @@ var drawControl = new L.Control.Draw({
 });
 map.addControl(drawControl);
 
-//randomRectangles();
+randomRectangles();
 
-d3rects();
+//d3rects();
 
 map.on('draw:created', function (e) {
     var type = e.layerType,
