@@ -23,6 +23,5 @@ var tileUrl = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
 
 
 addLeafletDrawPanel();
-
-randomRectangles();
 d3rects();
+//randomRectangles();

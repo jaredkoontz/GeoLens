@@ -1,92 +1,4 @@
 function d3rects() {
-    //var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-    //    g = svg.append("g").attr("class", "leaflet-zoom-hide");
-    //
-    //d3.json("json/recGeo.json", function (geoShape) {
-    //
-    //    //  create a d3.geo.path to convert GeoJSON to SVG
-    //    var transform = d3.geo.transform({point: projectPoint}),
-    //        path = d3.geo.path().projection(transform);
-    //
-    //    // create path elements for each of the features
-    //    d3_features = g.selectAll("path")
-    //        .data(geoShape.features)
-    //        .enter().append("path");
-    //
-    //    map.on("viewreset", reset);
-    //
-    //    reset();
-    //
-    //    // fit the SVG element to leaflet's map layer
-    //    function reset() {
-    //
-    //        bounds = path.bounds(geoShape);
-    //
-    //        var topLeft = bounds[0],
-    //            bottomRight = bounds[1];
-    //
-    //        svg.attr("width", bottomRight[0] - topLeft[0])
-    //            .attr("height", bottomRight[1] - topLeft[1])
-    //            .style("left", topLeft[0] + "px")
-    //            .style("top", topLeft[1] + "px");
-    //
-    //        g.attr("transform", "translate(" + -topLeft[0] + ","
-    //        + -topLeft[1] + ")");
-    //
-    //        // initialize the path data
-    //        d3_features.attr("d", path)
-    //            .style("fill-opacity", 0.7)
-    //            .attr('fill', 'blue');
-    //    }
-    //
-    //    // Use Leaflet to implement a D3 geometric transformation.
-    //    function projectPoint(x, y) {
-    //        var point = map.latLngToLayerPoint(new L.LatLng(y, x));
-    //        this.stream.point(point.x, point.y);
-    //    }
-    //
-    //});
-
-
-    //2 circles
-    //
-    //Initialize the SVG layer
-    //map._initPathRoot();
-    //
-    //// We pick up the SVG from the map object
-    //var svg = d3.select("#map").select("svg"),
-    //    g = svg.append("g");
-    //
-    //d3.json("json/circles.json", function(collection) {
-    //    // Add a LatLng object to each item in the dataset
-    //    collection.objects.forEach(function(d) {
-    //        d.LatLng = new L.LatLng(d.circle.coordinates[0],
-    //            d.circle.coordinates[1])
-    //    });
-    //
-    //    var feature = g.selectAll("circle")
-    //        .data(collection.objects)
-    //        .enter().append("circle")
-    //        .style("stroke", "black")
-    //        .style("opacity", .6)
-    //        .style("fill", "red")
-    //        .attr("r", 20);
-    //
-    //    map.on("viewreset", update);
-    //    update();
-    //
-    //    function update() {
-    //        feature.attr("transform",
-    //            function(d) {
-    //                return "translate("+
-    //                    map.latLngToLayerPoint(d.LatLng).x +","+
-    //                    map.latLngToLayerPoint(d.LatLng).y +")";
-    //            }
-    //        )
-    //    }
-    //});
-
-
     //3 rectangles
     map._initPathRoot();
 
@@ -109,42 +21,50 @@ function d3rects() {
             .style("stroke", "white")
             .style("opacity", .6)
             .style("fill", "red");
-        
+
+        feature.on("mouseover", function (d) {
+            d3.select(this).style("fill", "white");
+        });
+
+        feature.on("mouseout", function (d) {
+            d3.select(this).style("fill", "red");
+        });
+
         map.on("viewreset", update);
         update();
 
         function update() {
-            feature.attr("x",function(d) {
-                var bounds = d.LatLngBounds;
-                var southwest = bounds.getSouthWest();
-                var latln1 = [southwest.lat, southwest.lng];
-                return map.latLngToLayerPoint(latln1).x}
-            );
-            feature.attr("y",function(d) {
-                var bounds = d.LatLngBounds;
-                var southwest = bounds.getSouthWest();
-                var latln1 = [southwest.lat, southwest.lng];
-                return map.latLngToLayerPoint(latln1).y}
-            );
-            feature.attr("width",function(d) {
+
+            feature.attr("x", function (d) {
                     var bounds = d.LatLngBounds;
-                    var topLeft = bounds.getNorthEast(),
-                        southwest = bounds.getSouthWest();
-                    var latln1 = [southwest.lat, southwest.lng];
-                    var latln2 = [topLeft.lat, topLeft.lng];
-                return map.latLngToLayerPoint(latln2).x - map.latLngToLayerPoint(latln1).x;
-            });
-            feature.attr("height",function(d) {
+                    var southwest = bounds.getSouthWest();
+                    var bottomRight = [southwest.lat, southwest.lng];
+                    return map.latLngToLayerPoint(bottomRight).x
+                }
+            );
+            feature.attr("y", function (d) {
+                    var bounds = d.LatLngBounds;
+                    var northeast = bounds.getNorthEast();
+                    var topLeft = [northeast.lat, northeast.lng];
+                    return map.latLngToLayerPoint(topLeft).y
+                }
+            );
+            feature.attr("width", function (d) {
                 var bounds = d.LatLngBounds;
-                var topLeft = bounds.getNorthEast(),
+                var northeast = bounds.getNorthEast(),
                     southwest = bounds.getSouthWest();
-                var latln1 = [southwest.lat, southwest.lng];
-                var latln2 = [topLeft.lat, topLeft.lng];
-                return map.latLngToLayerPoint(latln1).y - map.latLngToLayerPoint(latln2).y;
+                var bottomRight = [southwest.lat, southwest.lng];
+                var topLeft = [northeast.lat, northeast.lng];
+                return map.latLngToLayerPoint(topLeft).x - map.latLngToLayerPoint(bottomRight).x;
             });
-
-
-
+            feature.attr("height", function (d) {
+                var bounds = d.LatLngBounds;
+                var northeast = bounds.getNorthEast(),
+                    southwest = bounds.getSouthWest();
+                var bottomRight = [southwest.lat, southwest.lng];
+                var topLeft = [northeast.lat, northeast.lng];
+                return map.latLngToLayerPoint(bottomRight).y - map.latLngToLayerPoint(topLeft).y;
+            });
         }
     })
 }
@@ -155,9 +75,9 @@ function randomRectangles() {
 
     var recs = [
         [[39.7265625, -106.171875], [39.55078125, -105.8203125]],
-        [[39.7265625, -105.8203125], [39.55078125, -105.46875]]
-        //[[39.90234375, -106.171875], [39.7265625, -105.8203125]],
-        //[[40.078125, -106.171875], [39.90234375, -105.8203125]],
+        [[39.7265625, -105.8203125], [39.55078125, -105.46875]],
+        [[39.90234375, -106.171875], [39.7265625, -105.8203125]],
+        [[40.078125, -106.171875], [39.90234375, -105.8203125]]
         //[[39.90234375, -105.8203125], [39.7265625, -105.46875]],
         //[[40.078125, -105.8203125], [39.90234375, -105.46875]],
         //[[40.25390625, -106.171875], [40.078125, -105.8203125]],
@@ -217,9 +137,9 @@ function randomRectangles() {
         var bounds = [recs[i]];
 
         var properties = {
-            color: "#ff7800",
-            weight: .5,
-            opacity: .5
+            color: "#fff",
+            weight: 1,
+            opacity: 0
 
         };
 

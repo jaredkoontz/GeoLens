@@ -1,4 +1,3 @@
-
 function addLeafletDrawPanel() {
     var drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
