@@ -10,12 +10,16 @@ http://stackoverflow.com/questions/15775103/leaflet-draw-mapping-how-to-initiate
 https://leanpub.com/leaflet-tips-and-tricks/read
 
 
-todo icon/logo
+//leaflet drawing
+http://www.d3noob.org/2014/01/using-leafletdraw-plugin-for-leafletjs.html
+
+todo make map not black
 todo make poly buttons grey after drawing query
+todo d3 rectangles?
+--
 todo image tile cache
 todo multiple histograms on panel.
 todo edit control is actually quite useful
-
 
 ---------------
 
