@@ -1,7 +1,7 @@
 {
   "geolens": [
     {
-      "rectangles": [
+      "geohashRecs": [
         {
           "rectangle": {
             "coordinates": [
@@ -61,7 +61,7 @@
       ]
     },
     {
-      "barData": [
+      "histograms": [
         {
           "x": "1",
           "y": 5
