@@ -1,32 +1,36 @@
-javascript minify command line
 
 
-http://leafletjs.com/examples/choropleth.html
-http://stackoverflow.com/questions/15775103/leaflet-draw-mapping-how-to-initiate-the-draw-function-without-toolbar
-http://www.d3noob.org/2014/01/using-leafletdraw-plugin-for-leafletjs.html
-https://leanpub.com/leaflet-tips-and-tricks/read
-http://stackoverflow.com/questions/15775103/leaflet-draw-mapping-how-to-initiate-the-draw-function-without-toolbar
-
-https://leanpub.com/leaflet-tips-and-tricks/read
-
-
-//leaflet drawing
-http://www.d3noob.org/2014/01/using-leafletdraw-plugin-for-leafletjs.html
-
+---------------
 todo make poly buttons grey after drawing query
---
 todo image tile cache
 todo multiple histograms on panel.
 todo edit control is actually quite useful
-
+todo minify javascript
 ---------------
 
 
 RoadMap of To do:
--rectangles on map
 -rectangles mapped with histograms
 -Make server code use json
 -Make server repository on github (this involves combinging code into my own galileo dir)
 -check browser types
 
-http://www.d3noob.org/2014/03/leafletjs-map-with-d3js-objects-that.html
+
+
+Thoughts
+hard code wanted features
+what to do about wanted time frame of query? hardcode?
+
+make histograms vertical?
+
+json structure
+-root
+  -geohashRectangleCoords
+  -Yearhists?
+    -monthhists
+      -dayhists
+
+Where to put values?
+  each level?
+  at day and sum up?
+    probably want to sum up at each level.

@@ -6,15 +6,12 @@ function drawHistograms(histData) {
     console.log(histData.histograms);
 
     data = histData.histograms;
-    
+
     var vis = d3.select('#histogramVis'), //could be "next available slot"?
         width = histPanelWidth,
         height = 75,
         margins = {
-            top: 5,
-            right: 5,
-            bottom: 5,
-            left: 5
+            top: 5, right: 5, bottom: 5, left: 5
         },
         xRange = d3.scale.ordinal().rangeRoundBands([margins.left, width - margins.right], 0.1).domain(data.map(function (d) {
             return d.x;
@@ -65,6 +62,7 @@ function drawHistograms(histData) {
         })
         .attr('fill', 'grey')
         .on('mouseover', function (d) {
+            console.log(d);
             d3.select(this)
                 .attr('fill', 'blue');
         })
