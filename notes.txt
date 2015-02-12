@@ -34,3 +34,11 @@ Where to put values?
   each level?
   at day and sum up?
     probably want to sum up at each level.
+
+
+
+
+--bin on time dimension
+    put all jan in one
+    put all feb in one
+
