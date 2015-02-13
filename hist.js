@@ -1,4 +1,4 @@
-function drawHistogram(histData,depth) {
+function drawHistogram(histData,depth,title) {
     var newHist = "histogramVis"+depth;
 
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -15,17 +15,13 @@ function drawHistogram(histData,depth) {
     var histPanelWidth = .13 * windowWidth; //current panel is 15% of page, so the width of the hist of .13 got 1% padding
 
     console.log(histData.histograms);
-    console.log(histHeight);
-
     var data = histData.histograms;
-
-    console.log(newHist);
 
     var vis = d3.select("#"+newHist), //could be "next available slot"?
         width = histPanelWidth,
         height = histHeight,
         margins = {
-            top: 5, right: 2, bottom: 5, left: 25
+            top: 10, right: 2, bottom: 5, left: 25
         },
         xRange = d3.scale.ordinal().rangeRoundBands([margins.left, width - margins.right], 0.1).domain(data.map(function (d) {
             return d.x;
@@ -49,9 +45,20 @@ function drawHistogram(histData,depth) {
             .orient("left")
             .tickSubdivide(true);
 
+    //svg height and width
     vis.style("width", width+(margins.left + margins.right))
         .style("height", height + (margins.bottom + margins.top));
-        //.append();
+
+
+    //create title
+    vis.append("text")
+        .attr("x", (width / 2))
+        .attr("y", margins.top)
+        .attr("text-anchor", "middle")
+        .style("font-size", "10px")
+        .style("stroke", "#fff")
+        .text(title);
+
 
 
     //creates x axis
@@ -61,6 +68,8 @@ function drawHistogram(histData,depth) {
         .style("stroke", "#fff")
         .style("font-size", "small")
         .call(xAxis);
+
+
     //creates y axis
     vis.append('svg:g')
         .attr('class', 'y axis')
@@ -96,5 +105,10 @@ function drawHistogram(histData,depth) {
         .on('mouseout', function (d) {
             d3.select(this)
                 .attr('fill', 'grey');
+        })
+        .on("click", function(d) {
+            console.log(d+ " " + depth + " " + title);
+            handleHistClick(d,depth,title);
         });
+
 }
