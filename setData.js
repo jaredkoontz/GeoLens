@@ -18,20 +18,20 @@ function setDataAndVisualize() {
 }
 
 
-function handleHistClick(clickedBar,depth,title) {
+function handleHistClick(clickedBar, depth, title) {
     if (lowestDepth == depth) {
         //if not too low
         //getNewData from clicked data depth and title
-        drawHistogram(geolensData, depth+1, title+1);
+        drawHistogram(geolensData, depth + 1, title + 1);
         lowestDepth++;
     }
-    else{
+    else {
         //remove histogram or histograms
         //add new one with click data
         var clickedDepth = depth;
         var currentDepth = lowestDepth;
-        while(currentDepth > clickedDepth){
-            var newHist = "histogramVis"+currentDepth;
+        while (currentDepth > clickedDepth) {
+            var newHist = "histogramVis" + currentDepth;
             $("#" + newHist).remove();
             depth--;
             currentDepth--;

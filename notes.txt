@@ -3,17 +3,24 @@
 ---------------
 todo make poly buttons grey after drawing query
 todo image tile cache
-todo multiple histograms on panel.
 todo edit control is actually quite useful
 todo minify javascript
 ---------------
 
 
 RoadMap of To do:
+-----
+client
 -rectangles mapped with histograms
+-check browser types
+-make histograms use new data
+-figure out where to put geohash values/colors.
+
+
+server
 -Make server code use json
 -Make server repository on github (this involves combinging code into my own galileo dir)
--check browser types
+
 
 
 

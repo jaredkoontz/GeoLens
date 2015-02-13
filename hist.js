@@ -1,9 +1,9 @@
-function drawHistogram(histData,depth,title) {
-    var newHist = "histogramVis"+depth;
+function drawHistogram(histData, depth, title) {
+    var newHist = "histogramVis" + depth;
 
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-    svg.setAttribute('id',newHist);
+    svg.setAttribute('id', newHist);
     document.getElementById("hists").appendChild(svg);
 
     var windowHeight = $(document).height(); // returns height of HTML document
@@ -17,7 +17,7 @@ function drawHistogram(histData,depth,title) {
     console.log(histData.histograms);
     var data = histData.histograms;
 
-    var vis = d3.select("#"+newHist), //could be "next available slot"?
+    var vis = d3.select("#" + newHist), //could be "next available slot"?
         width = histPanelWidth,
         height = histHeight,
         margins = {
@@ -46,7 +46,7 @@ function drawHistogram(histData,depth,title) {
             .tickSubdivide(true);
 
     //svg height and width
-    vis.style("width", width+(margins.left + margins.right))
+    vis.style("width", width + (margins.left + margins.right))
         .style("height", height + (margins.bottom + margins.top));
 
 
@@ -58,7 +58,6 @@ function drawHistogram(histData,depth,title) {
         .style("font-size", "10px")
         .style("stroke", "#fff")
         .text(title);
-
 
 
     //creates x axis
@@ -106,9 +105,9 @@ function drawHistogram(histData,depth,title) {
             d3.select(this)
                 .attr('fill', 'grey');
         })
-        .on("click", function(d) {
-            console.log(d+ " " + depth + " " + title);
-            handleHistClick(d,depth,title);
+        .on("click", function (d) {
+            console.log(d + " " + depth + " " + title);
+            handleHistClick(d, depth, title);
         });
 
 }
