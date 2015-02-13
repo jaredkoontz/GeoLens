@@ -33,11 +33,13 @@ html {
 
 #hists {
     margin: 1em;
+    display: block;
+    height: 100%;
+    width: 100%;
 }
 
 .axis path, .axis line {
     fill: none;
-    stroke: #fff; /*line color*/
     shape-rendering: crispEdges;
 }
 

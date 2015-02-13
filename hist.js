@@ -1,17 +1,23 @@
 function drawHistograms(histData) {
     var windowHeight = $(document).height(); // returns height of HTML document
     var windowWidth = $(document).width(); // returns width of HTML document
+    //todo, currently assuming at most 3 hists
 
-    var histPanelWidth = .13 * windowWidth;
+
+    var histHeight = .20 * windowHeight;
+    var histPanelWidth = .13 * windowWidth; //current panel is 15% of page, so the width of the hist of .13 got 1% padding
+
     console.log(histData.histograms);
+    console.log(histHeight);
 
-    data = histData.histograms;
+    var data = histData.histograms;
+
 
     var vis = d3.select('#histogramVis'), //could be "next available slot"?
         width = histPanelWidth,
-        height = 75,
+        height = histHeight,
         margins = {
-            top: 5, right: 5, bottom: 5, left: 5
+            top: 5, right: 2, bottom: 5, left: 25
         },
         xRange = d3.scale.ordinal().rangeRoundBands([margins.left, width - margins.right], 0.1).domain(data.map(function (d) {
             return d.x;
@@ -35,17 +41,29 @@ function drawHistograms(histData) {
             .orient("left")
             .tickSubdivide(true);
 
+    vis.style("width", width+(margins.left + margins.right))
+        .style("height", height + (margins.bottom + margins.top));
 
+
+    //creates x axis
     vis.append('svg:g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + (height - margins.bottom) + ')')
+        .style("stroke", "#fff")
+        .style("font-size", "small")
         .call(xAxis);
-
+    //creates y axis
     vis.append('svg:g')
         .attr('class', 'y axis')
         .attr('transform', 'translate(' + (margins.left) + ',0)')
+        .style("stroke", "#fff")
+        .style("font-size", "small")
+        .style("width", width)
+        .style("height", height)
         .call(yAxis);
 
+
+    //creates rectangles that make up histogram
     vis.selectAll('rect')
         .data(data)
         .enter()

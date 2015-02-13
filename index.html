@@ -24,7 +24,7 @@
     <script src="jsonpCallBack.js"></script>
     <script src="geohashRectangles.js"></script>
     <script src="leafletdrawPanel.js"></script>
-    <script src="addData.js"></script>
+    <script src="setData.js"></script>
 
 </head>
 <body>
@@ -34,6 +34,11 @@
 
 <div id="histPanel">
     Histograms
+    <br />
+    <form action="">
+        <input type="radio" name="sex" value="male" />Temperature
+        <input type="radio" name="sex" value="female" />Wind Speed
+    </form>
     <div id="hists">
         <svg id="histogramVis"></svg>
         <script src="hist.js"></script>
