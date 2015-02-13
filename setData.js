@@ -6,7 +6,9 @@ function setDataAndVisualize() {
         var geoHashRecData = json.geolens[0];
         var histData = json.geolens[1];
         drawGeohashes(geoHashRecData);
-        drawHistograms(histData);
+        for(var i=0;i<3;i++) {
+            drawHistogram(histData, i);
+        }
     });
 }
 

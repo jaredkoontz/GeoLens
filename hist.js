@@ -1,4 +1,11 @@
-function drawHistograms(histData) {
+function drawHistogram(histData,depth) {
+    var newHist = "histogramVis"+depth;
+
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+    svg.setAttribute('id',newHist);
+    document.getElementById("hists").appendChild(svg);
+
     var windowHeight = $(document).height(); // returns height of HTML document
     var windowWidth = $(document).width(); // returns width of HTML document
     //todo, currently assuming at most 3 hists
@@ -12,8 +19,9 @@ function drawHistograms(histData) {
 
     var data = histData.histograms;
 
+    console.log(newHist);
 
-    var vis = d3.select('#histogramVis'), //could be "next available slot"?
+    var vis = d3.select("#"+newHist), //could be "next available slot"?
         width = histPanelWidth,
         height = histHeight,
         margins = {
@@ -43,6 +51,7 @@ function drawHistograms(histData) {
 
     vis.style("width", width+(margins.left + margins.right))
         .style("height", height + (margins.bottom + margins.top));
+        //.append();
 
 
     //creates x axis
