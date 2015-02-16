@@ -8,7 +8,6 @@ var currentPath = "";
 
 function setDataAndVisualize() {
     if (!currentFeature) currentFeature = setCurrentFeature();
-    //console.log(currentFeature);
     d3.json("json/output.json", function (error, json) {
         //error handling
         if (error) return console.warn(error);
@@ -24,12 +23,9 @@ function setDataAndVisualize() {
     });
 }
 
-//current json implementation provides an avg field
-//todo redo using get current path
-//if has avgs or if depth == maxdepth?
 
-//todo where to update path?
 function getData(fullData, wantedDepth) {
+    console.log(currentPath);
     var currentObject = fullData.histograms;
     var newData = [];
     var path = currentPath.split(":");
@@ -114,13 +110,11 @@ function handleHistClick(clickedBar, depth) {
             $("#" + newHist).remove();
             depth--;
             mutableCurrentDepth--;
-            //todo remove last entry from path
             //remove last colon
             var str = currentPath.substring(0, currentPath.length - 1);
             var n = str.lastIndexOf(":");
-            currentPath = currentPath.substring(0, n);
+            currentPath = currentPath.substring(0, n+1);
         }
         currentDepth = mutableCurrentDepth;
     }
-
 }
