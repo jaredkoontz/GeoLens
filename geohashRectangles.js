@@ -2,7 +2,7 @@ function drawGeohashes(geoHashData) {
     //init svg layers
     map._initPathRoot();
 
-    console.log(geoHashData.geohashRecs);
+    //console.log(geoHashData.geohashRecs);
 
     // We pick up the SVG from the map object
     var svg = d3.select("#map").select("svg"),

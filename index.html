@@ -26,7 +26,7 @@
     <script src="leafletdrawPanel.js"></script>
     <script src="setData.js"></script>
     <script src="histogramClickHandler.js"></script>
-
+    <script src="utils.js"></script>
 
 </head>
 <body>
@@ -38,9 +38,9 @@
     Histograms
     <br/>
 
-    <form action="">
-        <input type="radio" name="sex" value="temp" checked="checked"/>Temperature
-        <input type="radio" name="sex" value="windspeed"/>Wind Speed
+    <form action="#" id="featureForm">
+        <input type="radio" name="features" value="t" checked="checked" onchange="setCurrentFeature()"/>Temperature
+        <input type="radio" name="features" value="ws" onchange="setCurrentFeature()"/>Wind Speed
     </form>
     <div id="hists">
         <script src="hist.js"></script>

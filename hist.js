@@ -1,3 +1,5 @@
+setDataAndVisualize();
+
 function drawHistogram(histData, depth, title) {
     var newHist = "histogramVis" + depth;
 
@@ -14,8 +16,8 @@ function drawHistogram(histData, depth, title) {
     var histHeight = .20 * windowHeight;
     var histPanelWidth = .13 * windowWidth; //current panel is 15% of page, so the width of the hist of .13 got 1% padding
 
-    console.log(histData.histograms);
-    var data = histData.histograms;
+    //console.log(histData.histograms);
+    var data = histData;
 
     var vis = d3.select("#" + newHist), //could be "next available slot"?
         width = histPanelWidth,
@@ -97,7 +99,7 @@ function drawHistogram(histData, depth, title) {
         })
         .attr('fill', 'grey')
         .on('mouseover', function (d) {
-            console.log(d);
+            //console.log(d);
             d3.select(this)
                 .attr('fill', 'blue');
         })
@@ -106,8 +108,8 @@ function drawHistogram(histData, depth, title) {
                 .attr('fill', 'grey');
         })
         .on("click", function (d) {
-            console.log(d + " " + depth + " " + title);
-            handleHistClick(d, depth, title);
+            //console.log(d + " " + depth + " " + title);
+            handleHistClick(d, depth);
         });
 
 }

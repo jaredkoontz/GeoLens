@@ -56,8 +56,8 @@ function addLeafletDrawPanel() {
 
     map.on('draw:delete', function (e) {
 //map.on('draw:deletestop', function(e) {
-        console.log("something was deleted; showing draw control");
-        console.log(drawnItems);
+//        console.log("something was deleted; showing draw control");
+//        console.log(drawnItems);
         //drawControlEditOnly.removeFrom(map);
         //drawControl.addTo(map);
         //drawControl.addTo(map);

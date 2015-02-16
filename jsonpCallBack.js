@@ -13,6 +13,7 @@ function setLatLonValuesAndType(latLonsFromLeaflet, typeFromLeaflet) {
 
 
 function sendRequest() {
+    //most recently drawn shape is sent
     console.log(latLons);
     console.log(type);
 }

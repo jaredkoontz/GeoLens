@@ -5,6 +5,8 @@ todo make poly buttons grey after drawing query
 todo image tile cache
 todo edit control is actually quite useful
 todo minify javascript
+
+todo title for d3 sometimes not shown
 ---------------
 
 
@@ -27,6 +29,11 @@ server
 Thoughts
 hard code wanted features
 what to do about wanted time frame of query? hardcode?
+when to compute average?
+
+--beforehand -> first
+
+
 
 make histograms vertical?
 

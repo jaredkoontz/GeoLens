@@ -23,5 +23,3 @@ var tileUrl = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
 
 
 addLeafletDrawPanel();
-//todo call these after sending query.
-setDataAndVisualize();
