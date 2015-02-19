@@ -1,9 +1,7 @@
 var geolensData; // a global
 var currentDepth; // lowest histogram level
-var lowestTitle; // lowest histogram's title
 var lowestDepth = 2; //lowest depth of the json array. todo dont hardcode: send over or compute?
 var currentFeature; //current selected feature.
-//todo use this
 var currentPath = "";
 
 function setDataAndVisualize() {
@@ -16,17 +14,15 @@ function setDataAndVisualize() {
         var histData = json.geolens[1];
         geolensData = histData;
         drawGeohashes(geoHashRecData);
-        var data = getData(histData, 0, 0);
-        drawHistogram(data, 0, 0);
-        lowestTitle = 0;
+        getData(histData, 0, 0);
         currentDepth = 0;
     });
 }
 
 
 function getData(fullData, wantedDepth) {
-    console.log(currentPath);
-    var currentObject = fullData.histograms;
+    //console.log(currentPath);
+    var currentData = fullData.histograms;
     var newData = [];
     var path = currentPath.split(":");
 
@@ -35,15 +31,15 @@ function getData(fullData, wantedDepth) {
         path.pop();
         //get the correct object to visualize based on the current path.
         for (var i = 0; i < path.length; i++) {
-            currentObject = currentObject[path[i]];
+            currentData = currentData[path[i]];
         }
     }
 
-    for (var currentKey in currentObject) {
-        if (currentObject.hasOwnProperty(currentKey)) {
+    for (var currentKey in currentData) {
+        if (currentData.hasOwnProperty(currentKey)) {
             if (wantedDepth == lowestDepth) {
                 if (currentKey == getCurrentFeature()) {
-                    var jsonObj = currentObject[currentKey];
+                    var jsonObj = currentData[currentKey];
                     console.log(jsonObj);
                     for (var xy in jsonObj) {
                         if (jsonObj.hasOwnProperty(xy)) {
@@ -54,7 +50,7 @@ function getData(fullData, wantedDepth) {
                 }
             }
             else {
-                var nextChild = currentObject[currentKey].avgs;
+                var nextChild = currentData[currentKey].avgs;
                 //get the right feature
                 for (var feature in nextChild) {
                     if (nextChild.hasOwnProperty(feature)) {
@@ -68,7 +64,7 @@ function getData(fullData, wantedDepth) {
 
         }
     }
-    console.log(newData);
+    //console.log(newData);
     return newData;
 }
 
@@ -84,7 +80,10 @@ function setCurrentFeature() {
             mutableCurrentDepth--;
         }
         //todo uncomment for feature changing
-        //drawHistogram(getData(geolensData, 0, 0), 0, 0);
+        console.log("called");
+        currentPath = "";
+        currentDepth = 0;
+        drawHistogram(getData(geolensData, 0, 0), 0, "Overview");
     }
 }
 
@@ -93,12 +92,13 @@ function handleHistClick(clickedBar, depth) {
     //get title from clicked bar
     var title = clickedBar.x;
     if (currentDepth == depth) {
-        //if not too low
-        //getNewData from clicked data depth and title
-        currentPath += title + ":";
-        var data = getData(geolensData, depth + 1, title);
-        drawHistogram(data, depth + 1, title);
-        currentDepth++;
+        var proposedDepth = depth+1;
+        if (proposedDepth <= lowestDepth) {
+            currentPath += title + ":";
+            var data = getData(geolensData, proposedDepth, title);
+            drawHistogram(data, proposedDepth, title);
+            currentDepth++;
+        }
     }
     else {
         //remove histogram or histograms

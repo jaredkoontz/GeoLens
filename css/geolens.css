@@ -43,3 +43,10 @@ html {
     shape-rendering: crispEdges;
 }
 
+.grid .tick {
+    stroke: white;
+    opacity: 0.7;
+}
+.grid path {
+    stroke-width: 0;
+}

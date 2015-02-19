@@ -1,6 +1,6 @@
 Fast And Easy to do
 todo title for d3 sometimes not shown
-todo make it so a histogram is not shown for clicks deeper than data is provided for.
+todo "instant click" if on 2014 march and then want to look at 2013, you need to click on 2013 twice.
 
 
 ---------------

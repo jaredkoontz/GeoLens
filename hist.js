@@ -23,7 +23,7 @@ function drawHistogram(histData, depth, title) {
         width = histPanelWidth,
         height = histHeight,
         margins = {
-            top: 10, right: 2, bottom: 5, left: 25
+            top: 20, right: 2, bottom: 5, left: 25
         },
         xRange = d3.scale.ordinal().rangeRoundBands([margins.left, width - margins.right], 0.1).domain(data.map(function (d) {
             return d.x;
@@ -55,26 +55,27 @@ function drawHistogram(histData, depth, title) {
     //create title
     vis.append("text")
         .attr("x", (width / 2))
-        .attr("y", margins.top)
+        .attr("y", 10)
         .attr("text-anchor", "middle")
-        .style("font-size", "10px")
+        .style("font-size", "small")
         .style("stroke", "#fff")
+        .style("text-decoration","underline")
         .text(title);
 
 
     //creates x axis
     vis.append('svg:g')
         .attr('class', 'x axis')
-        .attr('transform', 'translate(0,' + (height - margins.bottom) + ')')
+        .attr('transform', 'translate(0,' + (height + margins.bottom) + ')')
         .style("stroke", "#fff")
-        .style("font-size", "small")
+        .style("font-size", "smaller")
         .call(xAxis);
 
 
     //creates y axis
     vis.append('svg:g')
         .attr('class', 'y axis')
-        .attr('transform', 'translate(' + (margins.left) + ',0)')
+        .attr('transform', 'translate(' + (margins.left) + ','+(margins.top + margins.bottom)+')')
         .style("stroke", "#fff")
         .style("font-size", "small")
         .style("width", width)
@@ -91,11 +92,11 @@ function drawHistogram(histData, depth, title) {
             return xRange(d.x);
         })
         .attr('y', function (d) {
-            return yRange(d.y);
+            return yRange(d.y) + margins.top + margins.bottom;
         })
         .attr('width', xRange.rangeBand())
         .attr('height', function (d) {
-            return ((height - margins.bottom) - yRange(d.y));
+            return ((height - margins.top) - yRange(d.y));
         })
         .attr('fill', 'grey')
         .on('mouseover', function (d) {
