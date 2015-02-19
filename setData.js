@@ -22,7 +22,7 @@ function setDataAndVisualize() {
 
 function getData(fullData, wantedDepth) {
     //console.log(currentPath);
-    var currentData = fullData.histograms;
+    var currentData = fullData.aggInfo;
     var newData = [];
     var path = currentPath.split(":");
 
@@ -37,34 +37,39 @@ function getData(fullData, wantedDepth) {
 
     for (var currentKey in currentData) {
         if (currentData.hasOwnProperty(currentKey)) {
-            if (wantedDepth == lowestDepth) {
-                if (currentKey == getCurrentFeature()) {
-                    var jsonObj = currentData[currentKey];
-                    console.log(jsonObj);
-                    for (var xy in jsonObj) {
-                        if (jsonObj.hasOwnProperty(xy)) {
-                            var coordinates = new XYCoordinates(xy, jsonObj[xy]);
-                            newData.push(coordinates);
-                        }
-                    }
-                }
-            }
+            if (wantedDepth == lowestDepth) { //are we at the lowest depth.
+                if (currentKey == "hists") { //get histogram data
+                    var histData = currentData[currentKey];
+                    for (var currentFeature in histData) {
+                        if (histData.hasOwnProperty(currentFeature)) {
+                            if (currentFeature == getCurrentFeature()) { //get data for current desired feature
+                                var feature = histData[currentFeature];
+                                for (var xy in feature) {
+                                    if (feature.hasOwnProperty(xy)) {
+                                        var coordinates = new XYCoordinates(xy, feature[xy]); //create coordinates for d3
+                                        newData.push(coordinates); // add the data
+                                    }
+                                }
+                            } //current feature
+                        } //own property check
+                    } //end for
+                } //histogram key
+            } //wanted depth
             else {
+                //we are not at the end, grab the histogram averages.
                 var nextChild = currentData[currentKey].avgs;
                 //get the right feature
-                for (var feature in nextChild) {
-                    if (nextChild.hasOwnProperty(feature)) {
-                        if (feature == getCurrentFeature()) {
-                            var entry = new XYCoordinates(currentKey, nextChild[feature]);
-                            newData.push(entry);
+                for (var average in nextChild) {
+                    if (nextChild.hasOwnProperty(average)) {
+                        if (average == getCurrentFeature()) {
+                            var entry = new XYCoordinates(currentKey, nextChild[average]); //create coordinates for d3
+                            newData.push(entry); // add the data
                         }
                     }
                 }
             }
-
         }
     }
-    //console.log(newData);
     return newData;
 }
 
@@ -92,7 +97,7 @@ function handleHistClick(clickedBar, depth) {
     //get title from clicked bar
     var title = clickedBar.x;
     if (currentDepth == depth) {
-        var proposedDepth = depth+1;
+        var proposedDepth = depth + 1;
         if (proposedDepth <= lowestDepth) {
             currentPath += title + ":";
             var data = getData(geolensData, proposedDepth, title);

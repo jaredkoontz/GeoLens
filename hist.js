@@ -59,7 +59,7 @@ function drawHistogram(histData, depth, title) {
         .attr("text-anchor", "middle")
         .style("font-size", "small")
         .style("stroke", "#fff")
-        .style("text-decoration","underline")
+        .style("text-decoration", "underline")
         .text(title);
 
 
@@ -75,7 +75,7 @@ function drawHistogram(histData, depth, title) {
     //creates y axis
     vis.append('svg:g')
         .attr('class', 'y axis')
-        .attr('transform', 'translate(' + (margins.left) + ','+(margins.top + margins.bottom)+')')
+        .attr('transform', 'translate(' + (margins.left) + ',' + (margins.top + margins.bottom) + ')')
         .style("stroke", "#fff")
         .style("font-size", "small")
         .style("width", width)
