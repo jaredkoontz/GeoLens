@@ -1,3 +1,6 @@
+Fast And Easy to do
+todo title for d3 sometimes not shown
+todo make it so a histogram is not shown for clicks deeper than data is provided for.
 
 
 ---------------
@@ -6,7 +9,6 @@ todo image tile cache
 todo edit control is actually quite useful
 todo minify javascript
 
-todo title for d3 sometimes not shown
 ---------------
 
 

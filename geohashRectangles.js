@@ -8,11 +8,17 @@ function drawGeohashes(geoHashData) {
     var svg = d3.select("#map").select("svg"),
         g = svg.append("g");
 
+
+    var currentObject = geoHashData.geohashRecs;
+    for (var currentKey in currentObject) {
+
+
+    }
     geoHashData.geohashRecs.forEach(function (d) {
-        var northEast = new L.LatLng(d.rectangle.coordinates[0][0],
-                d.rectangle.coordinates[0][1]),
-            southWest = new L.LatLng(d.rectangle.coordinates[1][0],
-                d.rectangle.coordinates[1][1]);
+        console.log(d);
+        var hashname = Object.keys(d)[0];
+        var northEast = new L.LatLng(d[hashname][0], d[hashname][1]),
+            southWest = new L.LatLng(d[hashname][2], d[hashname][3]);
         d.LatLngBounds = L.latLngBounds(southWest, northEast);
     });
 

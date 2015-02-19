@@ -113,7 +113,7 @@ function handleHistClick(clickedBar, depth) {
             //remove last colon
             var str = currentPath.substring(0, currentPath.length - 1);
             var n = str.lastIndexOf(":");
-            currentPath = currentPath.substring(0, n+1);
+            currentPath = currentPath.substring(0, n + 1);
         }
         currentDepth = mutableCurrentDepth;
     }
