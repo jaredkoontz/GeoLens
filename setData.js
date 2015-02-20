@@ -19,15 +19,17 @@ function setDataAndVisualize() {
     });
 }
 
-
 function getData(fullData, wantedDepth) {
     var currentData = fullData.aggInfo;
     var newData = {
         "histogram": [],
         "geohashColors": []
     };
-    var needToSetHistogramColors = true;
 
+    var needToSetHistogramColors = true;
+    var needToMergeGeohashes = false;
+    //todo move to own method
+    //"getPath"
     var path = currentPath.split(":");
     //adjust current data
     if (path.length > 1) {
@@ -39,6 +41,7 @@ function getData(fullData, wantedDepth) {
         }
     }
     var tree = [];
+
     for (var currentKey in currentData) {
         if (currentData.hasOwnProperty(currentKey)) {
             if (wantedDepth == lowestDepth) { //are we at the lowest depth.
@@ -64,6 +67,31 @@ function getData(fullData, wantedDepth) {
                             newData.histogram.push(entry); // add the data
                         }
                     }
+                }
+
+                //get histogram for current data.
+                var geohashData = currentData[currentKey];
+                var hashesTry = geohashData.hashes;
+                if( typeof hashesTry == "object" ){
+                    needToMergeGeohashes = true;
+                    var thisFeature = [];
+                    for (var hash in hashesTry) {
+                        if (hashesTry.hasOwnProperty(hash)) {
+                            for (var possibleFeatures in hashesTry[hash]) {
+                                if (hashesTry[hash].hasOwnProperty(possibleFeatures)) {
+                                    if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
+                                        var featureValue = hashesTry[hash][possibleFeatures];
+                                        var hashColorCombo = new HashColorCombo(hash, featureValue);
+                                        thisFeature.push(hashColorCombo);
+                                    }
+                                } //current feature
+                            } //iterate possible features
+                        } //own property check
+                    } //end for
+                    newData.geohashColors.push(thisFeature);
+                }
+                else{
+                    //todo this branch
                 }
 
                 //console.log(currentKey);
@@ -111,18 +139,41 @@ function getData(fullData, wantedDepth) {
         }
     }
     //console.log(tree);
-    //var merged = MergeRecursive(tree[0], tree[1]);
+    //var merged = MergeRecursiveGeoHashColors(tree[0], tree[1]);
     //console.log(merged);
     if(needToSetHistogramColors){
         setHistogramColors(newData.histogram);
     }
-
+    if(needToMergeGeohashes){
+        newData.geohashColors = mergeGeohashes(newData.geohashColors);
+    }
     return newData;
 }
 
 
+function mergeGeohashes(geoHashColorArray) {
+    console.log(geoHashColorArray);
+    var merged = [];
+    for(var i = 0 ; i < geoHashColorArray.length;i++) {
+        merged = MergeRecursiveGeoHashColors(geoHashColorArray[i], merged);
+    }
+    console.log(merged);
+    var min = Number.MAX_VALUE;
+    var max = Number.MIN_VALUE;
+    for (var hash in merged) {
+        if (merged.hasOwnProperty(hash)) {
+            var featureValue = merged[hash];
+            //console.log(featureValue);
+            max = (max < featureValue.featureColor) ? featureValue.featureColor : max;
+            min = (min > featureValue.featureColor) ? featureValue.featureColor : min;
+        }
+    }
+    console.log(max);
+    console.log(min);
+    return computeGeoHashColors(merged, max, min);
+}
+
 function setHistogramColors(histogram) {
-    console.log(histogram);
     var min = Number.MAX_VALUE;
     var max = Number.MIN_VALUE;
     var colorData = [];
@@ -148,16 +199,18 @@ function setHistogramColors(histogram) {
 /*
  * Recursively merge properties of two objects
  */
-function MergeRecursive(obj1, obj2) {
+function MergeRecursiveGeoHashColors(obj1, obj2) {
 
     for (var p in obj2) {
         try {
             // Property in destination object set; update its value.
             if ( obj2[p].constructor==Object ) {
-                obj1[p] = MergeRecursive(obj1[p], obj2[p]);
+                obj1[p] = MergeRecursiveGeoHashColors(obj1[p], obj2[p]);
 
             } else {
-                obj1[p] = obj2[p];
+                //obj1[p] = (obj1 + obj2[p])/2; //nan
+                obj1[p].featureColor += obj2[p].featureColor; //combines the two
+                obj1[p].hash = obj2[p].hash; //combines the two
 
             }
 
@@ -167,7 +220,6 @@ function MergeRecursive(obj1, obj2) {
 
         }
     }
-
     return obj1;
 }
 
@@ -207,6 +259,8 @@ function traverse(jsonObj) {
         console.log(jsonObj);
     }
 }
+
+
 /**
  *
  *

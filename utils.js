@@ -72,6 +72,7 @@ function normalizeByArrayIndex(histData, max, min) {
 
 function computeGeoHashColors(colorData, max, min) {
     var normalized = normalizeGeoHashByArrayContents(colorData,max,min);
+    console.log(normalized);
     for (var hash in colorData) {
         if (colorData.hasOwnProperty(hash)) {
             var hexColor = getColor(normalized[hash].featureColor);
