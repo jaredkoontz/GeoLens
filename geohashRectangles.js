@@ -16,6 +16,8 @@ function drawGeohashes(geoHashData) {
         d.id = hashName;
     });
 
+
+
     var feature = g.selectAll("rectangle")
         .data(geoHashData.geohashRecs)
         .enter().append("rect")
@@ -28,13 +30,49 @@ function drawGeohashes(geoHashData) {
             return d.id;
         });
 
+    var currentColor;
 
     feature.on("mouseover", function (d) {
-        d3.select(this).style("fill", "white");
+        var geohashRec = d3.select(this);
+        currentColor  = geohashRec.style("fill");
+        var rgb = currentColor.match(/\d+/g);
+        var new_red   = 255 - rgb[0];
+        var new_green = 255 - rgb[1];
+        var new_blue  = 255 - rgb[2];
+        geohashRec.style("stroke", rgbToHex(new_red,new_green,new_blue));
+        geohashRec.style("stroke-width", 6);
+
+        //todo possible code for adding geohash to rectangle
+        //need to wrap it in a "g" for text to work.
+        //var text = geohashRec.append('text')
+        //    .attr('x', 50)
+        //    .attr('y', 130)
+        //    .attr('width', 150)
+        //    .attr('height', 100)
+        //    .append("xhtml:body")
+        //    .html('<div style="width: 150px;">This is some information about whatever</div>');
+        //var bar = geohashRec.append("g")
+        //    .attr("transform", function(d, i) { return "translate(0," + i * geohashRec.height + ")"; });
+        //
+        //bar.append("text")
+        //    .attr("x", function(d) { return x(d) - 3; })
+        //    .attr("y", function(d) {return d.height / 2})
+        //    .attr("dy", ".35em")
+        //    .text(function(d) { return d; });
+        //geohashRec.append("g")
+        //    .attr("transform", function(d, i) { return "translate(0," + i * geohashRec.attr("height")/2  + ")"; });
+        //
+        //var text = geohashRec.append('text').text(d.id)
+        //    .attr('x', geohashRec.attr("width")/2)
+        //    .attr('y', geohashRec.attr("height")/2)
+        //    .attr("dy", ".35em")
+        //    .attr('fill', rgbToHex(new_red,new_green,new_blue));
     });
 
-    feature.on("mouseout", function (d) {
-        d3.select(this).style("fill", "red");
+    feature.on("mouseout", function () {
+        var geohashRec = d3.select(this);
+        geohashRec.style("stroke", "none");
+        geohashRec.style("fill", currentColor);
     });
 
 

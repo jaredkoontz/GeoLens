@@ -1,6 +1,7 @@
 Fast And Easy to do
-todo title for d3 sometimes not shown
 todo "instant click" if on 2014 march and then want to look at 2013, you need to click on 2013 twice.
+make it so the color goes the inverse color on mouse over
+make the geohash text value appear on mouse over.
 
 
 ---------------

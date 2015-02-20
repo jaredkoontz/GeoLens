@@ -35,7 +35,7 @@ function getData(fullData, wantedDepth) {
             currentData = currentData[path[i]];
         }
     }
-
+    var tree = [];
     for (var currentKey in currentData) {
         if (currentData.hasOwnProperty(currentKey)) {
             if (wantedDepth == lowestDepth) { //are we at the lowest depth.
@@ -61,12 +61,79 @@ function getData(fullData, wantedDepth) {
                         }
                     }
                 }
-                //traverse down and get geohash info
-
+                //console.log(currentKey);
+                //tree.push(currentData[currentKey]);
+                //traverse(currentData);
+                //var there = false;
+                //while(!there) {
+                //    console.log(currentData);
+                //    if ('hashes' in currentData) {
+                //        var geohashColorsData = currentData[currentKey];
+                //        newData.geohashColors = getLowestGeoHashTilesData(geohashColorsData,newData.geohashColors);
+                //    }
+                //    else{
+                //        var nextStep = currentData[currentKey];
+                //        if(nextStep ===undefined ){
+                //            for (var foo in currentData) {
+                //                if (currentData.hasOwnProperty(foo)) {
+                //                    currentData = currentData[foo];
+                //                }
+                //            }
+                //        }
+                //        else{
+                //            currentData = currentData[currentKey];
+                //        }
+                //    }
+                //}
+                //for (var hash in geohashColorsData) {
+                //    if (geohashColorsData.hasOwnProperty(hash)) {
+                //        for (var possibleFeatures in geohashColorsData[hash]) {
+                //            if (geohashColorsData[hash].hasOwnProperty(possibleFeatures)) {
+                //                if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
+                //                    var featureValue = geohashColorsData[hash][possibleFeatures];
+                //                    var hashColorCombo = new HashColorCombo(hash, featureValue);
+                //                    colorData.push(hashColorCombo); // add the data
+                //                    max = (max < featureValue) ? featureValue : max;
+                //                    min = (min > featureValue) ? featureValue : min;
+                //                }
+                //            } //current feature
+                //        } //iterate possible features
+                //    } //own property check
+                //} //end for
+                //colorData = computeGeoHashColors(colorData, max, min); //compute colors from data.
+                //return colorData;
             }
         }
     }
+    console.log(tree);
+    var merged = MergeRecursive(tree[0], tree[1]);
+    console.log(merged);
     return newData;
+}
+/*
+ * Recursively merge properties of two objects
+ */
+function MergeRecursive(obj1, obj2) {
+
+    for (var p in obj2) {
+        try {
+            // Property in destination object set; update its value.
+            if ( obj2[p].constructor==Object ) {
+                obj1[p] = MergeRecursive(obj1[p], obj2[p]);
+
+            } else {
+                obj1[p] = obj2[p];
+
+            }
+
+        } catch(e) {
+            // Property in destination object not set; create it and set its value.
+            obj1[p] = obj2[p];
+
+        }
+    }
+
+    return obj1;
 }
 
 function setCurrentFeature() {
@@ -87,6 +154,24 @@ function setCurrentFeature() {
     }
 }
 
+
+//traverse down and get geohash info
+//called with every property and it's value
+
+
+function traverse(jsonObj) {
+    if( typeof jsonObj == "object" ) {
+        $.each(jsonObj, function(k,v) {
+            // k is either an array index or object key
+            console.log(jsonObj);
+            traverse(v);
+        });
+    }
+    else {
+        // jsonOb is a number or string
+        console.log(jsonObj);
+    }
+}
 /**
  *
  *
