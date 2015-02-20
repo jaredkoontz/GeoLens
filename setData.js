@@ -19,13 +19,14 @@ function setDataAndVisualize() {
     });
 }
 
-
 function getData(fullData, wantedDepth) {
-    //console.log(currentPath);
     var currentData = fullData.aggInfo;
-    var newData = [];
+    var newData = {
+        "histogram": [],
+        "geohashColors": []
+    };
     var path = currentPath.split(":");
-
+    //adjust current data
     if (path.length > 1) {
         //empty one always placed in the back
         path.pop();
@@ -40,20 +41,13 @@ function getData(fullData, wantedDepth) {
             if (wantedDepth == lowestDepth) { //are we at the lowest depth.
                 if (currentKey == "hists") { //get histogram data
                     var histData = currentData[currentKey];
-                    for (var currentFeature in histData) {
-                        if (histData.hasOwnProperty(currentFeature)) {
-                            if (currentFeature == getCurrentFeature()) { //get data for current desired feature
-                                var feature = histData[currentFeature];
-                                for (var xy in feature) {
-                                    if (feature.hasOwnProperty(xy)) {
-                                        var coordinates = new XYCoordinates(xy, feature[xy]); //create coordinates for d3
-                                        newData.push(coordinates); // add the data
-                                    }
-                                }
-                            } //current feature
-                        } //own property check
-                    } //end for
+                    newData.histogram = getLowestHistogramData(histData,newData.histogram);
                 } //histogram key
+                else if (currentKey == "hashes") {
+                    //geohash info
+                    var geohashColorsData = currentData[currentKey];
+                    newData.geohashColors = getLowestGeoHashTilesData(geohashColorsData,newData.geohashColors);
+                }
             } //wanted depth
             else {
                 //we are not at the end, grab the histogram averages.
@@ -63,10 +57,12 @@ function getData(fullData, wantedDepth) {
                     if (nextChild.hasOwnProperty(average)) {
                         if (average == getCurrentFeature()) {
                             var entry = new XYCoordinates(currentKey, nextChild[average]); //create coordinates for d3
-                            newData.push(entry); // add the data
+                            newData.histogram.push(entry); // add the data
                         }
                     }
                 }
+                //traverse down and get geohash info
+
             }
         }
     }
@@ -84,15 +80,17 @@ function setCurrentFeature() {
             $("#" + newHist).remove();
             mutableCurrentDepth--;
         }
-        //todo uncomment for feature changing
-        console.log("called");
         currentPath = "";
         currentDepth = 0;
-        drawHistogram(getData(geolensData, 0, 0), 0, "Overview");
+        var newData = getData(geolensData, 0, 0);
+        drawHistogram(newData.histogram, 0, "Overview");
     }
 }
 
-//todo does not handle going too low.
+/**
+ *
+ *
+ */
 function handleHistClick(clickedBar, depth) {
     //get title from clicked bar
     var title = clickedBar.x;
@@ -101,7 +99,7 @@ function handleHistClick(clickedBar, depth) {
         if (proposedDepth <= lowestDepth) {
             currentPath += title + ":";
             var data = getData(geolensData, proposedDepth, title);
-            drawHistogram(data, proposedDepth, title);
+            drawHistogram(data.histogram, proposedDepth, title);
             currentDepth++;
         }
     }

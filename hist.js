@@ -1,25 +1,26 @@
 setDataAndVisualize();
 
-function drawHistogram(histData, depth, title) {
-    var newHist = "histogramVis" + depth;
-
+function createNewSvg(newHist) {
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
     svg.setAttribute('id', newHist);
     document.getElementById("hists").appendChild(svg);
+}
+function drawHistogram(histData, depth, title) {
+    var newHist = "histogramVis" + depth;
+
+    createNewSvg(newHist);
 
     var windowHeight = $(document).height(); // returns height of HTML document
     var windowWidth = $(document).width(); // returns width of HTML document
     //todo, currently assuming at most 3 hists
 
-
     var histHeight = .20 * windowHeight;
     var histPanelWidth = .13 * windowWidth; //current panel is 15% of page, so the width of the hist of .13 got 1% padding
 
-    //console.log(histData.histograms);
     var data = histData;
 
-    var vis = d3.select("#" + newHist), //could be "next available slot"?
+    var vis = d3.select("#" + newHist),
         width = histPanelWidth,
         height = histHeight,
         margins = {
