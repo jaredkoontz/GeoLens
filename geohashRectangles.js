@@ -21,7 +21,6 @@ function drawGeohashes(geoHashData) {
     var feature = g.selectAll("rectangle")
         .data(geoHashData.geohashRecs)
         .enter().append("rect")
-        //.style("stroke", "white")
         .style("opacity", .5)
         .style("fill", "red")
 

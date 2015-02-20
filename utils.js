@@ -6,9 +6,10 @@ var getCurrentFeature = function () {
 };
 
 
-function XYCoordinates(x, y) {
+function XYCoordinateAndColor(x, y, color) {
     this.x = x;
     this.y = y;
+    this.color = color;
 }
 
 
@@ -19,7 +20,6 @@ function HashColorCombo(hash, featureColor) {
 
 
 function getGeohashRectByIdAndChangeColor(id,hexColor) {
-    console.log(id);
     d3.select("#map")
         .select("svg")
         .selectAll("rect")
@@ -28,40 +28,60 @@ function getGeohashRectByIdAndChangeColor(id,hexColor) {
 }
 
 
-function getLowestHistogramData(histData, histogramData) {
-    for (var currentFeature in histData) {
-        if (histData.hasOwnProperty(currentFeature)) {
+
+function getLowestHistogramData(potentialHistData, createdData) {
+    for (var currentFeature in potentialHistData) {
+        if (potentialHistData.hasOwnProperty(currentFeature)) {
             if (currentFeature == getCurrentFeature()) { //get data for current desired feature
-                var feature = histData[currentFeature];
+                var feature = potentialHistData[currentFeature];
                 for (var xy in feature) {
                     if (feature.hasOwnProperty(xy)) {
-                        var coordinates = new XYCoordinates(xy, feature[xy]); //create coordinates for d3
-                        histogramData.push(coordinates); // add the data
+                        var coordinates = new XYCoordinateAndColor(xy, feature[xy], ""); //create coordinates for d3
+                        createdData.push(coordinates); // add the data
                     }
                 }
             } //current feature
         } //own property check
     } //end for
-    return histogramData;
+    //set colors for histograms.
+    var min = 0;
+    var max = createdData.length;
+    var normalized = normalizeByArrayIndex(createdData,max,min);
+    var index = 0;
+    for (var normalizedValue in normalized) {
+        if (normalized.hasOwnProperty(normalizedValue)) {
+            createdData[index].color = getColor(normalized[normalizedValue]);
+            index++;
+        }
+    }
+    return createdData;
+}
+
+function normalizeByArrayIndex(histData, max, min) {
+        var normalizedArr = [];
+        for( var i = 0, len = histData.length; i < len; i++ )
+        {
+            var numerator = ([i]- min);
+            var denominator = (max - min);
+            var normalized = numerator/denominator;
+            normalizedArr.push(normalized);
+        }
+        return normalizedArr;
 }
 
 
 function computeGeoHashColors(colorData, max, min) {
-    //normalize values.
-    //iterate through and set color values.
-    var normalized = normalize(colorData,max,min);
-    //console.log(normalized);
-    //console.log(colorData);
+    var normalized = normalizeGeoHashByArrayContents(colorData,max,min);
     for (var hash in colorData) {
         if (colorData.hasOwnProperty(hash)) {
-            var hexColor = singleHueBrewerValues(normalized[hash].featureColor);
+            var hexColor = getColor(normalized[hash].featureColor);
             getGeohashRectByIdAndChangeColor(normalized[hash].hash,hexColor);
         }
     }
 }
 
 
-function normalize(array,max,min)
+function normalizeGeoHashByArrayContents(array,max,min)
 {
     var normalizedArr = [];
     for( var i = 0, len = array.length; i < len; i++ )
@@ -73,6 +93,21 @@ function normalize(array,max,min)
     }
     return normalizedArr;
 }
+
+
+function normalizeHistogramByArrayContents(array,max,min)
+{
+    var normalizedArr = [];
+    for( var i = 0, len = array.length; i < len; i++ )
+    {
+        var numerator = (array[i] - min);
+        var denominator = (max - min);
+        var normalized = numerator/denominator;
+        normalizedArr.push(normalized);
+    }
+    return normalizedArr;
+}
+
 
 
 function getLowestGeoHashTilesData(geohashColorsData, colorData) {

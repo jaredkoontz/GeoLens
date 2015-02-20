@@ -6,6 +6,8 @@ function createNewSvg(newHist) {
     svg.setAttribute('id', newHist);
     document.getElementById("hists").appendChild(svg);
 }
+
+
 function drawHistogram(histData, depth, title) {
     var newHist = "histogramVis" + depth;
 
@@ -13,7 +15,8 @@ function drawHistogram(histData, depth, title) {
 
     var windowHeight = $(document).height(); // returns height of HTML document
     var windowWidth = $(document).width(); // returns width of HTML document
-    //todo, currently assuming at most 3 hists
+
+    //todo, currently assuming at most 3 hists compute this value from lowest depth
 
     var histHeight = .20 * windowHeight;
     var histPanelWidth = .13 * windowWidth; //current panel is 15% of page, so the width of the hist of .13 got 1% padding
@@ -83,6 +86,7 @@ function drawHistogram(histData, depth, title) {
         .style("height", height)
         .call(yAxis);
 
+    var currentColor;
 
     //creates rectangles that make up histogram
     vis.selectAll('rect')
@@ -99,15 +103,23 @@ function drawHistogram(histData, depth, title) {
         .attr('height', function (d) {
             return ((height - margins.top) - yRange(d.y));
         })
-        .attr('fill', 'grey')
-        .on('mouseover', function (d) {
-            //console.log(d);
-            d3.select(this)
-                .attr('fill', 'blue');
+        .attr('fill', function(d) {
+            return d.color;
         })
-        .on('mouseout', function (d) {
-            d3.select(this)
-                .attr('fill', 'grey');
+        .on('mouseover', function () {
+            var geohashRec = d3.select(this);
+            currentColor  = geohashRec.style("fill");
+            var rgb = currentColor.match(/\d+/g);
+            var new_red   = 255 - rgb[0];
+            var new_green = 255 - rgb[1];
+            var new_blue  = 255 - rgb[2];
+            geohashRec.style("stroke", rgbToHex(new_red,new_green,new_blue));
+            geohashRec.style("stroke-width", 6);
+        })
+        .on('mouseout', function () {
+            var geohashRec = d3.select(this);
+            geohashRec.style("stroke", "none");
+            geohashRec.style("fill", currentColor);
         })
         .on("click", function (d) {
             //console.log(d + " " + depth + " " + title);

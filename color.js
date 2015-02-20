@@ -1,3 +1,8 @@
+
+function getColor(value){
+    return singleHueBrewerValues(value);
+}
+
 function multiHue(value) {
     var r = 0.0, g = 0.0, b = 0.0;
 

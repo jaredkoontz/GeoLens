@@ -19,12 +19,15 @@ function setDataAndVisualize() {
     });
 }
 
+
 function getData(fullData, wantedDepth) {
     var currentData = fullData.aggInfo;
     var newData = {
         "histogram": [],
         "geohashColors": []
     };
+    var needToSetHistogramColors = true;
+
     var path = currentPath.split(":");
     //adjust current data
     if (path.length > 1) {
@@ -42,6 +45,7 @@ function getData(fullData, wantedDepth) {
                 if (currentKey == "hists") { //get histogram data
                     var histData = currentData[currentKey];
                     newData.histogram = getLowestHistogramData(histData,newData.histogram);
+                    needToSetHistogramColors = false;
                 } //histogram key
                 else if (currentKey == "hashes") {
                     //geohash info
@@ -56,11 +60,12 @@ function getData(fullData, wantedDepth) {
                 for (var average in nextChild) {
                     if (nextChild.hasOwnProperty(average)) {
                         if (average == getCurrentFeature()) {
-                            var entry = new XYCoordinates(currentKey, nextChild[average]); //create coordinates for d3
+                            var entry = new XYCoordinateAndColor(currentKey, nextChild[average], ""); //create coordinates for d3
                             newData.histogram.push(entry); // add the data
                         }
                     }
                 }
+
                 //console.log(currentKey);
                 //tree.push(currentData[currentKey]);
                 //traverse(currentData);
@@ -105,11 +110,41 @@ function getData(fullData, wantedDepth) {
             }
         }
     }
-    console.log(tree);
-    var merged = MergeRecursive(tree[0], tree[1]);
-    console.log(merged);
+    //console.log(tree);
+    //var merged = MergeRecursive(tree[0], tree[1]);
+    //console.log(merged);
+    if(needToSetHistogramColors){
+        setHistogramColors(newData.histogram);
+    }
+
     return newData;
 }
+
+
+function setHistogramColors(histogram) {
+    console.log(histogram);
+    var min = Number.MAX_VALUE;
+    var max = Number.MIN_VALUE;
+    var colorData = [];
+    for (var xyCoord in histogram) {
+        if (histogram.hasOwnProperty(xyCoord)) {
+            var yValue = histogram[xyCoord].y;
+            colorData.push(yValue); // add the data
+            max = (max < yValue) ? yValue : max;
+            min = (min > yValue) ? yValue : min;
+        }
+    } //current feature
+    var index = 0;
+    var normalized = normalizeHistogramByArrayContents(colorData,max,min);
+    for (var hash in colorData) {
+        if (colorData.hasOwnProperty(hash)) {
+            histogram[index].color = getColor(normalized[hash]);
+            index ++;
+        }
+    }
+    return colorData;
+}
+
 /*
  * Recursively merge properties of two objects
  */
