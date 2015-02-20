@@ -261,10 +261,6 @@ function traverse(jsonObj) {
 }
 
 
-/**
- *
- *
- */
 function handleHistClick(clickedBar, depth) {
     //get title from clicked bar
     var title = clickedBar.x;
