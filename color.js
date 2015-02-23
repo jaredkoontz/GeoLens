@@ -1,3 +1,10 @@
+function getGeohashRectByIdAndChangeColor(id,hexColor) {
+    d3.select("#map")
+        .select("svg")
+        .selectAll("rect")
+        .filter(function(d) { return d.id == id})
+        .style("fill", hexColor);
+}
 
 function getColor(value){
     return singleHueBrewerValues(value);

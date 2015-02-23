@@ -40,20 +40,18 @@ function getData(fullData, wantedDepth) {
             currentData = currentData[path[i]];
         }
     }
-    var tree = [];
-
     for (var currentKey in currentData) {
         if (currentData.hasOwnProperty(currentKey)) {
             if (wantedDepth == lowestDepth) { //are we at the lowest depth.
                 if (currentKey == "hists") { //get histogram data
                     var histData = currentData[currentKey];
-                    newData.histogram = getLowestHistogramData(histData,newData.histogram);
+                    newData.histogram = getLowestHistogramData(histData, newData.histogram);
                     needToSetHistogramColors = false;
                 } //histogram key
                 else if (currentKey == "hashes") {
                     //geohash info
                     var geohashColorsData = currentData[currentKey];
-                    newData.geohashColors = getLowestGeoHashTilesData(geohashColorsData,newData.geohashColors);
+                    newData.geohashColors = getLowestGeoHashTilesData(geohashColorsData, newData.geohashColors);
                 }
             } //wanted depth
             else {
@@ -68,7 +66,7 @@ function getData(fullData, wantedDepth) {
                         }
                     }
                 }
-                if( currentKey != "avgs") {
+                if (currentKey != "avgs") {
                     //get histogram for current data.
                     var geohashData = currentData[currentKey];
                     var hashesTry = geohashData.hashes;
@@ -130,12 +128,13 @@ function getData(fullData, wantedDepth) {
             }
         }
     }
-    if(needToSetHistogramColors){
+    if (needToSetHistogramColors) {
         setHistogramColors(newData.histogram);
     }
-    if(needToMergeGeohashes){
+    if (needToMergeGeohashes) {
         newData.geohashColors = mergeGeohashes(newData.geohashColors);
     }
+    console.log(newData);
     return newData;
 }
 
@@ -143,7 +142,7 @@ function getData(fullData, wantedDepth) {
 function mergeGeohashes(geoHashColorArray) {
     console.log(geoHashColorArray);
     var merged = [];
-    for(var i = 0 ; i < geoHashColorArray.length;i++) {
+    for (var i = 0; i < geoHashColorArray.length; i++) {
         merged = MergeRecursiveGeoHashColors(geoHashColorArray[i], merged);
     }
     console.log(merged);
@@ -175,11 +174,11 @@ function setHistogramColors(histogram) {
         }
     } //current feature
     var index = 0;
-    var normalized = normalizeHistogramByArrayContents(colorData,max,min);
+    var normalized = normalizeHistogramByArrayContents(colorData, max, min);
     for (var hash in colorData) {
         if (colorData.hasOwnProperty(hash)) {
             histogram[index].color = getColor(normalized[hash]);
-            index ++;
+            index++;
         }
     }
     return colorData;
@@ -193,7 +192,7 @@ function MergeRecursiveGeoHashColors(obj1, obj2) {
     for (var p in obj2) {
         try {
             // Property in destination object set; update its value.
-            if ( obj2[p].constructor==Object ) {
+            if (obj2[p].constructor == Object) {
                 obj1[p] = MergeRecursiveGeoHashColors(obj1[p], obj2[p]);
 
             } else {
@@ -203,7 +202,7 @@ function MergeRecursiveGeoHashColors(obj1, obj2) {
 
             }
 
-        } catch(e) {
+        } catch (e) {
             // Property in destination object not set; create it and set its value.
             obj1[p] = obj2[p];
 
@@ -236,8 +235,8 @@ function setCurrentFeature() {
 
 
 function traverse(jsonObj) {
-    if( typeof jsonObj == "object" ) {
-        $.each(jsonObj, function(k,v) {
+    if (typeof jsonObj == "object") {
+        $.each(jsonObj, function (k, v) {
             // k is either an array index or object key
             console.log(jsonObj);
             traverse(v);
@@ -258,14 +257,14 @@ function updatePathText() {
         //empty one always placed in the back
         path.pop();
         //get the correct object to visualize based on the current path.
-        for (var i = path.length-1; i >= 0; i--) {
+        for (var i = path.length - 1; i >= 0; i--) {
             formattedPath += path[i] + " "
         }
     }
-    else{
+    else {
         formattedPath += "Overview"
     }
-    document.getElementById("currentPath").textContent=formattedPath ;
+    document.getElementById("currentPath").textContent = formattedPath;
 }
 
 function handleHistClick(clickedBar, depth) {

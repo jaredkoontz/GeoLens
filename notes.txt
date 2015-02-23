@@ -2,6 +2,8 @@ Fast And Easy to do
 todo "instant click" if on 2014 march and then want to look at 2013, you need to click on 2013 twice.
 todo make the geohash text value appear on mouse over.
 todo comment code and make set Data a smaller function. Reduce number of global functions?
+todo comment code
+
 
 -bugs
 todo max color is not shown on lowest histogram
