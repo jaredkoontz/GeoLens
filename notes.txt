@@ -7,11 +7,9 @@ todo comment code and make set Data a smaller function. Reduce number of global 
 todo max color is not shown on lowest histogram
 
 main functionality left to do:
-todo else brance of merging histograms/when histograms are not in the next immediate child
 todo brushing and linking from hists to geohashes
-
-todo from geohashes to hist -> show bar with closest color/samecolor
-todo from hist to geohashes -> all hashes with the same color.
+    todo from geohashes to hist -> show bar with closest color/samecolor
+    todo from hist to geohashes -> all hashes with the same color.
 
 
 

@@ -106,6 +106,7 @@ function drawHistogram(histData, depth, title) {
         .attr('fill', function(d) {
             return d.color;
         })
+        .style("opacity", .7)
         .on('mouseover', function () {
             var geohashRec = d3.select(this);
             currentColor  = geohashRec.style("fill");

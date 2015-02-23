@@ -68,79 +68,68 @@ function getData(fullData, wantedDepth) {
                         }
                     }
                 }
-
-                //get histogram for current data.
-                var geohashData = currentData[currentKey];
-                var hashesTry = geohashData.hashes;
-                if( typeof hashesTry == "object" ){
-                    needToMergeGeohashes = true;
-                    var thisFeature = [];
-                    for (var hash in hashesTry) {
-                        if (hashesTry.hasOwnProperty(hash)) {
-                            for (var possibleFeatures in hashesTry[hash]) {
-                                if (hashesTry[hash].hasOwnProperty(possibleFeatures)) {
-                                    if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
-                                        var featureValue = hashesTry[hash][possibleFeatures];
-                                        var hashColorCombo = new HashColorCombo(hash, featureValue);
-                                        thisFeature.push(hashColorCombo);
+                if( currentKey != "avgs") {
+                    //get histogram for current data.
+                    var geohashData = currentData[currentKey];
+                    var hashesTry = geohashData.hashes;
+                    if (typeof hashesTry == "object") {
+                        needToMergeGeohashes = true;
+                        var thisFeature = [];
+                        for (var hash in hashesTry) {
+                            if (hashesTry.hasOwnProperty(hash)) {
+                                for (var possibleFeatures in hashesTry[hash]) {
+                                    if (hashesTry[hash].hasOwnProperty(possibleFeatures)) {
+                                        if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
+                                            var featureValue = hashesTry[hash][possibleFeatures];
+                                            var hashColorCombo = new HashColorCombo(hash, featureValue);
+                                            thisFeature.push(hashColorCombo);
+                                        }
+                                    } //current feature
+                                } //iterate possible features
+                            } //own property check
+                        } //end for
+                        newData.geohashColors.push(thisFeature);
+                    }
+                    else {
+                        //todo this branch
+                        //traverse to next bunch and try .hashes
+                        var gotThere = false;
+                        while (!gotThere) {
+                            for (var obj in geohashData) {
+                                if (geohashData.hasOwnProperty(obj)) {
+                                    var hashesTry = geohashData[obj].hashes;
+                                    if (typeof hashesTry == "object") {
+                                        gotThere = true;
+                                        needToMergeGeohashes = true;
+                                        var thisFeature = [];
+                                        for (var hash in hashesTry) {
+                                            if (hashesTry.hasOwnProperty(hash)) {
+                                                for (var possibleFeatures in hashesTry[hash]) {
+                                                    if (hashesTry[hash].hasOwnProperty(possibleFeatures)) {
+                                                        if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
+                                                            var featureValue = hashesTry[hash][possibleFeatures];
+                                                            var hashColorCombo = new HashColorCombo(hash, featureValue);
+                                                            thisFeature.push(hashColorCombo);
+                                                        }
+                                                    } //current feature
+                                                } //iterate possible features
+                                            } //own property check
+                                        } //end for
+                                        newData.geohashColors.push(thisFeature);
                                     }
-                                } //current feature
-                            } //iterate possible features
-                        } //own property check
-                    } //end for
-                    newData.geohashColors.push(thisFeature);
-                }
-                else{
-                    //todo this branch
-                }
+                                } //end for
+                                else {
+                                    //todo this branch
+                                    //traverse further
+                                }
 
-                //console.log(currentKey);
-                //tree.push(currentData[currentKey]);
-                //traverse(currentData);
-                //var there = false;
-                //while(!there) {
-                //    console.log(currentData);
-                //    if ('hashes' in currentData) {
-                //        var geohashColorsData = currentData[currentKey];
-                //        newData.geohashColors = getLowestGeoHashTilesData(geohashColorsData,newData.geohashColors);
-                //    }
-                //    else{
-                //        var nextStep = currentData[currentKey];
-                //        if(nextStep ===undefined ){
-                //            for (var foo in currentData) {
-                //                if (currentData.hasOwnProperty(foo)) {
-                //                    currentData = currentData[foo];
-                //                }
-                //            }
-                //        }
-                //        else{
-                //            currentData = currentData[currentKey];
-                //        }
-                //    }
-                //}
-                //for (var hash in geohashColorsData) {
-                //    if (geohashColorsData.hasOwnProperty(hash)) {
-                //        for (var possibleFeatures in geohashColorsData[hash]) {
-                //            if (geohashColorsData[hash].hasOwnProperty(possibleFeatures)) {
-                //                if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
-                //                    var featureValue = geohashColorsData[hash][possibleFeatures];
-                //                    var hashColorCombo = new HashColorCombo(hash, featureValue);
-                //                    colorData.push(hashColorCombo); // add the data
-                //                    max = (max < featureValue) ? featureValue : max;
-                //                    min = (min > featureValue) ? featureValue : min;
-                //                }
-                //            } //current feature
-                //        } //iterate possible features
-                //    } //own property check
-                //} //end for
-                //colorData = computeGeoHashColors(colorData, max, min); //compute colors from data.
-                //return colorData;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-    //console.log(tree);
-    //var merged = MergeRecursiveGeoHashColors(tree[0], tree[1]);
-    //console.log(merged);
     if(needToSetHistogramColors){
         setHistogramColors(newData.histogram);
     }
@@ -261,6 +250,24 @@ function traverse(jsonObj) {
 }
 
 
+function updatePathText() {
+    var path = currentPath.split(":");
+    var formattedPath = "Current Path: ";
+    //adjust current data
+    if (path.length > 1) {
+        //empty one always placed in the back
+        path.pop();
+        //get the correct object to visualize based on the current path.
+        for (var i = path.length-1; i >= 0; i--) {
+            formattedPath += path[i] + " "
+        }
+    }
+    else{
+        formattedPath += "Overview"
+    }
+    document.getElementById("currentPath").textContent=formattedPath ;
+}
+
 function handleHistClick(clickedBar, depth) {
     //get title from clicked bar
     var title = clickedBar.x;
@@ -290,4 +297,5 @@ function handleHistClick(clickedBar, depth) {
         }
         currentDepth = mutableCurrentDepth;
     }
+    updatePathText();
 }
