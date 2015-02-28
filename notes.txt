@@ -1,3 +1,7 @@
+merging color ideas
+http://stackoverflow.com/questions/4057475/rounding-colour-values-to-the-nearest-of-a-small-set-of-colours
+
+
 Fast And Easy to do
 todo "instant click" if on 2014 march and then want to look at 2013, you need to click on 2013 twice.
 todo make the geohash text value appear on mouse over.
