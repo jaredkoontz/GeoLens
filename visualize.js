@@ -15,7 +15,7 @@ function getLowestHistogramData(potentialHistData, createdData) {
     //set colors for histograms.
     var min = 0;
     var max = createdData.length;
-    var normalized = normalizeByArrayIndex(createdData,max,min);
+    var normalized = normalizeByArrayIndex(createdData, max, min);
     var index = 0;
     for (var normalizedValue in normalized) {
         if (normalized.hasOwnProperty(normalizedValue)) {

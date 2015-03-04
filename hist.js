@@ -4,6 +4,7 @@ function createNewSvg(newHist) {
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
     svg.setAttribute('id', newHist);
+    svg.setAttribute('class', 'histogramVis');
     document.getElementById("hists").appendChild(svg);
 }
 
@@ -103,28 +104,29 @@ function drawHistogram(histData, depth, title) {
         .attr('height', function (d) {
             return ((height - margins.top) - yRange(d.y));
         })
-        .attr('fill', function(d) {
+        .attr('fill', function (d) {
             return d.color;
         })
-        .style("opacity", .7)
+        .style("opacity",.7)
         .on('mouseover', function () {
-            var geohashRec = d3.select(this);
-            currentColor  = geohashRec.style("fill");
+            var focusedBar = d3.select(this);
+            currentColor = focusedBar.style("fill");
             var rgb = currentColor.match(/\d+/g);
-            var new_red   = 255 - rgb[0];
+            var new_red = 255 - rgb[0];
             var new_green = 255 - rgb[1];
-            var new_blue  = 255 - rgb[2];
-            geohashRec.style("stroke", rgbToHex(new_red,new_green,new_blue));
-            geohashRec.style("stroke-width", 6);
+            var new_blue = 255 - rgb[2];
+            focusedBar.style("stroke", rgbToHex(new_red, new_green, new_blue));
+            focusedBar.style("stroke-width", 6);
+            linkFromBrushing(focusedBar, "bar")
+
         })
         .on('mouseout', function () {
-            var geohashRec = d3.select(this);
-            geohashRec.style("stroke", "none");
-            geohashRec.style("fill", currentColor);
+            var focusedBar = d3.select(this);
+            focusedBar.style("stroke", "none");
+            focusedBar.style("fill", currentColor);
         })
         .on("click", function (d) {
             //console.log(d + " " + depth + " " + title);
             handleHistClick(d, depth);
         });
-
 }

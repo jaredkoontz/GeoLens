@@ -17,11 +17,10 @@ function drawGeohashes(geoHashData) {
     });
 
 
-
     var feature = g.selectAll("rectangle")
         .data(geoHashData.geohashRecs)
         .enter().append("rect")
-        .style("opacity", .5)
+        .style("opacity",.7)
         .style("fill", "red")
 
         //add geohash as id.
@@ -33,13 +32,14 @@ function drawGeohashes(geoHashData) {
 
     feature.on("mouseover", function (d) {
         var geohashRec = d3.select(this);
-        currentColor  = geohashRec.style("fill");
+        currentColor = geohashRec.style("fill");
         var rgb = currentColor.match(/\d+/g);
-        var new_red   = 255 - rgb[0];
+        var new_red = 255 - rgb[0];
         var new_green = 255 - rgb[1];
-        var new_blue  = 255 - rgb[2];
-        geohashRec.style("stroke", rgbToHex(new_red,new_green,new_blue));
+        var new_blue = 255 - rgb[2];
+        geohashRec.style("stroke", rgbToHex(new_red, new_green, new_blue));
         geohashRec.style("stroke-width", 6);
+        linkFromBrushing(geohashRec, "hash");
 
         //todo possible code for adding geohash to rectangle
         //need to wrap it in a "g" for text to work.

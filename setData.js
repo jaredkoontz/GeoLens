@@ -134,18 +134,18 @@ function getData(fullData, wantedDepth) {
     if (needToMergeGeohashes) {
         newData.geohashColors = mergeGeohashes(newData.geohashColors);
     }
-    console.log(newData);
+    //console.log(newData);
     return newData;
 }
 
 
 function mergeGeohashes(geoHashColorArray) {
-    console.log(geoHashColorArray);
+    //console.log(geoHashColorArray);
     var merged = [];
     for (var i = 0; i < geoHashColorArray.length; i++) {
         merged = MergeRecursiveGeoHashColors(geoHashColorArray[i], merged);
     }
-    console.log(merged);
+    //console.log(merged);
     var min = Number.MAX_VALUE;
     var max = Number.MIN_VALUE;
     for (var hash in merged) {
@@ -156,8 +156,8 @@ function mergeGeohashes(geoHashColorArray) {
             min = (min > featureValue.featureColor) ? featureValue.featureColor : min;
         }
     }
-    console.log(max);
-    console.log(min);
+    //console.log(max);
+    //console.log(min);
     return computeGeoHashColors(merged, max, min);
 }
 
@@ -238,13 +238,13 @@ function traverse(jsonObj) {
     if (typeof jsonObj == "object") {
         $.each(jsonObj, function (k, v) {
             // k is either an array index or object key
-            console.log(jsonObj);
+            //console.log(jsonObj);
             traverse(v);
         });
     }
     else {
         // jsonOb is a number or string
-        console.log(jsonObj);
+        //console.log(jsonObj);
     }
 }
 

@@ -18,20 +18,20 @@ function sendRequest() {
     console.log(type);
 
 
-        jQuery.ajax({
-            type: 'GET',
-            url: "http://localhost:5446/", //home
+    jQuery.ajax({
+        type: 'GET',
+        url: "http://localhost:5446/", //home
 //            url: "http://lion.cs.colostate.edu:5446/", //school
-            dataType: 'jsonp',
-            jsonpCallback: 'geolens', // for caching
-            cache: true
-        }).done(function (data) {
+        dataType: 'jsonp',
+        jsonpCallback: 'geolens', // for caching
+        cache: true
+    }).done(function (data) {
 //            alert('success' + data[0].data);
-            var barData = data[0].geolens;//
-            callback(barData);
+        var barData = data[0].geolens;//
+        callback(barData);
 //            alert(get_type(data[0].message));
-        }).fail(function () {
-            alert('Uh Oh!');
-        });
+    }).fail(function () {
+        alert('Uh Oh!');
+    });
     return $ret;
 }

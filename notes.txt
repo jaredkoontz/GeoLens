@@ -1,5 +1,10 @@
 merging color ideas
 http://stackoverflow.com/questions/4057475/rounding-colour-values-to-the-nearest-of-a-small-set-of-colours
+http://colorbrewer2.org/
+
+//could have numcolors in histogram, and set geohashes accordingly. Would make brushing and linking very easy.
+//currently using 8 colors.
+
 
 
 Fast And Easy to do
