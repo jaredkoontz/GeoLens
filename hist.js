@@ -20,7 +20,9 @@ function drawHistogram(histData, depth, title) {
     //todo, currently assuming at most 3 hists compute this value from lowest depth
 
     var histHeight = .20 * windowHeight;
-    var histPanelWidth = .13 * windowWidth; //current panel is 15% of page, so the width of the hist of .13 got 1% padding
+    var histPanelWidth = .30 * windowWidth; //current panel is 15% of page, so the width of the hist of .13 got 1% padding
+
+
 
     var data = histData;
 
@@ -28,7 +30,7 @@ function drawHistogram(histData, depth, title) {
         width = histPanelWidth,
         height = histHeight,
         margins = {
-            top: 20, right: 2, bottom: 5, left: 25
+            top: 20, right: 2, bottom: 5, left: 50
         },
         xRange = d3.scale.ordinal().rangeRoundBands([margins.left, width - margins.right], 0.1).domain(data.map(function (d) {
             return d.x;

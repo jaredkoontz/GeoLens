@@ -16,6 +16,7 @@ todo comment code
 
 -bugs
 todo max color is not shown on lowest histogram
+sometimes top number is not shown
 
 main functionality left to do:
 todo brushing and linking from hists to geohashes
