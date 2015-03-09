@@ -16,6 +16,7 @@ function getGeohashRectByIdAndChangeColor(id, hexColor) {
  */
 function getColor(value) {
     return multiYellowToRedBrewer(value);
+    //return multiHue(value);
 }
 
 function multiYellowToRedBrewer(value) {
