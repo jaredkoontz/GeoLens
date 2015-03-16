@@ -1,4 +1,4 @@
-setDataAndVisualize();
+//setDataAndVisualize();
 
 function createNewSvg(newHist) {
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -31,12 +31,12 @@ function drawHistogram(histData, depth, title) {
     if (depth == 2) {
         var width = histPanelWidth,
             height = .40 * windowHeight,
-        margins = {
-            top: 100, right: 2, bottom: 20, left: 60
-        },
-        axis = {
-           top: 5
-        };
+            margins = {
+                top: 100, right: 2, bottom: 20, left: 60
+            },
+            axis = {
+                top: 5
+            };
         var xRange = d3.scale.ordinal().rangeRoundBands([margins.left, width - margins.right], 0.1).domain(data.map(function (d) {
                 return d.x;
             })),
@@ -83,7 +83,7 @@ function drawHistogram(histData, depth, title) {
         //creates x axis
         var visXAxis = vis.append('svg:g');
         visXAxis.attr('class', 'x axis')
-            .attr('transform', 'translate(' + 0 + ',' +  (height + margins.bottom) + ')')
+            .attr('transform', 'translate(' + 0 + ',' + (height + margins.bottom) + ')')
             .style("stroke", "#fff")
             .style("font-size", "smaller")
 
@@ -130,10 +130,10 @@ function drawHistogram(histData, depth, title) {
             .attr('height', function (d) {
                 return ((height - axis.top) - yRange(d.y));
             })
-            .attr('fill', function (d) {
+            .style('fill', function (d) {
                 return d.color;
             })
-            .style("opacity", .7)
+            .style("opacity", .95)
             .on('mouseover', function () {
                 var focusedBar = d3.select(this);
                 currentColor = focusedBar.style("fill");
@@ -149,7 +149,7 @@ function drawHistogram(histData, depth, title) {
             .on('mouseout', function () {
                 var focusedBar = d3.select(this);
                 focusedBar.style("stroke", "none");
-                focusedBar.style("fill", currentColor);
+                unlinkFromBrushing(focusedBar, "bar");
             })
             .on("click", function (d) {
                 //console.log(d + " " + depth + " " + title);
@@ -258,10 +258,12 @@ function drawHistogram(histData, depth, title) {
             .attr('height', function (d) {
                 return ((height - margins.top) - yRange(d.y));
             })
-            .attr('fill', function (d) {
-                return d.color;
+            .style('fill', function (d) {
+                //return d.color;
+                return "#fff";
+
             })
-            .style("opacity", .7)
+            .style("opacity", .95)
             .on('mouseover', function () {
                 var focusedBar = d3.select(this);
                 currentColor = focusedBar.style("fill");
@@ -271,7 +273,7 @@ function drawHistogram(histData, depth, title) {
                 var new_blue = 255 - rgb[2];
                 focusedBar.style("stroke", rgbToHex(new_red, new_green, new_blue));
                 focusedBar.style("stroke-width", 6);
-                linkFromBrushing(focusedBar, "bar")
+                //linkFromBrushing(focusedBar, "bar")
 
             })
             .on('mouseout', function () {

@@ -4,9 +4,25 @@ var lowestDepth = 2; //lowest depth of the json array. todo dont hardcode: send 
 var currentFeature; //current selected feature.
 var currentPath = "";
 
+function jsonpVis(data, map){
+        //get rectangle coords, and start parsing geohash data.
+
+
+
+        var geoHashRecData = data.geolens[0];
+        var histData = data.geolens[1];
+        geolensData = histData;
+        drawGeohashes(geoHashRecData);
+        getData(histData, 0, 0);
+        currentDepth = 0;
+}
+
+
 function setDataAndVisualize() {
     if (!currentFeature) currentFeature = setCurrentFeature();
-    d3.json("json/output.json", function (error, json) {
+    //d3.json("json/outputUS.json", function (error, json) {
+    //d3.json("json/output3char.json", function (error, json) {
+    d3.json("json/outputNoCo.json", function (error, json) {
         //error handling
         if (error) return console.warn(error);
         //get rectangle coords, and start parsing geohash data.
@@ -158,6 +174,8 @@ function mergeGeohashes(geoHashColorArray) {
     }
     //console.log(max);
     //console.log(min);
+
+
     return computeGeoHashColors(merged, max, min);
 }
 
@@ -226,25 +244,6 @@ function setCurrentFeature() {
         currentDepth = 0;
         var newData = getData(geolensData, 0, 0);
         drawHistogram(newData.histogram, 0, "Overview");
-    }
-}
-
-
-//traverse down and get geohash info
-//called with every property and it's value
-
-
-function traverse(jsonObj) {
-    if (typeof jsonObj == "object") {
-        $.each(jsonObj, function (k, v) {
-            // k is either an array index or object key
-            //console.log(jsonObj);
-            traverse(v);
-        });
-    }
-    else {
-        // jsonOb is a number or string
-        //console.log(jsonObj);
     }
 }
 

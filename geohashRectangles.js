@@ -20,7 +20,7 @@ function drawGeohashes(geoHashData) {
     var feature = g.selectAll("rectangle")
         .data(geoHashData.geohashRecs)
         .enter().append("rect")
-        .style("opacity",.7)
+        .style("opacity", .7)
         .style("fill", "red")
 
         //add geohash as id.
@@ -30,7 +30,7 @@ function drawGeohashes(geoHashData) {
 
     var currentColor;
 
-    feature.on("mouseover", function (d) {
+    feature.on("mouseover", function () {
         var geohashRec = d3.select(this);
         currentColor = geohashRec.style("fill");
         var rgb = currentColor.match(/\d+/g);
@@ -71,7 +71,7 @@ function drawGeohashes(geoHashData) {
     feature.on("mouseout", function () {
         var geohashRec = d3.select(this);
         geohashRec.style("stroke", "none");
-        geohashRec.style("fill", currentColor);
+        unlinkFromBrushing(geohashRec, "hash");
     });
 
 

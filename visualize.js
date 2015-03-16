@@ -30,6 +30,15 @@ function getLowestGeoHashTilesData(geohashColorsData, colorData) {
     var min = Number.MAX_VALUE;
     var max = Number.MIN_VALUE;
 
+
+    //if current depth is 2 get max and min value from rightmost hist
+    var correctHistogram = d3.select("#histogramVis" + 2).selectAll("rect");
+    correctHistogram.each(function (d, i) {
+        console.log(this);
+        console.log(d);
+    });
+
+
     for (var hash in geohashColorsData) {
         if (geohashColorsData.hasOwnProperty(hash)) {
             for (var possibleFeatures in geohashColorsData[hash]) {

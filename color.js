@@ -15,8 +15,8 @@ function getGeohashRectByIdAndChangeColor(id, hexColor) {
  *
  */
 function getColor(value) {
-    return multiYellowToRedBrewer(value);
-    //return multiHue(value);
+    //return multiYellowToRedBrewer(value);
+    return multiHue(value);
 }
 
 function multiYellowToRedBrewer(value) {
@@ -60,7 +60,6 @@ function multiYellowToRedBrewer(value) {
     }
     return rgbToHex(r, g, b);
 }
-
 
 
 /**
@@ -175,35 +174,35 @@ function singleBurntBrewer(value) {
         r = 255;
         g = 245;
         b = 235;
-    }else if (1.0 / 9.0 < value && value <= 2.0 / 9.0) {
+    } else if (1.0 / 9.0 < value && value <= 2.0 / 9.0) {
         r = 254;
         g = 230;
         b = 206;
-    }else if (2.0 / 9.0 < value && value <= 3.0 / 9.0) {
+    } else if (2.0 / 9.0 < value && value <= 3.0 / 9.0) {
         r = 253;
         g = 208;
         b = 162;
-    }else if (3.0 / 9.0 < value && value <= 4.0 / 9.0) {
+    } else if (3.0 / 9.0 < value && value <= 4.0 / 9.0) {
         r = 253;
         g = 174;
         b = 107;
-    }else if (4.0 / 9.0 < value && value <= 5.0 / 9.0) {
+    } else if (4.0 / 9.0 < value && value <= 5.0 / 9.0) {
         r = 253;
         g = 141;
         b = 60;
-    }else if (5.0 / 9.0 < value && value <= 6.0 / 9.0) {
+    } else if (5.0 / 9.0 < value && value <= 6.0 / 9.0) {
         r = 241;
         g = 105;
         b = 19;
-    }else if (6.0 / 9.0 < value && value <= 7.0 / 9.0) {
+    } else if (6.0 / 9.0 < value && value <= 7.0 / 9.0) {
         r = 217;
         g = 72;
         b = 1;
-    }else if (7.0 / 9.0 < value && value <= 8.0 / 9.0) {
+    } else if (7.0 / 9.0 < value && value <= 8.0 / 9.0) {
         r = 166;
         g = 54;
         b = 3;
-    }else if (8.0 / 9.0 < value && value <= 9.0 / 9.0) {
+    } else if (8.0 / 9.0 < value && value <= 9.0 / 9.0) {
         r = 127;
         g = 39;
         b = 4;

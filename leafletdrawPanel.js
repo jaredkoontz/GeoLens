@@ -47,7 +47,7 @@ function addLeafletDrawPanel() {
     map.on('draw:created', function (e) {
         var type = e.layerType,
             layer = e.layer;
-        setLatLonValuesAndType(layer.getLatLngs(), type);
+        setLatLonValuesAndType(layer.getLatLngs(), type, layer);
         drawnItems.addLayer(layer);
         //drawControl.removeFrom(map);
         //drawControlEditOnly.addTo(map);

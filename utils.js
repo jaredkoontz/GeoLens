@@ -1,27 +1,79 @@
+//todo brushing and linking by color
 function linkFromBrushing(brushedSelection, type) {
-    var currentColor = brushedSelection.style("fill");
-    var rgb = currentColor.match(/\d+/g);
-    var red = 255 - rgb[0];
-    var green = 255 - rgb[1];
-    var blue = 255 - rgb[2];
-    if (type == "hash") {
-        //need to highlight bars
-        console.log("hash");
-        //console.log(brushedSelection);
-        //highlight single bar
-        var correctHistogram = d3.select("#histogramVis" + currentDepth).selectAll("rect");
+    if (currentDepth == 2) {
+        var currentColor = brushedSelection.style("fill");
+        var rgb = currentColor.match(/\d+/g);
+        var new_red = 255 - rgb[0];
+        var new_green = 255 - rgb[1];
+        var new_blue = 255 - rgb[2];
+        if (type == "hash") {
+            //need to highlight bars
+            var correctHistogram = d3.select("#histogramVis" + currentDepth).selectAll("rect");
+            correctHistogram.each(function () {
+                var currentStyle = this.style.fill;
+                console.log(this.style.fill);
+                if (currentColor == currentStyle) {
+                    this.style.stroke = rgbToHex(new_red, new_green, new_blue);
+                    this.style.strokeWidth = 6;
+                }
+            });
+        }
+        else if (type == "bar") {
+            //need to highlight hashes
+            var svg = d3.select("#map").select("svg");
+            var hashes = svg.select('g').selectAll("rect");
 
-        console.log(correctHistogram);
-        console.log(rgb);
+            hashes.each(function () {
+                var currentStyle = this.style.fill;
+                console.log(this.style.fill);
+                if (currentColor == currentStyle) {
+                    this.style.stroke = rgbToHex(new_red, new_green, new_blue);
+                    this.style.strokeWidth = 6;
+                }
+            });
+
+            //console.log(brushedSelection);
+            //highlight multiple hashes
+
+        }
     }
-    else if (type == "bar") {
-        //need to highlight hashes
-        console.log("bar");
-        //console.log(brushedSelection);
-        //highlight multiple hashes
+}
 
+
+function unlinkFromBrushing(brushedSelection, type) {
+    if (currentDepth == 2) {
+        var currentColor = brushedSelection.style("fill");
+        var rgb = currentColor.match(/\d+/g);
+        var new_red = 255 - rgb[0];
+        var new_green = 255 - rgb[1];
+        var new_blue = 255 - rgb[2];
+        if (type == "hash") {
+            //need to highlight bars
+            var correctHistogram = d3.select("#histogramVis" + currentDepth).selectAll("rect");
+            correctHistogram.each(function () {
+                var currentStyle = this.style.fill;
+                console.log(this.style.fill);
+                if (currentColor == currentStyle) {
+                    this.style.stroke = "none";
+                }
+            });
+        }
+        else if (type == "bar") {
+            //need to highlight hashes
+            var svg = d3.select("#map").select("svg");
+            var hashes = svg.select('g').selectAll("rect");
+
+            hashes.each(function () {
+                var currentStyle = this.style.fill;
+                console.log(this.style.fill);
+                if (currentColor == currentStyle) {
+                    this.style.stroke = "none";
+                }
+            });
+
+
+        }
     }
-
 }
 
 

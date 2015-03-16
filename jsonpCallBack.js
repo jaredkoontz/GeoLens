@@ -1,6 +1,8 @@
 var latLons = [];
 var type = "";
-function setLatLonValuesAndType(latLonsFromLeaflet, typeFromLeaflet) {
+var layer;
+
+function setLatLonValuesAndType(latLonsFromLeaflet, typeFromLeaflet, layerCreated) {
     if (latLons.length != 0) {
         //there was a query area that was edited, remove old latLons and accept new one.
         while (latLons.length > 0) {
@@ -9,27 +11,31 @@ function setLatLonValuesAndType(latLonsFromLeaflet, typeFromLeaflet) {
     }
     latLons = latLonsFromLeaflet;
     type = typeFromLeaflet;
+    layer = layerCreated;
 }
 
 
-function sendRequest() {
+function sendJsonpRequest(index, val, map, callback) {
     //most recently drawn shape is sent
+    var $ret = 0;
     console.log(latLons);
     console.log(type);
+    console.log(layer);
 
 
-    jQuery.ajax({
-        type: 'GET',
+
+    $.ajax({
+        type: 'GET', //todo encode features and coords in url
         url: "http://localhost:5446/", //home
 //            url: "http://lion.cs.colostate.edu:5446/", //school
         dataType: 'jsonp',
         jsonpCallback: 'geolens', // for caching
-        cache: true
+        cache: false,
+        async: false
     }).done(function (data) {
-//            alert('success' + data[0].data);
-        var barData = data[0].geolens;//
+        map.removeLayer(layer);
+        var barData = data[0];//
         callback(barData);
-//            alert(get_type(data[0].message));
     }).fail(function () {
         alert('Uh Oh!');
     });
