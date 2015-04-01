@@ -15,26 +15,29 @@
     <link rel="stylesheet" href="lib/js/leaflet.css">
     <link rel="stylesheet" href="css/geolens.css">
     <style type="text/css"></style>
+
     <!--lib-->
     <script src="lib/js/d3.min.js"></script>
     <script src="lib/js/leaflet.js"></script>
     <script src="lib/js/leaflet.draw-src.js"></script>
     <script src="lib/js/jquery-1.11.1.min.js"></script>
+
     <!-- homebrewed -->
-    <script src="jsonpCallBack.js"></script>
-    <script src="geohashRectangles.js"></script>
-    <script src="leafletdrawPanel.js"></script>
-    <script src="setData.js"></script>
-    <script src="histogramClickHandler.js"></script>
-    <script src="utils.js"></script>
-    <script src="visualize.js"></script>
-    <script src="color.js"></script>
+    <script src="geolens/globals.js"></script>
+    <script src="geolens/jsonpCallBack.js"></script>
+    <script src="geolens/geohashRectangles.js"></script>
+    <script src="geolens/leafletdrawPanel.js"></script>
+    <script src="geolens/setData.js"></script>
+    <script src="geolens/histogramClickHandler.js"></script>
+    <script src="geolens/utils.js"></script>
+    <script src="geolens/visualize.js"></script>
+    <script src="geolens/color.js"></script>
 
 </head>
 <body>
 <div id="map">
 </div>
-<script src="map.js"></script>
+<script src="geolens/map.js"></script>
 
 <div id="histPanel">
     <br/>
@@ -47,7 +50,7 @@
     <div id="currentPath">Current Path: Overview</div>
     <hr/>
     <div id="hists">
-        <script src="hist.js"></script>
+        <script src="geolens/hist.js"></script>
     </div>
 </div>
 

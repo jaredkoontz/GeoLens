@@ -1,3 +1,6 @@
+/**
+ *
+ */
 function drawGeohashes(geoHashData) {
     //init svg layers
     map._initPathRoot();

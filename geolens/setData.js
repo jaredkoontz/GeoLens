@@ -1,61 +1,68 @@
-var geolensData; // a global
-var currentDepth; // lowest histogram level
-var lowestDepth = 2; //lowest depth of the json array. todo dont hardcode: send over or compute?
-var currentFeature; //current selected feature.
-var currentPath = "";
-
-function jsonpVis(data, map){
-        //get rectangle coords, and start parsing geohash data.
-
-
-
-        var geoHashRecData = data.geolens[0];
-        var histData = data.geolens[1];
-        geolensData = histData;
-        drawGeohashes(geoHashRecData);
-        getData(histData, 0, 0);
-        currentDepth = 0;
+/**
+ *
+ */
+function visualizeResponse(data, map){
+    //get rectangle coords, and start parsing geohash data.
+    var geoHashRecData = data.geolens[0];
+    var histData = data.geolens[1];
+    geolensData = histData; //set global
+    drawGeohashes(geoHashRecData);
+    getData(histData, 0, 0);
+    currentDepth = 0; //set global
 }
 
-
-function setDataAndVisualize() {
-    if (!currentFeature) currentFeature = setCurrentFeature();
-    //d3.json("json/outputUS.json", function (error, json) {
-    //d3.json("json/output3char.json", function (error, json) {
-    d3.json("json/outputNoCo.json", function (error, json) {
-        //error handling
-        if (error) return console.warn(error);
-        //get rectangle coords, and start parsing geohash data.
-        var geoHashRecData = json.geolens[0];
-        var histData = json.geolens[1];
-        geolensData = histData;
-        drawGeohashes(geoHashRecData);
-        getData(histData, 0, 0);
-        currentDepth = 0;
-    });
-}
-
+/**
+ *
+ */
 function getData(fullData, wantedDepth) {
     var currentData = fullData.aggInfo;
+
+    //create the new data to give to d3 to visualize
     var newData = {
         "histogram": [],
         "geohashColors": []
     };
 
+    //booleans that are set later if we need to set colors or merge the geohashes.
     var needToSetHistogramColors = true;
     var needToMergeGeohashes = false;
-    //todo move to own method
-    //"getPath"
+
+    //get current path
     var path = currentPath.split(":");
-    //adjust current data
+    //adjust current data according to the path
     if (path.length > 1) {
-        //empty one always placed in the back
+        //an empty path is always placed in the back, remove it
         path.pop();
+
         //get the correct object to visualize based on the current path.
         for (var i = 0; i < path.length; i++) {
             currentData = currentData[path[i]];
         }
+
     }
+
+    //data has been set, traverse and visualize it.
+    var returnValues = foo(wantedDepth,currentData,needToMergeGeohashes,needToSetHistogramColors,newData);
+
+    //are we at the lowest level and need to set colors for the histograms?
+    if (returnValues.needToSetHistogramColors) {
+        //set the colors of the histograms
+        setHistogramColors(returnValues.newData.histogram);
+    }
+
+    //do we need to merge the geohashes?
+    if (returnValues.needToMergeGeohashes) {
+        //merge the geohashes
+        newData.geohashColors = mergeGeohashes(returnValues.newData.geohashColors);
+    }
+
+    return newData;
+}
+
+/**
+ *  todo rename and refactor
+ */
+function foo(wantedDepth,currentData,needToMergeGeohashes,needToSetHistogramColors,newData){
     for (var currentKey in currentData) {
         if (currentData.hasOwnProperty(currentKey)) {
             if (wantedDepth == lowestDepth) { //are we at the lowest depth.
@@ -144,17 +151,18 @@ function getData(fullData, wantedDepth) {
             }
         }
     }
-    if (needToSetHistogramColors) {
-        setHistogramColors(newData.histogram);
-    }
-    if (needToMergeGeohashes) {
-        newData.geohashColors = mergeGeohashes(newData.geohashColors);
-    }
-    //console.log(newData);
-    return newData;
+
+    return {
+        newData: newData,
+        needToMergeGeohashes: needToMergeGeohashes,
+        needToSetHistogramColors: needToSetHistogramColors
+    };
 }
 
 
+/**
+ *
+ */
 function mergeGeohashes(geoHashColorArray) {
     //console.log(geoHashColorArray);
     var merged = [];
@@ -175,10 +183,12 @@ function mergeGeohashes(geoHashColorArray) {
     //console.log(max);
     //console.log(min);
 
-
     return computeGeoHashColors(merged, max, min);
 }
 
+/**
+ *
+ */
 function setHistogramColors(histogram) {
     var min = Number.MAX_VALUE;
     var max = Number.MIN_VALUE;
@@ -202,7 +212,7 @@ function setHistogramColors(histogram) {
     return colorData;
 }
 
-/*
+/**
  * Recursively merge properties of two objects
  */
 function MergeRecursiveGeoHashColors(obj1, obj2) {
@@ -229,6 +239,9 @@ function MergeRecursiveGeoHashColors(obj1, obj2) {
     return obj1;
 }
 
+/**
+ *
+ */
 function setCurrentFeature() {
     currentFeature = $('input[name="features"]:checked').val();
     if (geolensData === undefined || geolensData === null) {
@@ -247,7 +260,9 @@ function setCurrentFeature() {
     }
 }
 
-
+/**
+ *
+ */
 function updatePathText() {
     var path = currentPath.split(":");
     var formattedPath = "Current Path: ";
@@ -266,6 +281,9 @@ function updatePathText() {
     document.getElementById("currentPath").textContent = formattedPath;
 }
 
+/**
+ *
+ */
 function handleHistClick(clickedBar, depth) {
     //get title from clicked bar
     var title = clickedBar.x;
@@ -297,3 +315,25 @@ function handleHistClick(clickedBar, depth) {
     }
     updatePathText();
 }
+
+
+
+//code for "offline" version
+
+
+//function setDataAndVisualize() {
+//    if (!currentFeature) currentFeature = setCurrentFeature();
+//    //d3.json("json/outputUS.json", function (error, json) {
+//    //d3.json("json/output3char.json", function (error, json) {
+//    d3.json("json/outputNoCo.json", function (error, json) {
+//        //error handling
+//        if (error) return console.warn(error);
+//        //get rectangle coords, and start parsing geohash data.
+//        var geoHashRecData = json.geolens[0];
+//        var histData = json.geolens[1];
+//        geolensData = histData;
+//        drawGeohashes(geoHashRecData);
+//        getData(histData, 0, 0);
+//        currentDepth = 0;
+//    });
+//}

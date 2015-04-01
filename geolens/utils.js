@@ -1,4 +1,6 @@
-//todo brushing and linking by color
+/**
+ *
+ */
 function linkFromBrushing(brushedSelection, type) {
     if (currentDepth == 2) {
         var currentColor = brushedSelection.style("fill");
@@ -31,22 +33,16 @@ function linkFromBrushing(brushedSelection, type) {
                     this.style.strokeWidth = 6;
                 }
             });
-
-            //console.log(brushedSelection);
-            //highlight multiple hashes
-
         }
     }
 }
 
-
+/**
+ *
+ */
 function unlinkFromBrushing(brushedSelection, type) {
     if (currentDepth == 2) {
         var currentColor = brushedSelection.style("fill");
-        var rgb = currentColor.match(/\d+/g);
-        var new_red = 255 - rgb[0];
-        var new_green = 255 - rgb[1];
-        var new_blue = 255 - rgb[2];
         if (type == "hash") {
             //need to highlight bars
             var correctHistogram = d3.select("#histogramVis" + currentDepth).selectAll("rect");
@@ -76,7 +72,9 @@ function unlinkFromBrushing(brushedSelection, type) {
     }
 }
 
-
+/**
+ *
+ */
 var getCurrentFeature = function () {
     if (!currentFeature) {
         setCurrentFeature();
@@ -84,20 +82,26 @@ var getCurrentFeature = function () {
     return currentFeature;
 };
 
-
+/**
+ *
+ */
 function XYCoordinateAndColor(x, y, color) {
     this.x = x;
     this.y = y;
     this.color = color;
 }
 
-
+/**
+ *
+ */
 function HashColorCombo(hash, featureColor) {
     this.hash = hash;
     this.featureColor = featureColor;
 }
 
-
+/**
+ *
+ */
 function normalizeByArrayIndex(histData, max, min) {
     var normalizedArr = [];
     for (var i = 0, len = histData.length; i < len; i++) {
@@ -109,7 +113,9 @@ function normalizeByArrayIndex(histData, max, min) {
     return normalizedArr;
 }
 
-
+/**
+ *
+ */
 function computeGeoHashColors(colorData, max, min) {
     var normalized = normalizeGeoHashByArrayContents(colorData, max, min);
     //console.log(normalized);
@@ -121,7 +127,9 @@ function computeGeoHashColors(colorData, max, min) {
     }
 }
 
-
+/**
+ *
+ */
 function normalizeGeoHashByArrayContents(array, max, min) {
     var normalizedArr = [];
     for (var i = 0, len = array.length; i < len; i++) {
@@ -133,7 +141,9 @@ function normalizeGeoHashByArrayContents(array, max, min) {
     return normalizedArr;
 }
 
-
+/**
+ *
+ */
 function normalizeHistogramByArrayContents(array, max, min) {
     var normalizedArr = [];
     for (var i = 0, len = array.length; i < len; i++) {

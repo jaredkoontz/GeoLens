@@ -1,5 +1,7 @@
-//setDataAndVisualize();
 
+/**
+ *
+ */
 function createNewSvg(newHist) {
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
@@ -8,7 +10,9 @@ function createNewSvg(newHist) {
     document.getElementById("hists").appendChild(svg);
 }
 
-
+/**
+ *
+ */
 function drawHistogram(histData, depth, title) {
     var newHist = "histogramVis" + depth;
 
@@ -28,7 +32,7 @@ function drawHistogram(histData, depth, title) {
     var vis = d3.select("#" + newHist);
 
 
-    if (depth == 2) {
+    if (depth == lowestDepth) {
         var width = histPanelWidth,
             height = .40 * windowHeight,
             margins = {

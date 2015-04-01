@@ -2,6 +2,9 @@ var latLons = [];
 var type = "";
 var layer;
 
+/**
+ *
+ */
 function setLatLonValuesAndType(latLonsFromLeaflet, typeFromLeaflet, layerCreated) {
     if (latLons.length != 0) {
         //there was a query area that was edited, remove old latLons and accept new one.
@@ -14,7 +17,9 @@ function setLatLonValuesAndType(latLonsFromLeaflet, typeFromLeaflet, layerCreate
     layer = layerCreated;
 }
 
-
+/**
+ *
+ */
 function sendJsonpRequest(index, val, map, callback) {
     //most recently drawn shape is sent
     var $ret = 0;
@@ -41,3 +46,4 @@ function sendJsonpRequest(index, val, map, callback) {
     });
     return $ret;
 }
+
