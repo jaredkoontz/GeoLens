@@ -42,7 +42,7 @@ function getData(fullData, wantedDepth) {
     }
 
     //data has been set, traverse and visualize it.
-    var returnValues = foo(wantedDepth,currentData,needToMergeGeohashes,needToSetHistogramColors,newData);
+    var returnValues = traverseData(wantedDepth,currentData,needToMergeGeohashes,needToSetHistogramColors,newData);
 
     //are we at the lowest level and need to set colors for the histograms?
     if (returnValues.needToSetHistogramColors) {
@@ -53,111 +53,12 @@ function getData(fullData, wantedDepth) {
     //do we need to merge the geohashes?
     if (returnValues.needToMergeGeohashes) {
         //merge the geohashes
-        newData.geohashColors = mergeGeohashes(returnValues.newData.geohashColors);
+        mergeGeohashes(returnValues.newData.geohashColors);
     }
 
     return newData;
 }
 
-/**
- *  todo rename and refactor
- */
-function foo(wantedDepth,currentData,needToMergeGeohashes,needToSetHistogramColors,newData){
-    for (var currentKey in currentData) {
-        if (currentData.hasOwnProperty(currentKey)) {
-            if (wantedDepth == lowestDepth) { //are we at the lowest depth.
-                if (currentKey == "hists") { //get histogram data
-                    var histData = currentData[currentKey];
-                    newData.histogram = getLowestHistogramData(histData, newData.histogram);
-                    needToSetHistogramColors = false;
-                } //histogram key
-                else if (currentKey == "hashes") {
-                    //geohash info
-                    var geohashColorsData = currentData[currentKey];
-                    newData.geohashColors = getLowestGeoHashTilesData(geohashColorsData, newData.geohashColors);
-                }
-            } //wanted depth
-            else {
-                //we are not at the end, grab the histogram averages.
-                var nextChild = currentData[currentKey].avgs;
-                //get the right feature
-                for (var average in nextChild) {
-                    if (nextChild.hasOwnProperty(average)) {
-                        if (average == getCurrentFeature()) {
-                            var entry = new XYCoordinateAndColor(currentKey, nextChild[average], ""); //create coordinates for d3
-                            newData.histogram.push(entry); // add the data
-                        }
-                    }
-                }
-                if (currentKey != "avgs") {
-                    //get histogram for current data.
-                    var geohashData = currentData[currentKey];
-                    var hashesTry = geohashData.hashes;
-                    if (typeof hashesTry == "object") {
-                        needToMergeGeohashes = true;
-                        var thisFeature = [];
-                        for (var hash in hashesTry) {
-                            if (hashesTry.hasOwnProperty(hash)) {
-                                for (var possibleFeatures in hashesTry[hash]) {
-                                    if (hashesTry[hash].hasOwnProperty(possibleFeatures)) {
-                                        if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
-                                            var featureValue = hashesTry[hash][possibleFeatures];
-                                            var hashColorCombo = new HashColorCombo(hash, featureValue);
-                                            thisFeature.push(hashColorCombo);
-                                        }
-                                    } //current feature
-                                } //iterate possible features
-                            } //own property check
-                        } //end for
-                        newData.geohashColors.push(thisFeature);
-                    }
-                    else {
-                        //todo this branch
-                        //traverse to next bunch and try .hashes
-                        var gotThere = false;
-                        while (!gotThere) {
-                            for (var obj in geohashData) {
-                                if (geohashData.hasOwnProperty(obj)) {
-                                    var hashesTry = geohashData[obj].hashes;
-                                    if (typeof hashesTry == "object") {
-                                        gotThere = true;
-                                        needToMergeGeohashes = true;
-                                        var thisFeature = [];
-                                        for (var hash in hashesTry) {
-                                            if (hashesTry.hasOwnProperty(hash)) {
-                                                for (var possibleFeatures in hashesTry[hash]) {
-                                                    if (hashesTry[hash].hasOwnProperty(possibleFeatures)) {
-                                                        if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
-                                                            var featureValue = hashesTry[hash][possibleFeatures];
-                                                            var hashColorCombo = new HashColorCombo(hash, featureValue);
-                                                            thisFeature.push(hashColorCombo);
-                                                        }
-                                                    } //current feature
-                                                } //iterate possible features
-                                            } //own property check
-                                        } //end for
-                                        newData.geohashColors.push(thisFeature);
-                                    }
-                                } //end for
-                                else {
-                                    //todo this branch
-                                    //traverse further
-                                }
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    return {
-        newData: newData,
-        needToMergeGeohashes: needToMergeGeohashes,
-        needToSetHistogramColors: needToSetHistogramColors
-    };
-}
 
 
 /**
@@ -180,10 +81,7 @@ function mergeGeohashes(geoHashColorArray) {
             min = (min > featureValue.featureColor) ? featureValue.featureColor : min;
         }
     }
-    //console.log(max);
-    //console.log(min);
-
-    return computeGeoHashColors(merged, max, min);
+   computeGeoHashColors(merged, max, min);
 }
 
 /**
@@ -209,7 +107,6 @@ function setHistogramColors(histogram) {
             index++;
         }
     }
-    return colorData;
 }
 
 /**
@@ -321,19 +218,20 @@ function handleHistClick(clickedBar, depth) {
 //code for "offline" version
 
 
-//function setDataAndVisualize() {
-//    if (!currentFeature) currentFeature = setCurrentFeature();
-//    //d3.json("json/outputUS.json", function (error, json) {
-//    //d3.json("json/output3char.json", function (error, json) {
-//    d3.json("json/outputNoCo.json", function (error, json) {
-//        //error handling
-//        if (error) return console.warn(error);
-//        //get rectangle coords, and start parsing geohash data.
-//        var geoHashRecData = json.geolens[0];
-//        var histData = json.geolens[1];
-//        geolensData = histData;
-//        drawGeohashes(geoHashRecData);
-//        getData(histData, 0, 0);
-//        currentDepth = 0;
-//    });
-//}
+function setDataAndVisualize() {
+    if (!currentFeature) currentFeature = setCurrentFeature();
+    //d3.json("json/outputUS.json", function (error, json) {
+    //d3.json("json/output3char.json", function (error, json) {
+    d3.json("json/output3char.json", function (error, json) {
+        //error handling
+        if (error) return console.warn(error);
+        //get rectangle coords, and start parsing geohash data.
+        var geoHashRecData = json.geolens[0];
+        var histData = json.geolens[1];
+        geolensData = histData;
+        drawGeohashes(geoHashRecData);
+        getData(histData, 0, 0);
+        currentDepth = 0;
+    });
+}
+setDataAndVisualize();

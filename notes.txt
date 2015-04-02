@@ -2,6 +2,8 @@ MAJOR BUGS
 Histograms sometimes lexicographically sorted, not sorted by value
 
 
+image tiles cache, sometimes it goes down.
+
 
 merging color ideas
 http://stackoverflow.com/questions/4057475/rounding-colour-values-to-the-nearest-of-a-small-set-of-colours
