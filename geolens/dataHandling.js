@@ -41,61 +41,9 @@ function handleNonLowestAndAggregate(currentData,currentKey,needToMergeGeohashes
         }
     }
     if (currentKey != "avgs") {
-        //get histogram for current data.
-        var geohashData = currentData[currentKey];
-        var hashesTry = geohashData.hashes;
-        if (typeof hashesTry == "object") {
-            needToMergeGeohashes = true;
-            var thisFeature = [];
-            for (var hash in hashesTry) {
-                if (hashesTry.hasOwnProperty(hash)) {
-                    for (var possibleFeatures in hashesTry[hash]) {
-                        if (hashesTry[hash].hasOwnProperty(possibleFeatures)) {
-                            if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
-                                var featureValue = hashesTry[hash][possibleFeatures];
-                                var hashColorCombo = new HashColorCombo(hash, featureValue);
-                                thisFeature.push(hashColorCombo);
-                            }
-                        } //current feature
-                    } //iterate possible features
-                } //own property check
-            } //end for
-            newData.geohashColors.push(thisFeature);
-        }
-        else {
-            var gotThere = false;
-            while (!gotThere) {
-                for (var obj in geohashData) {
-                    if (geohashData.hasOwnProperty(obj)) {
-                        var hashesTry = geohashData[obj].hashes;
-                        if (typeof hashesTry == "object") {
-                            gotThere = true;
-                            needToMergeGeohashes = true;
-                            var thisFeature = [];
-                            for (var hash in hashesTry) {
-                                if (hashesTry.hasOwnProperty(hash)) {
-                                    for (var possibleFeatures in hashesTry[hash]) {
-                                        if (hashesTry[hash].hasOwnProperty(possibleFeatures)) {
-                                            if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
-                                                var featureValue = hashesTry[hash][possibleFeatures];
-                                                var hashColorCombo = new HashColorCombo(hash, featureValue);
-                                                thisFeature.push(hashColorCombo);
-                                            }
-                                        } //current feature
-                                    } //iterate possible features
-                                } //own property check
-                            } //end for
-                            newData.geohashColors.push(thisFeature);
-                        }
-                    } //end for
-                    else {
-                        //todo this branch
-                        //traverse further
-                    }
-
-                }
-            }
-        }
+        var returnValues = aggregateData(currentData,currentKey,newData,needToMergeGeohashes);
+        newData = returnValues.newData;
+        needToMergeGeohashes = returnValues.needToMergeGeohashes;
     }
     //console.log(newData);
     return {
@@ -104,7 +52,76 @@ function handleNonLowestAndAggregate(currentData,currentKey,needToMergeGeohashes
     };
 }
 
+function aggregateData(currentData,currentKey,newData,needToMergeGeohashes){
+    //get histogram for current data.
+    var geohashData = currentData[currentKey];
+    var hashesTry = geohashData.hashes;
+    if (typeof hashesTry == "object") {
+        needToMergeGeohashes = true;
+        var thisFeature = [];
+        for (var hash in hashesTry) {
+            if (hashesTry.hasOwnProperty(hash)) {
+                for (var possibleFeatures in hashesTry[hash]) {
+                    if (hashesTry[hash].hasOwnProperty(possibleFeatures)) {
+                        if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
+                            var featureValue = hashesTry[hash][possibleFeatures];
+                            var hashColorCombo = new HashColorCombo(hash, featureValue);
+                            thisFeature.push(hashColorCombo);
+                        }
+                    } //current feature
+                } //iterate possible features
+            } //own property check
+        } //end for
+        newData.geohashColors.push(thisFeature);
+    }
+    else {
+        var returnValues = traverseFurther(newData,needToMergeGeohashes);
+        newData = returnValues.newData;
+        needToMergeGeohashes = returnValues.needToMergeGeohashes;
+    }
+    return {
+        newData: newData,
+        needToMergeGeohashes: needToMergeGeohashes
+    };
+}
 
+function traverseFurther(geohashData,newData,needToMergeGeohashes){
+    var gotThere = false;
+    while (!gotThere) {
+        for (var obj in geohashData) {
+            if (geohashData.hasOwnProperty(obj)) {
+                var hashesTry = geohashData[obj].hashes;
+                if (typeof hashesTry == "object") {
+                    gotThere = true;
+                    needToMergeGeohashes = true;
+                    var thisFeature = [];
+                    for (var hash in hashesTry) {
+                        if (hashesTry.hasOwnProperty(hash)) {
+                            for (var possibleFeatures in hashesTry[hash]) {
+                                if (hashesTry[hash].hasOwnProperty(possibleFeatures)) {
+                                    if (possibleFeatures == getCurrentFeature()) { //get data for current desired feature
+                                        var featureValue = hashesTry[hash][possibleFeatures];
+                                        var hashColorCombo = new HashColorCombo(hash, featureValue);
+                                        thisFeature.push(hashColorCombo);
+                                    }
+                                } //current feature
+                            } //iterate possible features
+                        } //own property check
+                    } //end for
+                    newData.geohashColors.push(thisFeature);
+                }
+            } //end for
+            else {
+                //todo this branch
+                //traverse further
+            }
+        }
+    }
+    return {
+        newData: newData,
+        needToMergeGeohashes: needToMergeGeohashes
+    };
+}
 
 function handleLowestDepth(currentData,currentKey,needToSetHistogramColors,newData) {
     if (currentKey == "hists") { //get histogram data
