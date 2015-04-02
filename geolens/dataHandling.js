@@ -1,3 +1,6 @@
+/**
+ *
+ */
 
 
 /**
@@ -10,7 +13,7 @@ function traverseData(wantedDepth,currentData,needToMergeGeohashes,needToSetHist
                 var lowestReturnValues = handleLowestDepth(currentData, currentKey, needToSetHistogramColors, newData);
                 newData = lowestReturnValues.newData;
                 needToSetHistogramColors = lowestReturnValues.needToSetHistogramColors;
-            } //wanted depth
+            }
             else {
                 var returnValues = handleNonLowestAndAggregate(currentData,currentKey,needToMergeGeohashes,newData);
                 newData = returnValues.newData;
@@ -24,6 +27,10 @@ function traverseData(wantedDepth,currentData,needToMergeGeohashes,needToSetHist
         needToSetHistogramColors: needToSetHistogramColors
     };
 }
+
+
+
+
 
 /**
  *
@@ -52,6 +59,9 @@ function handleNonLowestAndAggregate(currentData,currentKey,needToMergeGeohashes
     };
 }
 
+/**
+ *
+ */
 function aggregateData(currentData,currentKey,newData,needToMergeGeohashes){
     //get histogram for current data.
     var geohashData = currentData[currentKey];
@@ -75,7 +85,7 @@ function aggregateData(currentData,currentKey,newData,needToMergeGeohashes){
         newData.geohashColors.push(thisFeature);
     }
     else {
-        var returnValues = traverseFurther(newData,needToMergeGeohashes);
+        var returnValues = traverseFurther(geohashData,newData,needToMergeGeohashes);
         newData = returnValues.newData;
         needToMergeGeohashes = returnValues.needToMergeGeohashes;
     }
@@ -85,6 +95,9 @@ function aggregateData(currentData,currentKey,newData,needToMergeGeohashes){
     };
 }
 
+/**
+ *
+ */
 function traverseFurther(geohashData,newData,needToMergeGeohashes){
     var gotThere = false;
     while (!gotThere) {
@@ -123,6 +136,10 @@ function traverseFurther(geohashData,newData,needToMergeGeohashes){
     };
 }
 
+
+/**
+ *
+ */
 function handleLowestDepth(currentData,currentKey,needToSetHistogramColors,newData) {
     if (currentKey == "hists") { //get histogram data
         var histData = currentData[currentKey];

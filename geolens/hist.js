@@ -292,3 +292,40 @@ function drawHistogram(histData, depth, title) {
 
     }
 }
+
+
+
+/**
+ *
+ */
+function handleHistClick(clickedBar, depth) {
+    //get title from clicked bar
+    var title = clickedBar.x;
+    if (currentDepth == depth) {
+        var proposedDepth = depth + 1;
+        if (proposedDepth <= lowestDepth) {
+            currentPath += title + ":";
+            var data = setData(geolensData, proposedDepth, title);
+            drawHistogram(data.histogram, proposedDepth, title);
+            currentDepth++;
+        }
+    }
+    else {
+        //remove histogram or histograms
+        //add new one with click data
+        var clickedDepth = depth;
+        var mutableCurrentDepth = currentDepth;
+        while (mutableCurrentDepth > clickedDepth) {
+            var newHist = "histogramVis" + mutableCurrentDepth;
+            $("#" + newHist).remove();
+            depth--;
+            mutableCurrentDepth--;
+            //remove last colon
+            var str = currentPath.substring(0, currentPath.length - 1);
+            var n = str.lastIndexOf(":");
+            currentPath = currentPath.substring(0, n + 1);
+        }
+        currentDepth = mutableCurrentDepth;
+    }
+    updatePathText();
+}

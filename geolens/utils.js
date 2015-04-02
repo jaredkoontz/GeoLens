@@ -1,6 +1,10 @@
 /**
  *
  */
+
+/**
+ *
+ */
 function linkFromBrushing(brushedSelection, type) {
     if (currentDepth == 2) {
         var currentColor = brushedSelection.style("fill");

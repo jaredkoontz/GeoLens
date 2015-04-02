@@ -26,6 +26,7 @@
     <script src="geolens/globals.js"></script>
     <script src="geolens/jsonpCallBack.js"></script>
     <script src="geolens/dataHandling.js"></script>
+    <script src="geolens/dataMerging.js"></script>
     <script src="geolens/geohashRectangles.js"></script>
     <script src="geolens/leafletdrawPanel.js"></script>
     <script src="geolens/setData.js"></script>
@@ -35,21 +36,27 @@
     <script src="geolens/color.js"></script>
 
 </head>
+
+
 <body>
+<!-- the leaflet map -->
 <div id="map">
 </div>
 <script src="geolens/map.js"></script>
-
+<!-- the histogram panel -->
 <div id="histPanel">
     <br/>
 
+    <!-- current features -->
     <form action="#" id="featureForm">
         <input type="radio" name="features" value="t" checked="checked" onchange="setCurrentFeature()"/>Temperature
         <input type="radio" name="features" value="p" onchange="setCurrentFeature()"/>Pressure
     </form>
     <hr/>
+    <!-- current path -->
     <div id="currentPath">Current Path: Overview</div>
     <hr/>
+    <!-- the histograms -->
     <div id="hists">
         <script src="geolens/hist.js"></script>
     </div>

@@ -1,20 +1,35 @@
 /**
  *
  */
+
+
+/**
+ * This function gets called after the ajax call.
+ * input: data from the response.
+ *
+ *
+ */
 function visualizeResponse(data, map){
     //get rectangle coords, and start parsing geohash data.
     var geoHashRecData = data.geolens[0];
     var histData = data.geolens[1];
+
     geolensData = histData; //set global
+    //draw the geohashes on the map
     drawGeohashes(geoHashRecData);
-    getData(histData, 0, 0);
+    //set the data and visualize it
+    setData(histData, 0, 0);
+    //set the depth for traversal
     currentDepth = 0; //set global
 }
 
 /**
- *
+ * The function does most of the brute work.
+ * input: fullData - the entire json response
+ * input: wantedDepth - The depth in the response the user is looking for
  */
-function getData(fullData, wantedDepth) {
+function setData(fullData, wantedDepth) {
+    //geohashes have been drawn on the map already, only handling the aggregation information of the json document
     var currentData = fullData.aggInfo;
 
     //create the new data to give to d3 to visualize
@@ -61,163 +76,71 @@ function getData(fullData, wantedDepth) {
 
 
 
-/**
- *
- */
-function mergeGeohashes(geoHashColorArray) {
-    //console.log(geoHashColorArray);
-    var merged = [];
-    for (var i = 0; i < geoHashColorArray.length; i++) {
-        merged = MergeRecursiveGeoHashColors(geoHashColorArray[i], merged);
-    }
-    //console.log(merged);
-    var min = Number.MAX_VALUE;
-    var max = Number.MIN_VALUE;
-    for (var hash in merged) {
-        if (merged.hasOwnProperty(hash)) {
-            var featureValue = merged[hash];
-            //console.log(featureValue);
-            max = (max < featureValue.featureColor) ? featureValue.featureColor : max;
-            min = (min > featureValue.featureColor) ? featureValue.featureColor : min;
-        }
-    }
-   computeGeoHashColors(merged, max, min);
-}
 
 /**
- *
- */
-function setHistogramColors(histogram) {
-    var min = Number.MAX_VALUE;
-    var max = Number.MIN_VALUE;
-    var colorData = [];
-    for (var xyCoord in histogram) {
-        if (histogram.hasOwnProperty(xyCoord)) {
-            var yValue = histogram[xyCoord].y;
-            colorData.push(yValue); // add the data
-            max = (max < yValue) ? yValue : max;
-            min = (min > yValue) ? yValue : min;
-        }
-    } //current feature
-    var index = 0;
-    var normalized = normalizeHistogramByArrayContents(colorData, max, min);
-    for (var hash in colorData) {
-        if (colorData.hasOwnProperty(hash)) {
-            histogram[index].color = getColor(normalized[hash]);
-            index++;
-        }
-    }
-}
-
-/**
- * Recursively merge properties of two objects
- */
-function MergeRecursiveGeoHashColors(obj1, obj2) {
-
-    for (var p in obj2) {
-        try {
-            // Property in destination object set; update its value.
-            if (obj2[p].constructor == Object) {
-                obj1[p] = MergeRecursiveGeoHashColors(obj1[p], obj2[p]);
-
-            } else {
-                //obj1[p] = (obj1 + obj2[p])/2; //nan
-                obj1[p].featureColor += obj2[p].featureColor; //combines the two
-                obj1[p].hash = obj2[p].hash; //combines the two
-
-            }
-
-        } catch (e) {
-            // Property in destination object not set; create it and set its value.
-            obj1[p] = obj2[p];
-
-        }
-    }
-    return obj1;
-}
-
-/**
- *
+ * Sets the current feature of interest.
+ * Gets called when the user clicks the radio button on the histogram panel
  */
 function setCurrentFeature() {
-    currentFeature = $('input[name="features"]:checked').val();
+    currentFeature = $('input[name="features"]:checked').val(); //set global
     if (geolensData === undefined || geolensData === null) {
-    }
+    } //gets called when the div is created, however the feature isn't selection. simply die quietly.
     else {
+        //the user has chosen a feature, remove all current histograms.
         var mutableCurrentDepth = currentDepth;
         while (mutableCurrentDepth >= 0) {
             var newHist = "histogramVis" + mutableCurrentDepth;
             $("#" + newHist).remove();
             mutableCurrentDepth--;
         }
+
+        //reset the path and depth
         currentPath = "";
         currentDepth = 0;
-        var newData = getData(geolensData, 0, 0);
+        //get the new data from the json document.
+        var newData = setData(geolensData, 0, 0);
+
+        //draw the overview histogram
         drawHistogram(newData.histogram, 0, "Overview");
     }
 }
 
 /**
- *
+ * This function updates the text on the histogram panel showing the
+ * current path the user is viewing.
  */
 function updatePathText() {
+    //get the current path.
     var path = currentPath.split(":");
+
     var formattedPath = "Current Path: ";
-    //adjust current data
+
     if (path.length > 1) {
+        //adjust current data
+
         //empty one always placed in the back
         path.pop();
-        //get the correct object to visualize based on the current path.
+
+        //get add to the formatted path string based on the current global path.
         for (var i = path.length - 1; i >= 0; i--) {
             formattedPath += path[i] + " "
         }
     }
+
     else {
-        formattedPath += "Overview"
+    //we are on the top level, label it overview
+        formattedPath += "Overview";
     }
+
+    //set the html on the geolens page to reflect the new path
     document.getElementById("currentPath").textContent = formattedPath;
 }
 
+
 /**
- *
+ * code for offline version.
+ * reads a json document, and then sets the data.
  */
-function handleHistClick(clickedBar, depth) {
-    //get title from clicked bar
-    var title = clickedBar.x;
-    if (currentDepth == depth) {
-        var proposedDepth = depth + 1;
-        if (proposedDepth <= lowestDepth) {
-            currentPath += title + ":";
-            var data = getData(geolensData, proposedDepth, title);
-            drawHistogram(data.histogram, proposedDepth, title);
-            currentDepth++;
-        }
-    }
-    else {
-        //remove histogram or histograms
-        //add new one with click data
-        var clickedDepth = depth;
-        var mutableCurrentDepth = currentDepth;
-        while (mutableCurrentDepth > clickedDepth) {
-            var newHist = "histogramVis" + mutableCurrentDepth;
-            $("#" + newHist).remove();
-            depth--;
-            mutableCurrentDepth--;
-            //remove last colon
-            var str = currentPath.substring(0, currentPath.length - 1);
-            var n = str.lastIndexOf(":");
-            currentPath = currentPath.substring(0, n + 1);
-        }
-        currentDepth = mutableCurrentDepth;
-    }
-    updatePathText();
-}
-
-
-
-//code for "offline" version
-
-
 function setDataAndVisualize() {
     if (!currentFeature) currentFeature = setCurrentFeature();
     //d3.json("json/outputUS.json", function (error, json) {
@@ -230,7 +153,7 @@ function setDataAndVisualize() {
         var histData = json.geolens[1];
         geolensData = histData;
         drawGeohashes(geoHashRecData);
-        getData(histData, 0, 0);
+        setData(histData, 0, 0);
         currentDepth = 0;
     });
 }
