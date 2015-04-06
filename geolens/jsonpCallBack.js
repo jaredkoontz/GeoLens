@@ -28,7 +28,6 @@ function sendJsonpRequest(index, val, map, callback) {
     console.log(layer);
 
 
-
     $.ajax({
         type: 'GET', //todo encode features and coords in url
         url: "http://localhost:5446/", //home

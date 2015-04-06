@@ -11,6 +11,7 @@ function drawGeohashes(geoHashData) {
     var svg = d3.select("#map").select("svg"),
         g = svg.append("g");
 
+
     geoHashData.geohashRecs.forEach(function (d) {
         var hashName = Object.keys(d)[0];
         var northEast = new L.LatLng(d[hashName][0], d[hashName][1]),

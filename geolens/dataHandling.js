@@ -6,7 +6,7 @@
 /**
  *
  */
-function traverseData(wantedDepth,currentData,needToMergeGeohashes,needToSetHistogramColors,newData) {
+function traverseData(wantedDepth, currentData, needToMergeGeohashes, needToSetHistogramColors, newData) {
     for (var currentKey in currentData) {
         if (currentData.hasOwnProperty(currentKey)) {
             if (wantedDepth == lowestDepth) { //are we at the lowest depth.
@@ -15,7 +15,7 @@ function traverseData(wantedDepth,currentData,needToMergeGeohashes,needToSetHist
                 needToSetHistogramColors = lowestReturnValues.needToSetHistogramColors;
             }
             else {
-                var returnValues = handleNonLowestAndAggregate(currentData,currentKey,needToMergeGeohashes,newData);
+                var returnValues = handleNonLowestAndAggregate(currentData, currentKey, needToMergeGeohashes, newData);
                 newData = returnValues.newData;
                 needToMergeGeohashes = returnValues.needToMergeGeohashes;
             }
@@ -29,13 +29,10 @@ function traverseData(wantedDepth,currentData,needToMergeGeohashes,needToSetHist
 }
 
 
-
-
-
 /**
  *
  */
-function handleNonLowestAndAggregate(currentData,currentKey,needToMergeGeohashes,newData){
+function handleNonLowestAndAggregate(currentData, currentKey, needToMergeGeohashes, newData) {
     //we are not at the end, grab the histogram averages.
     var nextChild = currentData[currentKey].avgs;
     //get the right feature
@@ -48,7 +45,7 @@ function handleNonLowestAndAggregate(currentData,currentKey,needToMergeGeohashes
         }
     }
     if (currentKey != "avgs") {
-        var returnValues = aggregateData(currentData,currentKey,newData,needToMergeGeohashes);
+        var returnValues = aggregateData(currentData, currentKey, newData, needToMergeGeohashes);
         newData = returnValues.newData;
         needToMergeGeohashes = returnValues.needToMergeGeohashes;
     }
@@ -62,7 +59,7 @@ function handleNonLowestAndAggregate(currentData,currentKey,needToMergeGeohashes
 /**
  *
  */
-function aggregateData(currentData,currentKey,newData,needToMergeGeohashes){
+function aggregateData(currentData, currentKey, newData, needToMergeGeohashes) {
     //get histogram for current data.
     var geohashData = currentData[currentKey];
     var hashesTry = geohashData.hashes;
@@ -85,7 +82,7 @@ function aggregateData(currentData,currentKey,newData,needToMergeGeohashes){
         newData.geohashColors.push(thisFeature);
     }
     else {
-        var returnValues = traverseFurther(geohashData,newData,needToMergeGeohashes);
+        var returnValues = traverseFurther(geohashData, newData, needToMergeGeohashes);
         newData = returnValues.newData;
         needToMergeGeohashes = returnValues.needToMergeGeohashes;
     }
@@ -98,7 +95,7 @@ function aggregateData(currentData,currentKey,newData,needToMergeGeohashes){
 /**
  *
  */
-function traverseFurther(geohashData,newData,needToMergeGeohashes){
+function traverseFurther(geohashData, newData, needToMergeGeohashes) {
     var gotThere = false;
     while (!gotThere) {
         for (var obj in geohashData) {
@@ -140,7 +137,7 @@ function traverseFurther(geohashData,newData,needToMergeGeohashes){
 /**
  *
  */
-function handleLowestDepth(currentData,currentKey,needToSetHistogramColors,newData) {
+function handleLowestDepth(currentData, currentKey, needToSetHistogramColors, newData) {
     if (currentKey == "hists") { //get histogram data
         var histData = currentData[currentKey];
         newData.histogram = getLowestHistogramData(histData, newData.histogram);

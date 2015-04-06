@@ -9,7 +9,7 @@
  *
  *
  */
-function visualizeResponse(data, map){
+function visualizeResponse(data, map) {
     //get rectangle coords, and start parsing geohash data.
     var geoHashRecData = data.geolens[0];
     var histData = data.geolens[1];
@@ -57,7 +57,7 @@ function setData(fullData, wantedDepth) {
     }
 
     //data has been set, traverse and visualize it.
-    var returnValues = traverseData(wantedDepth,currentData,needToMergeGeohashes,needToSetHistogramColors,newData);
+    var returnValues = traverseData(wantedDepth, currentData, needToMergeGeohashes, needToSetHistogramColors, newData);
 
     //are we at the lowest level and need to set colors for the histograms?
     if (returnValues.needToSetHistogramColors) {
@@ -73,8 +73,6 @@ function setData(fullData, wantedDepth) {
 
     return newData;
 }
-
-
 
 
 /**
@@ -128,7 +126,7 @@ function updatePathText() {
     }
 
     else {
-    //we are on the top level, label it overview
+        //we are on the top level, label it overview
         formattedPath += "Overview";
     }
 

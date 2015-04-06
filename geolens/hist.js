@@ -1,4 +1,3 @@
-
 /**
  *
  */
@@ -292,7 +291,6 @@ function drawHistogram(histData, depth, title) {
 
     }
 }
-
 
 
 /**
