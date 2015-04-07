@@ -143,7 +143,7 @@ function setDataAndVisualize() {
     if (!currentFeature) currentFeature = setCurrentFeature();
     //d3.json("json/outputUS.json", function (error, json) {
     //d3.json("json/output3char.json", function (error, json) {
-    d3.json("json/output3char.json", function (error, json) {
+    d3.json("sample_outputs/outputPlay.json", function (error, json) {
         //error handling
         if (error) return console.warn(error);
         //get rectangle coords, and start parsing geohash data.
