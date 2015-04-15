@@ -1,6 +1,6 @@
 <!DOCTYPE html
-        PUBLIC "-//W3C//DTD HTML 4.01//EN"
-        "http://www.w3.org/TR/html4/strict.dtd">
+    PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en-US">
 <head profile="http://www.w3.org/2005/10/profile">
     <link rel="icon"
@@ -35,8 +35,23 @@
     <script src="geolens/visualize.js"></script>
     <script src="geolens/color.js"></script>
 
-</head>
+    <?php
+    if ($_GET["json"]) {
+        //want to view a precomputed example
+        include("php/precomputedExamples.php");
+    }
+    else{
 
+        //if(didn't go through the entry page, check to see galileo is up){
+        //}
+        //else{
+        //Galileo is up.
+        //}
+    }
+    ?>
+
+
+</head>
 
 <body>
 <!-- the leaflet map -->
@@ -46,7 +61,7 @@
 <!-- the histogram panel -->
 <div id="histPanel">
     <br/>
-
+    <?php //todo need to create these with php ?>
     <!-- current features -->
     <form action="#" id="featureForm">
         <input type="radio" name="features" value="t" checked="checked" onchange="setCurrentFeature()"/>Temperature

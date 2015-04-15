@@ -139,11 +139,11 @@ function updatePathText() {
  * code for offline version.
  * reads a json document, and then sets the data.
  */
-function setDataAndVisualize() {
+function setDataAndVisualize(path) {
     if (!currentFeature) currentFeature = setCurrentFeature();
     //d3.json("json/outputUS.json", function (error, json) {
     //d3.json("json/output3char.json", function (error, json) {
-    d3.json("sample_outputs/outputPlay.json", function (error, json) {
+    d3.json(path, function (error, json) {
         //error handling
         if (error) return console.warn(error);
         //get rectangle coords, and start parsing geohash data.
@@ -155,4 +155,3 @@ function setDataAndVisualize() {
         currentDepth = 0;
     });
 }
-setDataAndVisualize();
