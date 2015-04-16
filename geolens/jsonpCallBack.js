@@ -28,8 +28,11 @@ function sendJsonpRequest(index, val, map, callback) {
     console.log(layer);
 
 
+    //todo pass coordinator of query in cookies
+    //todo pass lat longs and type in query.
+
     $.ajax({
-        type: 'GET', //todo encode features and coords in url
+        type: 'GET',
         url: "http://localhost:5446/", //home
 //            url: "http://lion.cs.colostate.edu:5446/", //school
         dataType: 'jsonp',
