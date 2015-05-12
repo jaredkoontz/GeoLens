@@ -1,0 +1,93 @@
+todo remove drawing toolbar on pre computed examples.
+
+
+MAJOR BUGS
+Histograms sometimes lexicographically sorted, not sorted by value
+
+
+image tiles cache, sometimes it goes down.
+
+
+merging color ideas
+http://stackoverflow.com/questions/4057475/rounding-colour-values-to-the-nearest-of-a-small-set-of-colours
+http://colorbrewer2.org/
+
+//could have numcolors in histogram, and set geohashes accordingly. Would make brushing and linking very easy.
+//currently using 8 colors.
+
+
+
+
+Fast And Easy to do
+todo "instant click" if on 2014 march and then want to look at 2013, you need to click on 2013 twice.
+todo make the geohash text value appear on mouse over.
+todo comment code and make set Data a smaller function. Reduce number of global functions?
+todo comment code
+
+
+-bugs
+todo max color is not shown on lowest histogram
+sometimes top number is not shown
+
+main functionality left to do:
+todo brushing and linking from hists to geohashes
+    todo from geohashes to hist -> show bar with closest color/samecolor
+    todo from hist to geohashes -> all hashes with the same color.
+
+
+
+---------------
+todo make poly buttons grey after drawing query
+todo image tile cache
+todo edit control is actually quite useful
+todo minify javascript
+
+---------------
+
+
+RoadMap of To do:
+-----
+client
+-rectangles mapped with histograms
+-check browser types
+-make histograms use new data
+-figure out where to put geohash values/colors.
+
+
+server
+-Make server code use json
+-Make server repository on github (this involves combinging code into my own galileo dir)
+
+
+
+
+Thoughts
+hard code wanted features
+what to do about wanted time frame of query? hardcode?
+when to compute average?
+
+--beforehand -> first
+
+
+
+make histograms vertical?
+
+json structure
+-root
+  -geohashRectangleCoords
+  -Yearhists?
+    -monthhists
+      -dayhists
+
+Where to put values?
+  each level?
+  at day and sum up?
+    probably want to sum up at each level.
+
+
+
+
+--bin on time dimension
+    put all jan in one
+    put all feb in one
+
