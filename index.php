@@ -47,6 +47,7 @@
         //else{
         //Galileo is up.
         //}
+        
     }
     ?>
 
