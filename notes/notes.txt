@@ -1,22 +1,9 @@
+todo add button to enable multiple resolution
 todo remove drawing toolbar on pre computed examples.
 
 
 MAJOR BUGS
 Histograms sometimes lexicographically sorted, not sorted by value
-
-
-image tiles cache, sometimes it goes down.
-
-
-merging color ideas
-http://stackoverflow.com/questions/4057475/rounding-colour-values-to-the-nearest-of-a-small-set-of-colours
-http://colorbrewer2.org/
-
-//could have numcolors in histogram, and set geohashes accordingly. Would make brushing and linking very easy.
-//currently using 8 colors.
-
-
-
 
 Fast And Easy to do
 todo "instant click" if on 2014 march and then want to look at 2013, you need to click on 2013 twice.
@@ -45,6 +32,19 @@ todo minify javascript
 ---------------
 
 
+image tiles cache, sometimes it goes down.
+
+
+merging color ideas
+http://stackoverflow.com/questions/4057475/rounding-colour-values-to-the-nearest-of-a-small-set-of-colours
+http://colorbrewer2.org/
+
+//could have numcolors in histogram, and set geohashes accordingly. Would make brushing and linking very easy.
+//currently using 8 colors.
+
+
+
+
 RoadMap of To do:
 -----
 client
@@ -67,27 +67,3 @@ what to do about wanted time frame of query? hardcode?
 when to compute average?
 
 --beforehand -> first
-
-
-
-make histograms vertical?
-
-json structure
--root
-  -geohashRectangleCoords
-  -Yearhists?
-    -monthhists
-      -dayhists
-
-Where to put values?
-  each level?
-  at day and sum up?
-    probably want to sum up at each level.
-
-
-
-
---bin on time dimension
-    put all jan in one
-    put all feb in one
-
