@@ -1,4 +1,5 @@
-# GeoLens
+[![GeoLens](http://www.cs.colostate.edu/geolens/entry/images/Geolens-logo.png)](http://www.cs.colostate.edu/geolens)
+
 
 ###Intro
 
