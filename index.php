@@ -39,8 +39,7 @@
     if ($_GET["json"]) {
         //want to view a precomputed example
         include("php/precomputedExamples.php");
-    }
-    else{
+    } else {
 
         //if(didn't go through the entry page, check to see galileo is up){
         //}

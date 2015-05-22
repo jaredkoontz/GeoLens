@@ -1,5 +1,4 @@
-
-(function() {
+(function () {
 
     L.Control.ListMarkers = L.Control.extend({
 
@@ -10,14 +9,14 @@
             maxItems: 20,
             collapsed: false,
             label: 'title',
-            itemIcon: L.Icon.Default.imagePath+'/marker-icon.png',
+            itemIcon: L.Icon.Default.imagePath + '/marker-icon.png',
             itemArrow: '&#10148;',	//visit: http://character-code.com/arrows-html-codes.php
             maxZoom: 9,
             position: 'bottomleft'
             //TODO autocollapse
         },
 
-        initialize: function(options) {
+        initialize: function (options) {
             L.Util.setOptions(this, options);
             this._container = null;
             this._list = null;
@@ -41,60 +40,58 @@
             return container;
         },
 
-        onRemove: function(map) {
+        onRemove: function (map) {
             map.off('moveend', this._updateList, this);
             this._container = null;
             this._list = null;
         },
 
-        _createItem: function(layer) {
+        _createItem: function (layer) {
 
             var li = L.DomUtil.create('li', 'list-markers-li'),
                 a = L.DomUtil.create('a', '', li),
-                icon = this.options.itemIcon ? '<img src="'+this.options.itemIcon+'" />' : '',
+                icon = this.options.itemIcon ? '<img src="' + this.options.itemIcon + '" />' : '',
                 that = this;
 
             a.href = '#';
             L.DomEvent
                 .disableClickPropagation(a)
                 .on(a, 'click', L.DomEvent.stop, this)
-                .on(a, 'click', function(e) {
-                    this._moveTo( layer.getLatLng() );
+                .on(a, 'click', function (e) {
+                    this._moveTo(layer.getLatLng());
                 }, this)
-                .on(a, 'mouseover', function(e) {
-                    that.fire('item-mouseover', {layer: layer });
+                .on(a, 'mouseover', function (e) {
+                    that.fire('item-mouseover', {layer: layer});
                 }, this)
-                .on(a, 'mouseout', function(e) {
-                    that.fire('item-mouseout', {layer: layer });
+                .on(a, 'mouseout', function (e) {
+                    that.fire('item-mouseout', {layer: layer});
                 }, this);
-
 
 
             //console.log('_createItem',layer.options);
 
-            if( layer.options.hasOwnProperty(this.options.label) )
-            {
-                a.innerHTML = icon+'<span>'+layer.options[this.options.label]+'</span> <b>'+this.options.itemArrow+'</b>';
+            if (layer.options.hasOwnProperty(this.options.label)) {
+                a.innerHTML = icon + '<span>' + layer.options[this.options.label] + '</span> <b>' + this.options.itemArrow + '</b>';
                 //TODO use related marker icon!
                 //TODO use template for item
             }
             else
-                console.log("propertyName '"+this.options.label+"' not found in marker");
+                console.log("propertyName '" + this.options.label + "' not found in marker");
 
             return li;
         },
 
-        _updateList: function() {
+        _updateList: function () {
 
             var that = this,
                 n = 0;
 
             this._list.innerHTML = '';
-            this._layer.eachLayer(function(layer) {
-                if(layer instanceof L.Marker)
-                    if( that._map.getBounds().contains(layer.getLatLng()) )
-                        if(++n < that.options.maxItems)
-                            that._list.appendChild( that._createItem(layer) );
+            this._layer.eachLayer(function (layer) {
+                if (layer instanceof L.Marker)
+                    if (that._map.getBounds().contains(layer.getLatLng()))
+                        if (++n < that.options.maxItems)
+                            that._list.appendChild(that._createItem(layer));
             });
         },
 
@@ -115,8 +112,7 @@
                 L.DomEvent.on(container, 'click', L.DomEvent.stopPropagation);
             }
 
-            if (this.options.collapsed)
-            {
+            if (this.options.collapsed) {
                 this._collapse();
 
                 if (!L.Browser.android) {
@@ -150,9 +146,9 @@
             L.DomUtil.addClass(this._container, 'list-markers-collapsed');
         },
 
-        _moveTo: function(latlng) {
-            if(this.options.maxZoom)
-                this._map.setView(latlng, Math.min(this._map.getZoom(), this.options.maxZoom) );
+        _moveTo: function (latlng) {
+            if (this.options.maxZoom)
+                this._map.setView(latlng, Math.min(this._map.getZoom(), this.options.maxZoom));
             else
                 this._map.panTo(latlng);
         }
