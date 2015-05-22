@@ -25,7 +25,7 @@
 }
 
 .leaflet-draw-toolbar a {
-    background-image: url('../images/geo-spritesheet.png');
+    background-image: url('images/geo-spritesheet.png');
     background-repeat: no-repeat;
 }
 
