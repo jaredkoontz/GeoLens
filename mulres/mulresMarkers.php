@@ -51,7 +51,7 @@
 <div id="map"></div>
 
 <script src="lib/leaflet-list-markers.js"></script>
-<script src="cities-italy.js"></script>
+<script src="data/markers.js"></script>
 <script>
 
     var map = new L.Map('map', {zoom: 5, minZoom: 0, center: L.latLng(40.573436, -105.086547)});	//set center from first location
