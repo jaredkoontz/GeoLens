@@ -1,4 +1,3 @@
-
 L.Control.Button = L.Control.extend({
     options: {
         position: 'bottomleft'
@@ -37,7 +36,6 @@ L.Control.Button = L.Control.extend({
     },
 
 
-
     getIconUrl: function () {
         return this._button.iconUrl;
     },
@@ -48,10 +46,10 @@ L.Control.Button = L.Control.extend({
     },
 
     toggle: function (e) {
-        if(typeof e === 'boolean'){
+        if (typeof e === 'boolean') {
             this._button.toggleStatus = e;
         }
-        else{
+        else {
             this._button.toggleStatus = !this._button.toggleStatus;
         }
         this._update();
@@ -69,38 +67,38 @@ L.Control.Button = L.Control.extend({
 
     _makeButton: function (button) {
         var newButton = L.DomUtil.create('div', 'leaflet-buttons-control-button', this._container);
-        if(button.toggleStatus)
-            L.DomUtil.addClass(newButton,'leaflet-buttons-control-toggleon');
+        if (button.toggleStatus)
+            L.DomUtil.addClass(newButton, 'leaflet-buttons-control-toggleon');
 
         var image = L.DomUtil.create('img', 'leaflet-buttons-control-img', newButton);
-        image.setAttribute('src',button.iconUrl);
+        image.setAttribute('src', button.iconUrl);
 
-        if(button.text !== ''){
+        if (button.text !== '') {
 
-            L.DomUtil.create('br','',newButton);  //there must be a better way
+            L.DomUtil.create('br', '', newButton);  //there must be a better way
 
             var span = L.DomUtil.create('span', 'leaflet-buttons-control-text', newButton);
 
-            if(button.hideText)
-                L.DomUtil.addClass(span,'leaflet-buttons-control-text-hide');
+            if (button.hideText)
+                L.DomUtil.addClass(span, 'leaflet-buttons-control-text-hide');
         }
 
         L.DomEvent
             .addListener(newButton, 'click', L.DomEvent.stop)
-            .addListener(newButton, 'click', button.onClick,this)
-            .addListener(newButton, 'click', this._clicked,this);
+            .addListener(newButton, 'click', button.onClick, this)
+            .addListener(newButton, 'click', this._clicked, this);
         L.DomEvent.disableClickPropagation(newButton);
         return newButton;
 
     },
 
     _clicked: function () {  //'this' refers to button
-        if(this._button.doToggle){
-            if(this._button.toggleStatus) {	//currently true, remove class
-                L.DomUtil.removeClass(this._container.childNodes[0],'leaflet-buttons-control-toggleon');
+        if (this._button.doToggle) {
+            if (this._button.toggleStatus) {	//currently true, remove class
+                L.DomUtil.removeClass(this._container.childNodes[0], 'leaflet-buttons-control-toggleon');
             }
-            else{
-                L.DomUtil.addClass(this._container.childNodes[0],'leaflet-buttons-control-toggleon');
+            else {
+                L.DomUtil.addClass(this._container.childNodes[0], 'leaflet-buttons-control-toggleon');
             }
             this.toggle();
         }

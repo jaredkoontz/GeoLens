@@ -11,7 +11,6 @@
           content="text/html;charset=utf-8"/>
 
 
-
     <!-- leaflet -->
     <link rel="stylesheet" href="../lib/js/leaflet.draw.css">
     <link rel="stylesheet" href="../lib/js/leaflet.css">

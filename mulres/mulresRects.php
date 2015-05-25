@@ -11,7 +11,6 @@
           content="text/html;charset=utf-8"/>
 
 
-
     <!-- leaflet -->
     <link rel="stylesheet" href="../lib/js/leaflet.draw.css">
     <link rel="stylesheet" href="../lib/js/leaflet.css">
@@ -51,7 +50,7 @@
 <div id="map"></div>
 
 <script src="lib/leaflet-list-markers.js"></script>
-<script src="data/markers.js"></script>
+<script src="data/rects.js"></script>
 <script>
 
     var map = new L.Map('map', {zoom: 5, minZoom: 0, center: L.latLng(40.573436, -105.086547)});	//set center from first location
@@ -62,27 +61,38 @@
     map.addLayer(markersLayer);
 
     ////////////populate map from cities-italy.js
-    for (var i in cities)
-        L.Rectangle(L.latLng(cities[i].loc), {title: cities[i].name}).addTo(markersLayer);
+    for (var i in cities) {
+        var latLongs = cities[i].loc;
+        var bounds = L.latLngBounds([latLongs[0], latLongs[1]], [latLongs[2], latLongs[3]]);
+        L.rectangle(bounds, {color: "#ff7800", weight: 1, title: cities[i].name}).addTo(map);
+    }
 
-    //TODO make example using label option with pop fields
+    map.on('zoomend ', function (e) {
+        console.log(map.getZoom());
+        listVisibleGeoHashes();
+    });
 
-    //inizialize Leaflet List Markers
-    var list = new L.Control.ListMarkers({layer: markersLayer, itemIcon: null});
 
-    list.on('item-mouseover', function (e) {
-        e.layer.setIcon(L.icon({
-            iconUrl: './images/select-marker.png'
-        }))
-    }).on('item-mouseout', function (e) {
-        e.layer.setIcon(L.icon({
-            iconUrl: L.Icon.Default.imagePath + '/marker-icon.png'
-        }))
+    map.on('moveend ', function (e) {
+        console.log(map.getZoom());
+        listVisibleGeoHashes();
     });
 
 
     addMulResLeafletDrawPanel();
-    map.addControl(list);
+
+
+
+
+    function listVisibleGeoHashes() {
+        map.eachLayer(function (layer) {
+            if (layer instanceof L.Rectangle)
+                if (map.getBounds().contains(layer.getBounds()))
+                    console.log(layer);
+        });
+    }
+
+
 
 </script>
 

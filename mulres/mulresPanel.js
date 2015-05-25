@@ -44,7 +44,6 @@ function addMulResLeafletDrawPanel() {
     });
 
 
-
     map.addControl(drawControl);
 
 
@@ -68,7 +67,6 @@ function addMulResLeafletDrawPanel() {
     });
 
 
-
     var myButtonOptions = {
         'position': 'topright',
         'text': false,
@@ -81,6 +79,7 @@ function addMulResLeafletDrawPanel() {
     };
 
     var myButton = new L.Control.Button(myButtonOptions);
+
     function my_button_onClick() {
         console.log("someone clicked my button");
     }
