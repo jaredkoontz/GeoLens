@@ -16,6 +16,9 @@ function getCorrectPath($wantedJson)
         $directory .= "output3char.json";
     else if ($wantedJson == "ushalf")
         $directory .= "outputUS.json";
+    else if ($wantedJson == "2k")
+        $directory .= "2kWyco.json";
+
     else return "";
 
     return $directory;
