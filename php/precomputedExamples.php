@@ -18,6 +18,8 @@ function getCorrectPath($wantedJson)
         $directory .= "outputUS.json";
     else if ($wantedJson == "2k")
         $directory .= "2kWyco.json";
+    else if ($wantedJson == "2kw")
+        $directory .= "2kWycoWrong.json";
 
     else return "";
 

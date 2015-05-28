@@ -82,8 +82,6 @@
     addMulResLeafletDrawPanel();
 
 
-
-
     function listVisibleGeoHashes() {
         map.eachLayer(function (layer) {
             if (layer instanceof L.Rectangle)
@@ -91,7 +89,6 @@
                     console.log(layer);
         });
     }
-
 
 
 </script>
