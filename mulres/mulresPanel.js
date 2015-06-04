@@ -68,14 +68,14 @@ function addMulResLeafletDrawPanel() {
 
 
     var myButtonOptions = {
-        'position': 'topright',
-        'text': false,
-        'iconUrl': '../lib/images/mulresEye.png',  // string
-        'onClick': my_button_onClick,  // callback function
-        'hideText': false,  // bool
-        'maxWidth': 30,  // number
-        'doToggle': false,  // bool
-        'toggleStatus': true  // bool
+        position: 'topright',
+        text: false,
+        iconUrl: '../lib/images/mulresEye.png',  // string
+        onClick: my_button_onClick,  // callback function
+        hideText: false,  // bool
+        maxWidth: 30,  // number
+        doToggle: true,  // bool
+        toggleStatus: true  // bool
     };
 
     var myButton = new L.Control.Button(myButtonOptions);

@@ -34,13 +34,14 @@
     <script src="geolens/utils.js"></script>
     <script src="geolens/visualize.js"></script>
     <script src="geolens/color.js"></script>
+    <script src="geolens/zoom.js"></script>
 
     <?php
     if ($_GET["json"]) {
         //want to view a precomputed example
         include("php/precomputedExamples.php");
     } else {
-
+        //todo
         //if(didn't go through the entry page, check to see galileo is up){
         //}
         //else{

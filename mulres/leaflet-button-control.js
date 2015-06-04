@@ -1,6 +1,6 @@
 L.Control.Button = L.Control.extend({
     options: {
-        position: 'bottomleft'
+        //position: 'bottomleft'
     },
     initialize: function (options) {
         this._button = {};
@@ -22,13 +22,13 @@ L.Control.Button = L.Control.extend({
 
     setButton: function (options) {
         var button = {
-            'iconUrl': options.iconUrl,
-            'onClick': options.onClick,
-            'hideText': !!options.hideText,
-            'maxWidth': options.maxWidth || 70,
-            'doToggle': options.doToggle,
-            'toggleStatus': false,
-            'position': options.position
+            iconUrl: options.iconUrl,
+            onClick: options.onClick,
+            hideText: options.hideText,
+            maxWidth: options.maxWidth || 70,
+            doToggle: options.doToggle,
+            toggleStatus: options.toggleStatus,
+            position: options.position
         };
 
         this._button = button;
