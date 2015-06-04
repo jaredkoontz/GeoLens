@@ -69,10 +69,10 @@ function addMulResLeafletDrawPanel() {
 
     var myButtonOptions = {
         position: 'topright',
-        text: false,
-        iconUrl: '../lib/images/mulresEye.png',  // string
-        onClick: my_button_onClick,  // callback function
-        hideText: false,  // bool
+        text: true,
+        iconUrl: '../lib/images/mulresEye-.png',  // string
+        onClick: mulResPlus,  // callback function
+        hideText: true,  // bool
         maxWidth: 30,  // number
         doToggle: true,  // bool
         toggleStatus: true  // bool
@@ -80,11 +80,31 @@ function addMulResLeafletDrawPanel() {
 
     var myButton = new L.Control.Button(myButtonOptions);
 
-    function my_button_onClick() {
-        console.log("someone clicked my button");
+    function mulResPlus() {
+        console.log("we want to zoom in");
     }
 
     map.addControl(myButton);
 
+
+
+    //var mulResMinusOptions = {
+    //    position: 'topright',
+    //    text: false,
+    //    iconUrl: '../lib/images/mulresEye-.png',  // location of file
+    //    onClick: mulResMinus(),  // callback function
+    //    hideText: false,  // bool
+    //    maxWidth: 30,  // number
+    //    doToggle: true,  // bool
+    //    toggleStatus: true  // bool
+    //};
+    //
+    //var mulResMinusButton = new L.Control.Button(mulResMinusOptions);
+    //
+    //function mulResMinus() {
+    //    console.log("we want to zoom out");
+    //}
+    ////
+    //map.addControl(mulResMinusButton);
 
 }
