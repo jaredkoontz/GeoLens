@@ -24,10 +24,10 @@ var tileUrl = 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', //light 
     });
 
 
-map.on('zoomend ', function (e) {
-    console.log(map.getZoom());
-    handleZoom(map);
-});
+//map.on('zoomend ', function (e) {
+//    console.log(map.getZoom());
+//    handleZoom(map);
+//});
 
 
 //map.on('moveend ', function (e) {
