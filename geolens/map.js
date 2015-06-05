@@ -37,4 +37,4 @@ var tileUrl = 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', //light 
 
 
 
-addLeafletDrawPanel();
+addMulResLeafletDrawPanel();

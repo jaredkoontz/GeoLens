@@ -33,24 +33,27 @@
     <script src="../geolens/dataHandling.js"></script>
     <script src="../geolens/dataMerging.js"></script>
     <script src="../geolens/geohashRectangles.js"></script>
-    <script src="../geolens/leafletdrawPanel.js"></script>
+    <script src="../geolens/leafletDrawPanel.js"></script>
     <script src="../geolens/setData.js"></script>
     <script src="../geolens/histogramClickHandler.js"></script>
     <script src="../geolens/utils.js"></script>
     <script src="../geolens/visualize.js"></script>
     <script src="../geolens/color.js"></script>
-    <script src="mulresPanel.js"></script>
-    <script src="leaflet-button-control.js"></script>
 
 
 </head>
 
 <body>
 
+<script src="../geolens/map.js"></script>
 <div id="map"></div>
+
+<script src="../geolens/easy-button.js"></script>
+<script src="../geolens/leafletDrawMulResPanel.js"></script>
 
 <script src="lib/leaflet-list-markers.js"></script>
 <script src="data/markers.js"></script>
+<script src="leaflet-button-control.js"></script>
 <script>
 
     var map = new L.Map('map', {zoom: 5, minZoom: 0, center: L.latLng(40.573436, -105.086547)});	//set center from first location

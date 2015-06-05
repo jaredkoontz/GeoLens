@@ -66,45 +66,13 @@ function addMulResLeafletDrawPanel() {
         //drawControl.addTo(map);
     });
 
-
-    var myButtonOptions = {
-        position: 'topright',
-        text: true,
-        iconUrl: '../lib/images/mulresEye-.png',  // string
-        onClick: mulResPlus,  // callback function
-        hideText: true,  // bool
-        maxWidth: 30,  // number
-        doToggle: true,  // bool
-        toggleStatus: true  // bool
-    };
-
-    var myButton = new L.Control.Button(myButtonOptions);
-
-    function mulResPlus() {
-        console.log("we want to zoom in");
-    }
-
-    map.addControl(myButton);
-
-
-
-    //var mulResMinusOptions = {
-    //    position: 'topright',
-    //    text: false,
-    //    iconUrl: '../lib/images/mulresEye-.png',  // location of file
-    //    onClick: mulResMinus(),  // callback function
-    //    hideText: false,  // bool
-    //    maxWidth: 30,  // number
-    //    doToggle: true,  // bool
-    //    toggleStatus: true  // bool
-    //};
-    //
-    //var mulResMinusButton = new L.Control.Button(mulResMinusOptions);
-    //
-    //function mulResMinus() {
-    //    console.log("we want to zoom out");
-    //}
-    ////
-    //map.addControl(mulResMinusButton);
+    L.easyButton('fa-eye',
+        function funk(){increaseResolution()},
+        'Increase Resolution (If Possible)'
+    );
+    L.easyButton('fa-eye-slash',
+        function funk(){decreaseResolution()},
+        'Decrease Resolution (If Possible)'
+    );
 
 }

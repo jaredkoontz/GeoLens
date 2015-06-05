@@ -33,7 +33,7 @@
     <script src="../geolens/dataHandling.js"></script>
     <script src="../geolens/dataMerging.js"></script>
     <script src="../geolens/geohashRectangles.js"></script>
-    <script src="../geolens/leafletdrawPanel.js"></script>
+    <script src="../geolens/leafletDrawPanel.js"></script>
     <script src="../geolens/setData.js"></script>
     <script src="../geolens/histogramClickHandler.js"></script>
     <script src="../geolens/utils.js"></script>

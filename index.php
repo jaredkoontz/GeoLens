@@ -21,19 +21,25 @@
     <script src="lib/js/leaflet.js"></script>
     <script src="lib/js/leaflet.draw-src.js"></script>
     <script src="lib/js/jquery-1.11.1.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <style type="text/css"></style>
 
     <!-- homebrewed -->
-    <script src="geolens/globals.js"></script>
-    <script src="geolens/jsonpCallBack.js"></script>
+    <script src="geolens/color.js"></script>
     <script src="geolens/dataHandling.js"></script>
     <script src="geolens/dataMerging.js"></script>
+    <script src="geolens/easy-button.js"></script>
     <script src="geolens/geohashRectangles.js"></script>
-    <script src="geolens/leafletdrawPanel.js"></script>
-    <script src="geolens/setData.js"></script>
+    <script src="geolens/globals.js"></script>
+    <script src="geolens/hist.js"></script>
     <script src="geolens/histogramClickHandler.js"></script>
+    <script src="geolens/jsonpCallBack.js"></script>
+    <script src="geolens/leafletDrawPanel.js"></script>
+    <script src="geolens/mulResHandler.js"></script>
+
+    <script src="geolens/setData.js"></script>
     <script src="geolens/utils.js"></script>
     <script src="geolens/visualize.js"></script>
-    <script src="geolens/color.js"></script>
     <script src="geolens/zoom.js"></script>
 
     <?php
@@ -57,8 +63,9 @@
 <!-- the leaflet map -->
 <div id="map">
 </div>
-<script src="geolens/map.js"></script>
 <!-- the histogram panel -->
+<script src="geolens/leafletDrawMulResPanel.js"></script>
+<script src="geolens/map.js"></script>
 <div id="histPanel">
     <br/>
     <?php //todo need to create these with php ?>
