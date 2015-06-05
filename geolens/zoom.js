@@ -1,4 +1,3 @@
-
 //notes:
 //6 & 7 look good at 2k ->5
 
@@ -19,7 +18,7 @@
 // 5 | 6
 // 6 |
 
-function handleZoom(map){
+function handleZoom(map) {
     //if there is a current image on the site
     //get the current length of our hash How do we have this?
     //

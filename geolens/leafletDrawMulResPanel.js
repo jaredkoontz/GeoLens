@@ -67,11 +67,15 @@ function addMulResLeafletDrawPanel() {
     });
 
     L.easyButton('fa-eye',
-        function funk(){increaseResolution()},
+        function funk() {
+            increaseResolution()
+        },
         'Increase Resolution (If Possible)'
     );
     L.easyButton('fa-eye-slash',
-        function funk(){decreaseResolution()},
+        function funk() {
+            decreaseResolution()
+        },
         'Decrease Resolution (If Possible)'
     );
 

@@ -1,12 +1,14 @@
 /**
- * Created by root on 6/4/15.
+ *
  */
-function increaseResolution(){
-    //resolution
 
+
+
+function increaseResolution() {
+    //need to get current resolution of geohash tiles.
+    console.log("increase " + map.getZoom())
 }
 
-
-function decreaseResolution(){
-
+function decreaseResolution() {
+    console.log("decrease " + map.getZoom())
 }
