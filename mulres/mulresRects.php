@@ -40,7 +40,7 @@
     <script src="../geolens/visualize.js"></script>
     <script src="../geolens/color.js"></script>
     <script src="mulresPanel.js"></script>
-    <script src="leaflet-button-control.js"></script>
+
 
 
 </head>

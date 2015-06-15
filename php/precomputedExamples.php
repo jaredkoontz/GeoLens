@@ -20,6 +20,8 @@ function getCorrectPath($wantedJson)
         $directory .= "2kWyco.json";
     else if ($wantedJson == "2kw")
         $directory .= "2kWycoWrong.json";
+    else if ($wantedJson == "1m")
+        $directory .= "1month.json";
 
     else return "";
 
