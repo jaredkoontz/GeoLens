@@ -48,7 +48,22 @@
 <div id="map"></div>
 <script>
 
-    var centralLocation = [40.573436, -105.086547];
+
+
+
+
+
+
+
+//    var radius = 110;             // radius in miles of wanted circle ..... US
+    var radius = 70;             // radius in miles of wanted circle ..... wyco
+//    var radius = 30;             // radius in miles of wanted circle ..... noco
+
+    var numberOfPoints = 100;   //number of points we want to use to approximate the circle
+
+
+    var centralLocation = [39.8282, -98.5795];
+//    var centralLocation = [40.573436, -105.086547];
     var maxZoom = 18;
     var currentZoom = 5;
 
@@ -69,35 +84,36 @@
 
     var d2r = Math.PI / 180;   // degrees to radians
     var r2d = 180 / Math.PI;   // radians to degrees
-    var earthsradius = 3963; // 3963 is the radius of the earth in miles
+    var earthsRadius = 3963; // 3963 is the radius of the earth in miles
 
 
-    var radius = 100;             // radius in miles
-    var numberOfPoints = 60;
-    for (var i = 3; i <= numberOfPoints; i++) {
-        var polyPoints = drawCircle(centralLocation[0], centralLocation[1], i, radius);
-        var polygon = new L.Polygon(polyPoints);
-        map.addLayer(polygon);
-    }
 
+    var polyPoints = drawCircle(centralLocation[0], centralLocation[1], numberOfPoints, radius);
+    var polygon = new L.Polygon(polyPoints);
+    map.addLayer(polygon);
+
+//    for (var i = 3; i <= numberOfPoints; i++) { //i starts at 3 because 2 points is a line, and 1 point is, well, a point
+//        var polyPoints = drawCircle(centralLocation[0], centralLocation[1], i, radius);
+//        var polygon = new L.Polygon(polyPoints);
+//        map.addLayer(polygon);
+//    }
 
     function drawCircle(inputLong, inputLat, numberOfPoints, radius) {
-
-
         // find the radius in lat/lon
-        var rlat = (radius / earthsradius) * r2d;
+        var rlat = (radius / earthsRadius) * r2d;
         var rlng = rlat / Math.cos(inputLat * d2r);
 
         var poly = [];
         var latitude;
         var longitude;
-        for (var i = 0; i < numberOfPoints + 1; i++) // one extra here makes sure we connect the
+        for (var i = 0; i < numberOfPoints + 1; i++) // one extra here makes sure we connect the points
         {
             var theta = Math.PI * (i / (numberOfPoints / 2));
             latitude = inputLong + (rlng * Math.cos(theta)); // center a + radius x * cos(theta)
             longitude = inputLat + (rlat * Math.sin(theta)); // center b + radius y * sin(theta)
             var point = new L.LatLng(latitude, longitude);
-            console.log(point);
+
+//            console.log(point);
             poly.push(point);
         }
 
@@ -108,8 +124,14 @@
 
 
     function writeJava(poly) {
-        console.log(poly);
-
+        console.log("return new Coordinates[]{");
+        for (var index = 0; index < poly.length - 1; ++index) {
+            if (index === poly.length - 2)
+                console.log(" new Coordinates(" + poly[index].lat + "f, " + poly[index].lng + "f) ");
+            else
+                console.log(" new Coordinates(" + poly[index].lat + "f, " + poly[index].lng + "f), ");
+        }
+        console.log("};");
     }
 
 </script>
