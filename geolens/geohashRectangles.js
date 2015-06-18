@@ -29,7 +29,7 @@ function drawGeohashes(geoHashData) {
 
         //add geohash as id.
         .attr("id", function (d) {
-            if(currentResolution != d.id.length){
+            if (currentResolution != d.id.length) {
                 currentResolution = d.id.length;
             }
             return d.id;

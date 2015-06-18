@@ -5,54 +5,54 @@
 <head profile="http://www.w3.org/2005/10/profile">
     <link rel="icon"
           type="image/png"
-          href="../images/favicon.ico">
+          href="../../images/favicon.ico">
     <title>MulRes Play</title>
     <meta http-equiv="content-type"
           content="text/html;charset=utf-8"/>
 
 
     <!-- leaflet -->
-    <link rel="stylesheet" href="../lib/js/leaflet.draw.css">
-    <link rel="stylesheet" href="../lib/js/leaflet.css">
-    <link rel="stylesheet" href="../css/geolens.css">
+    <link rel="stylesheet" href="../../lib/js/leaflet.draw.css">
+    <link rel="stylesheet" href="../../lib/js/leaflet.css">
+    <link rel="stylesheet" href="../../css/geolens.css">
 
-    <link rel="stylesheet" href="lib/leaflet-list-markers.css"/>
+    <link rel="stylesheet" href="../lib/leaflet-list-markers.css"/>
 
     <style type="text/css"></style>
 
     <!--lib-->
-    <script src="../lib/js/d3.min.js"></script>
-    <script src="../lib/js/leaflet.js"></script>
-    <script src="../lib/js/leaflet.draw-src.js"></script>
-    <script src="../lib/js/jquery-1.11.1.min.js"></script>
+    <script src="../../lib/js/d3.min.js"></script>
+    <script src="../../lib/js/leaflet.js"></script>
+    <script src="../../lib/js/leaflet.draw-src.js"></script>
+    <script src="../../lib/js/jquery-1.11.1.min.js"></script>
 
 
     <!-- homebrewed -->
-    <script src="../geolens/globals.js"></script>
-    <script src="../geolens/jsonpCallBack.js"></script>
-    <script src="../geolens/dataHandling.js"></script>
-    <script src="../geolens/dataMerging.js"></script>
-    <script src="../geolens/geohashRectangles.js"></script>
-    <script src="../geolens/leafletDrawPanel.js"></script>
-    <script src="../geolens/setData.js"></script>
-    <script src="../geolens/histogramClickHandler.js"></script>
-    <script src="../geolens/utils.js"></script>
-    <script src="../geolens/visualize.js"></script>
-    <script src="../geolens/color.js"></script>
+    <script src="../../geolens/globals.js"></script>
+    <script src="../../geolens/jsonpCallBack.js"></script>
+    <script src="../../geolens/dataHandling.js"></script>
+    <script src="../../geolens/dataMerging.js"></script>
+    <script src="../../geolens/geohashRectangles.js"></script>
+    <script src="../../geolens/leafletDrawPanel.js"></script>
+    <script src="../../geolens/setData.js"></script>
+    <script src="../../geolens/histogramClickHandler.js"></script>
+    <script src="../../geolens/utils.js"></script>
+    <script src="../../geolens/visualize.js"></script>
+    <script src="../../geolens/color.js"></script>
 
 
 </head>
 
 <body>
 
-<script src="../geolens/map.js"></script>
+<script src="../../geolens/map.js"></script>
 <div id="map"></div>
 
-<script src="../geolens/easy-button.js"></script>
-<script src="../geolens/leafletDrawMulResPanel.js"></script>
+<script src="../../geolens/easy-button.js"></script>
+<script src="../../geolens/leafletDrawMulResPanel.js"></script>
 
-<script src="lib/leaflet-list-markers.js"></script>
-<script src="data/markers.js"></script>
+<script src="../lib/leaflet-list-markers.js"></script>
+<script src="../data/markers.js"></script>
 
 <script>
 
