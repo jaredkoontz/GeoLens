@@ -49,21 +49,15 @@
 <script>
 
 
-
-
-
-
-
-
-//    var radius = 110;             // radius in miles of wanted circle ..... US
+    //    var radius = 110;             // radius in miles of wanted circle ..... US
     var radius = 70;             // radius in miles of wanted circle ..... wyco
-//    var radius = 30;             // radius in miles of wanted circle ..... noco
+    //    var radius = 30;             // radius in miles of wanted circle ..... noco
 
     var numberOfPoints = 100;   //number of points we want to use to approximate the circle
 
 
     var centralLocation = [39.8282, -98.5795];
-//    var centralLocation = [40.573436, -105.086547];
+    //    var centralLocation = [40.573436, -105.086547];
     var maxZoom = 18;
     var currentZoom = 5;
 
@@ -86,17 +80,15 @@
     var r2d = 180 / Math.PI;   // radians to degrees
     var earthsRadius = 3963; // 3963 is the radius of the earth in miles
 
-
-
     var polyPoints = drawCircle(centralLocation[0], centralLocation[1], numberOfPoints, radius);
     var polygon = new L.Polygon(polyPoints);
     map.addLayer(polygon);
 
-//    for (var i = 3; i <= numberOfPoints; i++) { //i starts at 3 because 2 points is a line, and 1 point is, well, a point
-//        var polyPoints = drawCircle(centralLocation[0], centralLocation[1], i, radius);
-//        var polygon = new L.Polygon(polyPoints);
-//        map.addLayer(polygon);
-//    }
+    //    for (var i = 3; i <= numberOfPoints; i++) { //i starts at 3 because 2 points is a line, and 1 point is, well, a point
+    //        var polyPoints = drawCircle(centralLocation[0], centralLocation[1], i, radius);
+    //        var polygon = new L.Polygon(polyPoints);
+    //        map.addLayer(polygon);
+    //    }
 
     function drawCircle(inputLong, inputLat, numberOfPoints, radius) {
         // find the radius in lat/lon
