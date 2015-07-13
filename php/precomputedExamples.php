@@ -23,6 +23,18 @@ function getCorrectPath($wantedJson)
     else if ($wantedJson == "1m")
         $directory .= "1month.json";
 
+    else if ($wantedJson == "1")
+        $directory .= "mulres/"."1.json";
+    else if ($wantedJson == "2")
+        $directory .= "mulres/"."2.json";
+    else if ($wantedJson == "3")
+        $directory .= "mulres/"."3.json";
+    else if ($wantedJson == "4")
+        $directory .= "mulres/"."4.json";
+    else if ($wantedJson == "5")
+        $directory .= "mulres/"."5.json";
+
+
     else return "";
 
     return $directory;
