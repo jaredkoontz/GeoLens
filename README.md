@@ -43,10 +43,3 @@ locality and minimizing data movements. This paper includes
 empirical benchmarks of our framework encompassing a
 billion-file dataset published by the National Climactic Data
 Center.
-
-
-
-
-
-
-
