@@ -1,3 +1,4 @@
+#intellij
 .idea/*
 *.iml
 out/
@@ -9,5 +10,3 @@ build.properties
 
 # Mac OS File Attributes
 .DS_Store
-
-
