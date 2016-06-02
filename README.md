@@ -1,9 +1,6 @@
 [![GeoLens](http://www.cs.colostate.edu/geolens/entry/images/Geolens-logo.png)](http://www.cs.colostate.edu/geolens)
 
 
-
-
-
 ###Intro
 
 This is the client side software for the GeoLens project. It is implemented in javascript using the d3 package. The gap between the java server-side and this client is bridged using json.
